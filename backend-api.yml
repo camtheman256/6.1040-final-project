@@ -14,8 +14,8 @@ paths:
           description: OK
           content:
             application/json:
-              example: |
-                {"message": "Hello World!"}
+              example:
+                message: "Hello World!"
   /user:
     get:
       responses:
