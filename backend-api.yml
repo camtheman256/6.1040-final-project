@@ -5,7 +5,7 @@ info:
 servers:
   - url: https://api.server.test/v1
 paths:
-  /test:
+  /user:
     get:
       responses:
         '200':
