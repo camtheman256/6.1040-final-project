@@ -3,8 +3,19 @@ info:
   title: final-project-backend-api
   version: '1.0'
 servers:
-  - url: https://api.server.test/v1
+  - url: http://localhost:8080
 paths:
+  /:
+    get:
+      summary: Hello World endpoint
+      description: This endpoint can be used to test that the server is responding correctly.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example: |
+                {"message": "Hello World!"}
   /user:
     get:
       responses:

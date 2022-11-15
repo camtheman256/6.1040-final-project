@@ -12,5 +12,10 @@
     {
       "path": "./tsconfig.config.json"
     }
-  ]
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }
