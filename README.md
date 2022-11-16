@@ -15,15 +15,15 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
 
 1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
+   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
+   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## MongoDB Atlas setup
+## MongoDB Atlas and Server setup
 
 [MongoDB](https://mongodb.com)
 
@@ -31,13 +31,14 @@ After following the instructions above, you should have copied a secret that loo
 
 To allow your local server to connect to the database you just created, create a file named `.env` in the project's root directory with the contents
 
-```
+```env
 MONGO_SRV=mongodb+srv://xxxxxx:xxxxxxxxx@cluster0.yc2imit.mongodb.net/?retryWrites=true&w=majority
+DB_NAME=kerb
 ```
 
-where the secret is replaced with the one you obtained.
+where the secret is replaced with the one you obtained, and `DB_NAME` is the database name you want to use.
 
-
+You can also optionally specify which `PORT` you want to use for the API server and a `SECRET` for your user sessions.
 
 ## Project Setup
 
@@ -49,7 +50,10 @@ npm install
 
 ```sh
 npm run dev
+npm run dev-api
 ```
+
+`dev-api` will automatically reload the server when you make changes to the API server, and requests will be proxied through the Vite dev server.
 
 ### Type-Check, Compile and Minify for Production
 
