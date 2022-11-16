@@ -54,7 +54,7 @@ app.all("*", (req, res) => {
   });
 });
 
-const port = parseInt(process.env.PORT as string) || 8080;
+const port = parseInt(process.env.PORT as string) || 8000;
 const server = http.createServer(app);
 server.listen(port, () => {
   console.log(`Express server running at http://localhost:${port}`);

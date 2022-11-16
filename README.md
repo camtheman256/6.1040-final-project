@@ -38,7 +38,7 @@ DB_NAME=kerb
 
 where the secret is replaced with the one you obtained, and `DB_NAME` is the database name you want to use.
 
-You can also optionally specify which `PORT` you want to use for the API server and a `SECRET` for your user sessions.
+You can also optionally specify which `PORT` you want to use for the API server and a `SECRET` for your user sessions. Port 8000 is proxied for documentation purposes, so we recommend setting `PORT` to 8000.
 
 ## Project Setup
 
@@ -54,6 +54,15 @@ npm run dev-api
 ```
 
 `dev-api` will automatically reload the server when you make changes to the API server, and requests will be proxied through the Vite dev server.
+
+### View OpenAPI Docs
+
+```sh
+npm run dev-api
+npm run docs
+```
+
+Then, open [127.0.0.1:8080](http://127.0.0.1), and you'll be able to browse and execute the OpenAPI endpoints.
 
 ### Type-Check, Compile and Minify for Production
 

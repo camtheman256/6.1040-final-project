@@ -2,9 +2,13 @@ openapi: '3.0.2'
 info:
   title: final-project-backend-api
   version: '1.0'
+  description: |
+    ## 6.1040 Final Project OpenAPI Spec
 servers:
-  - url: http://localhost:8080
+  - url: http://127.0.0.1:8080
+    description: Development
   - url: https://6-1040-final-project.vercel.app
+    description: Production
 paths:
   /api:
     get:
