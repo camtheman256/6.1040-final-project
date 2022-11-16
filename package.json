@@ -7,7 +7,9 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "serve": "ts-node api/index.ts",
+    "dev-api": "ts-node-dev api/index.ts"
   },
   "dependencies": {
     "connect-mongo": "^4.6.0",
@@ -37,6 +39,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "~4.7.4",
     "vite": "^3.1.8",
     "vue-tsc": "^1.0.8"
