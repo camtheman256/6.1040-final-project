@@ -1,6 +1,7 @@
 import type {Request, Response, NextFunction} from 'express';
-import {HydratedDocument, Types} from 'mongoose';
-import {OAuth2Client, TokenPayload} from 'google-auth-library';
+
+import {type HydratedDocument, type Types} from 'mongoose';
+import {OAuth2Client, type TokenPayload} from 'google-auth-library';
 
 import UserCollection from './collection';
 import type {User} from './model';
@@ -32,9 +33,51 @@ async function createUserFromGapiAuth(payload: TokenPayload): Promise<HydratedDo
     return user;
 };
 
+/**
+ * Checks if the user is logged in, that is, whether the userId is set in session
+ */
+const isUserLoggedIn = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.session.userId) {
+      res.status(403).json({
+        message: "User is not logged in."
+      });
+      return;
+    }
+    next();
+};
 
+/**
+ * Checks if the user is signed out, that is, userId is undefined in session
+ */
+const isUserLoggedOut = (req: Request, res: Response, next: NextFunction) => {
+    if (req.session.userId) {
+      res.status(403).json({
+        error: 'You are already signed in.'
+      });
+      return;
+    }
+  
+    next();
+};
+
+const isCurrentSessionUserExists = async (req: Request, res: Response, next: NextFunction) => {
+    if (req.session.userId) {
+      const user = await UserCollection.findOneFromGapiUserId(req.session.userId);
+      if (!user) {
+        req.session.userId = undefined;
+        res.status(500).json({
+          message: 'User session was not recognized.'
+        });
+        return;
+      }
+    }
+    next();
+};
 
 export {
     verifyGoogleAuthToken,
-    createUserFromGapiAuth
+    createUserFromGapiAuth,
+    isUserLoggedIn,
+    isUserLoggedOut,
+    isCurrentSessionUserExists
 };
