@@ -44,6 +44,14 @@ app.use(
   })
 );
 
+//apparently we need to declare session types now (starter code used older version of express)
+declare module 'express-session' {
+  export interface SessionData {
+    userId: string;
+  }
+}
+
+
 app.use('/api/users', userRouter);
 
 app.get("/api", (req, res) => {
