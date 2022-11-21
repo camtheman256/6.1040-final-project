@@ -1,6 +1,5 @@
-import type {Types} from 'mongoose';
-import {Schema, model} from 'mongoose';
-
+import type { Types } from "mongoose";
+import { Schema, model } from "mongoose";
 
 export type User = {
   _id: Types.ObjectId; //mongoDB
@@ -11,29 +10,28 @@ export type User = {
   dateJoined: Date;
 };
 
-
 const UserSchema = new Schema({
   gapiUserId: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: false
+    required: false,
   },
   imageUrl: {
     type: String,
-    required: false
+    required: false,
   },
   email: {
     type: String,
-    required: false
+    required: false,
   },
   dateJoined: {
     type: Date,
-    required: true
+    required: true,
   },
 });
 
-const UserModel = model<User>('User', UserSchema);
+const UserModel = model<User>("User", UserSchema);
 export default UserModel;

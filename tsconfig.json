@@ -1,10 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "api/**/*", "backend/**/*"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "*" : ["./src/types/express-session/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },
@@ -15,8 +16,13 @@
     }
   ],
   "ts-node": {
+    "files" : true,
     "compilerOptions": {
       "module": "CommonJS"
-    }
-  }
+    },
+  },
+  "files": [
+    "src/types/express-session/index.d.ts",
+  ],
+  
 }
