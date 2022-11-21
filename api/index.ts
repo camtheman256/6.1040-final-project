@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import http from "http";
 
+import {userRouter} from '../backend/user/router';
+
 // Configure .env file
 dotenv.config();
 
@@ -41,6 +43,8 @@ app.use(
     }),
   })
 );
+
+app.use('/api/users', userRouter);
 
 app.get("/api", (req, res) => {
   res.status(200).json({
