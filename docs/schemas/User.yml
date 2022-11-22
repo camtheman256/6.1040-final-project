@@ -1,0 +1,15 @@
+type: Object
+required:
+  - gapiUserId
+  - dateJoined
+properties:
+  gapiUserId:
+    type: string
+  name: 
+    type: string
+  imageUrl:
+    type: string
+  email:
+    type: string
+  dateJoined:
+    type: string

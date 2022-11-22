@@ -1,0 +1,127 @@
+PATH_users-gapi-token-auth:
+  post:
+    summary: Google Auth Token sign in
+    description: Use Google OAuth2 for authentication and logging in
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/gapiAuthPayload"
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "You have signed in successfully."
+      '401':
+        description: 'Unauthorized'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              type: object
+              properties: 
+                message: "Unable to verify authentication token."
+      '403':
+        description: 'Forbidden'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              type: object
+              properties: 
+                message: "You are already signed in."
+
+  delete:
+    summary: Google Auth Token sign out
+    description: Sign out using Google OAuth2
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "You have signed out successfully."
+      '403':
+        description: 'Forbidden'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              type: object
+              properties: 
+                message: "User is not logged in."
+
+  get:
+    summary: Get current session user 
+    description: Get session user information
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yml#/User"
+      '403':
+        description: 'Forbidden'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              type: object
+              properties: 
+                message: "User is not logged in."
+
+PATH_users:
+    get:
+        summary: Find a user
+        description: Used to get the user in collection based on userId.
+        parameters:
+            -in: path
+            name: userId
+            required: true
+            schema:
+                type: string
+        resposnes:
+            '200':
+                description: 'OK'
+                content:
+                    application/json:
+                        schema:
+                            $ref: "../schemas/_index.yml#/User"
+
+
+
+
