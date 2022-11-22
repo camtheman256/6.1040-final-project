@@ -1,0 +1,12 @@
+type: Object
+required:
+  - name
+  - address
+  - gapiPlaceId
+properties:
+  name:
+    type: string
+  address:
+    type: string
+  gapiPlaceId:
+    type: string

@@ -13,11 +13,14 @@
     "docs": "http-server docs -p 8080 --proxy http://127.0.0.1:8000"
   },
   "dependencies": {
+    "@types/gapi": "^0.0.43",
     "connect-mongo": "^4.6.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
     "express-session": "^1.17.3",
+    "google-auth-library": "^8.7.0",
+    "moment": "^2.29.4",
     "mongoose": "^6.6.2",
     "morgan": "^1.10.0",
     "pinia": "^2.0.23",

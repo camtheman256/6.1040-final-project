@@ -1,33 +1,37 @@
-import type {Types} from 'mongoose';
-import {Schema, model} from 'mongoose';
+import type { Types } from "mongoose";
+import { Schema, model } from "mongoose";
 
-/**
- * This file defines the properties stored in a User
- * DO NOT implement operations here ---> use collection file
- */
-
-// Type definition for User on the backend
 export type User = {
-  _id: Types.ObjectId;
-  username: string;
-  password: string;
+  _id: Types.ObjectId; //mongoDB
+  gapiUserId: string;
+  name: string;
+  imageUrl: string;
+  email: string;
+  dateJoined: Date;
 };
 
-// Mongoose schema definition for interfacing with a MongoDB table
-// Users stored in this table will have these fields, with the
-// type given by the type property, inside MongoDB
 const UserSchema = new Schema({
-  // The user's username
-  username: {
+  gapiUserId: {
     type: String,
-    required: true
+    required: true,
   },
-  // The user's password
-  password: {
+  name: {
     type: String,
-    required: true
-  }
+    required: false,
+  },
+  imageUrl: {
+    type: String,
+    required: false,
+  },
+  email: {
+    type: String,
+    required: false,
+  },
+  dateJoined: {
+    type: Date,
+    required: true,
+  },
 });
 
-const UserModel = model<User>('User', UserSchema);
+const UserModel = model<User>("User", UserSchema);
 export default UserModel;

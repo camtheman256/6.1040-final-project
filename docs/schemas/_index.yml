@@ -1,0 +1,30 @@
+User:
+  $ref: "./User.yml"
+
+Space:
+  $ref: "./Space.yml"
+
+
+gapiAuthPayload:
+  type: object
+  required:
+    - token
+  properties:
+    token: 
+      type: string
+
+createSpacePayload:
+  type: object
+  required:
+    - temp
+  properties:
+    temp:
+      type: string
+
+updateSpacePayload:
+  type: object
+  required:
+    -temp
+  properties:
+    temp:
+      type: string
