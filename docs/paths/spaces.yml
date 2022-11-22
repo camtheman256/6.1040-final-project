@@ -1,0 +1,98 @@
+PATH_spaces:
+  post:
+    summary: Create new space
+    description: Used to create a new space in collection.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/createSpacePayload"
+    responses:
+      '201':
+        description: 'Created'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "Space has successfully been created."
+
+  get:
+    summary: Find a space
+    description: Used to get the space in collection based on spaceId.
+    parameters:
+      - in: path
+        name: spaceId
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yml#/Space"
+
+  delete:
+    summary: Delete a space
+    description: Used to delete a space from collection.
+    parameters:
+      - in: path
+        name: spaceId
+        required: true
+        schema:
+          type: string
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "Space has successfully been deleted."
+  put:
+    summary: Update a space
+    description: Used to update a space in collection.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/updateSpacePayload"
+    parameters:
+      - in: path
+        name: spaceId
+        required: true
+        schema:
+          type: string
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+                space:
+                  $ref: "../schemas/_index.yml#/Space"
+            example:
+              type: object
+              properties:
+                message: "Space has successfully been updated."
+                space: {}
+      

@@ -1,4 +1,4 @@
-PATH-gapi-token-auth:
+PATH_users-gapi-token-auth:
   post:
     summary: Google Auth Token sign in
     description: Use Google OAuth2 for authentication and logging in
@@ -103,6 +103,24 @@ PATH-gapi-token-auth:
               type: object
               properties: 
                 message: "User is not logged in."
+
+PATH_users:
+    get:
+        summary: Find a user
+        description: Used to get the user in collection based on userId.
+        parameters:
+            -in: path
+            name: userId
+            required: true
+            schema:
+                type: string
+        resposnes:
+            '200':
+                description: 'OK'
+                content:
+                    application/json:
+                        schema:
+                            $ref: "../schemas/_index.yml#/User"
 
 
 

@@ -22,5 +22,9 @@ paths:
               example:
                 message: "Hello World!"
   /api/users/gapi-token-auth:
-    $ref: "./paths/users.yml#/PATH-gapi-token-auth"
+    $ref: "./paths/users.yml#/PATH_users-gapi-token-auth"
+  /api/users/{userId}:
+    $ref: "./paths/users.yml#/PATH_users"
+  /api/spaces/{spaceId}:
+    $ref: "./paths/spaces.yml#/PATH_spaces"
     
