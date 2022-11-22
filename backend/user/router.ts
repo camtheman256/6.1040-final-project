@@ -1,5 +1,5 @@
-import type {Request, Response} from 'express';
-import express from 'express';
+import type { Request, Response } from "express";
+import express from "express";
 
 const router = express.Router();
 
@@ -10,6 +10,4 @@ const router = express.Router();
  *
  * @return - TODO
  */
-router.get(
-  '/',
-);
+router.get("/");
