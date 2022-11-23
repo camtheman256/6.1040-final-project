@@ -1,3 +1,4 @@
+import PlaceSearchVue from "@/components/PlaceSearch.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
@@ -16,6 +17,12 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
+    },
+    {
+      // I need a place to build the place search widget, so this can get removed in the final version
+      path: "/place-search",
+      name: "place-search",
+      component: PlaceSearchVue,
     },
   ],
 });
