@@ -2,23 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Elements in HTML</title>
-    <!-- Embed elements Elements via Web Component -->
-    <script src="https://unpkg.com/@stoplight/elements/web-components.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="SwaggerUI" />
+    <title>SwaggerUI</title>
     <link
       rel="stylesheet"
-      href="https://unpkg.com/@stoplight/elements/styles.min.css"
+      href="https://unpkg.com/swagger-ui-dist/swagger-ui.css"
     />
   </head>
   <body>
-    <elements-api
-      apiDescriptionUrl="/root.yml"
-      router="hash"
-      layout="sidebar"
-    />
+    <div id="swagger-ui"></div>
+    <script
+      src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/swagger-ui-dist/swagger-ui-standalone-preset.js"
+      crossorigin
+    ></script>
+    <script>
+      window.onload = () => {
+        window.ui = SwaggerUIBundle({
+          url: "root.yml",
+          dom_id: "#swagger-ui",
+          presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+          layout: "StandaloneLayout",
+        });
+      };
+    </script>
   </body>
 </html>
