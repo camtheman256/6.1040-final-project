@@ -11,18 +11,3 @@ const myStore = useCounterStore();
     <button @click="myStore.increment()">More!</button>
   </div>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-
-.about {
-  flex-direction: column;
-  justify-content: center;
-}
-</style>
