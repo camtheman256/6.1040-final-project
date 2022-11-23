@@ -80,6 +80,7 @@ PATH_users-gapi-token-auth:
               properties: 
                 message: "User is not logged in."
 
+PATH_users-session:
   get:
     summary: Get current session user 
     description: Get session user information

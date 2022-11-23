@@ -15,8 +15,9 @@ async function verifyGoogleAuthToken(
 ): Promise<TokenPayload | void> {
   const client = new OAuth2Client(req.body.client_id);
   const ticket = await client.verifyIdToken({
-    idToken: req.body.user_id_token,
-    audience: req.body.client_id,
+    idToken: req.body.token,
+    audience:
+      "681310618538-s6g1aq6eposlcsh028n5gu8f68k8l56l.apps.googleusercontent.com",
   });
   const payload = ticket.getPayload();
   return payload;

@@ -21,10 +21,15 @@ paths:
             application/json:
               example:
                 message: "Hello World!"
-  /api/users/gapi-token-auth:
+  /api/users/session/token-auth:
     $ref: "./paths/users.yml#/PATH_users-gapi-token-auth"
+  /api/users/session:
+    $ref: "./paths/users.yml#/PATH_users-session"
   /api/users/{userId}:
     $ref: "./paths/users.yml#/PATH_users"
   /api/spaces/{spaceId}:
     $ref: "./paths/spaces.yml#/PATH_spaces"
-    
+
+components:
+  schemas:
+    $ref: "./schemas/_index.yml"
