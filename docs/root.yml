@@ -29,4 +29,7 @@ paths:
     $ref: "./paths/users.yml#/PATH_users"
   /api/spaces/{spaceId}:
     $ref: "./paths/spaces.yml#/PATH_spaces"
-    
+
+components:
+  schemas:
+    $ref: "./schemas/_index.yml"
