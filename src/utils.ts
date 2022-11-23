@@ -1,5 +1,4 @@
 export async function get(url: string) {
-  console.log("GET url provided:", url);
   return fetch(url).then(async (r) => r.json());
 }
 export async function post(url: string, body: object) {
@@ -9,6 +8,7 @@ export async function post(url: string, body: object) {
     headers: { "Content-Type": "application/json" },
     // credentials: "same-origin", // Sends express-session credentials with request
   };
-  await fetch(url, options);
-  console.log("POST sent to url:", url);
+  return fetch(url, options).then((r) =>
+    console.log("POST sent. Received:", r)
+  );
 }
