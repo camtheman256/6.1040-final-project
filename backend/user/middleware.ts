@@ -31,10 +31,10 @@ async function verifyGoogleAuthToken(
 async function createUserFromGapiAuth(
   payload: TokenPayload
 ): Promise<HydratedDocument<User>> {
-  const user = await UserCollection.findOneFromGapiUserId(payload.iss);
+  const user = await UserCollection.findOneFromGapiUserId(payload.sub);
   if (!user) {
     const newUser = await UserCollection.addOne(
-      payload.iss,
+      payload.sub,
       payload.name,
       payload.picture,
       payload.email
