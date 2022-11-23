@@ -31,7 +31,7 @@ router.post(
     const email: string | undefined = payload.email;
     const userDoc = await userMiddleware.createUserFromGapiAuth(payload);
     req.session.userId = userDoc.gapiUserId;
-    res.status(201).json({
+    res.status(200).json({
       message: "You have signed in successfully.",
     });
   }
