@@ -4,6 +4,8 @@ User:
 Space:
   $ref: "./Space.yml"
 
+Place:
+  $ref: "./gmap_schemas/Place.yml"
 
 gapiAuthPayload:
   type: object
@@ -13,18 +15,3 @@ gapiAuthPayload:
     token: 
       type: string
 
-createSpacePayload:
-  type: object
-  required:
-    - temp
-  properties:
-    temp:
-      type: string
-
-updateSpacePayload:
-  type: object
-  required:
-    -temp
-  properties:
-    temp:
-      type: string

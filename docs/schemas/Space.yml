@@ -1,12 +1,22 @@
 type: Object
 required:
+  - place_id
+  - formatted_address
   - name
-  - address
-  - gapiPlaceId
 properties:
+  place_id:
+    type: string
+  formatted_address:
+    type: string
+  formatted_phone_number:
+    type: string
   name:
     type: string
-  address:
+  photos:
+    type: array
+    items: 
+      type: string
+  url:
     type: string
-  gapiPlaceId:
+  website:
     type: string

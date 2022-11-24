@@ -19,9 +19,7 @@ PATH_users-gapi-token-auth:
                 message: 
                   type: string
             example:
-              type: object
-              properties:
-                message: "You have signed in successfully."
+              message: "You have signed in successfully."
       '401':
         description: 'Unauthorized'
         content:
@@ -32,9 +30,7 @@ PATH_users-gapi-token-auth:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "Unable to verify authentication token."
+              message: "Unable to verify authentication token."
       '403':
         description: 'Forbidden'
         content:
@@ -45,9 +41,7 @@ PATH_users-gapi-token-auth:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "You are already signed in."
+              message: "You are already signed in."
 
   delete:
     summary: Google Auth Token sign out
@@ -63,9 +57,7 @@ PATH_users-gapi-token-auth:
                 message: 
                   type: string
             example:
-              type: object
-              properties:
-                message: "You have signed out successfully."
+              message: "You have signed out successfully."
       '403':
         description: 'Forbidden'
         content:
@@ -76,9 +68,7 @@ PATH_users-gapi-token-auth:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "User is not logged in."
+              message: "User is not logged in."
 
 PATH_users-session:
   get:
@@ -101,9 +91,7 @@ PATH_users-session:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "User is not logged in."
+              message: "User is not logged in."
 
 PATH_users:
     get:

@@ -6,6 +6,28 @@ import express from "express";
 //import SpaceCollection from "./collection";
 //import { constructSpaceResponse } from "./util";
 
-import { assert } from "console";
+import * as userMiddleware from "../user/middleware"
 
 const router = express.Router();
+
+/**
+ * @name POST /api/spaces
+ */
+router.post(
+    "/spaces",
+    [
+        userMiddleware.isUserLoggedIn,
+    ],
+    async (req: Request, res: Response) => {
+        
+    }
+);
+
+/**
+ * @name DELETE /api/spaces
+ */
+
+/**
+ * @name GET /api/spaces/{spaceId}
+ */
+

@@ -7,7 +7,7 @@ PATH_spaces:
       content:
         application/json:
           schema:
-            $ref: "../schemas/_index.yml#/createSpacePayload"
+            $ref: "../schemas/_index.yml#/Place"
     responses:
       '201':
         description: 'Created'
@@ -18,10 +18,10 @@ PATH_spaces:
               properties:
                 message: 
                   type: string
+                space:
+                  $ref: "../schemas/_index.yml#/Space"
             example:
-              type: object
-              properties:
-                message: "Space has successfully been created."
+              message: "Space has successfully been created."
 
   get:
     summary: Find a space
@@ -38,7 +38,22 @@ PATH_spaces:
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yml#/Space"
+              type: object
+              properties:
+                message:
+                  type: string
+                space: 
+                  $ref: "../schemas/_index.yml#/Space"
+            example:
+              {
+                message: "Successfuly found space.",
+                space: {
+                  place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                  formatted_address: "123 Apple St. Anchorage, AL 12345",
+                  name: "aPlaceInAlaska"
+                }
+              }
+
 
   delete:
     summary: Delete a space
@@ -60,9 +75,7 @@ PATH_spaces:
                 message: 
                   type: string
             example:
-              type: object
-              properties:
-                message: "Space has successfully been deleted."
+              message: "Space has successfully been deleted."
   put:
     summary: Update a space
     description: Used to update a space in collection.
@@ -71,7 +84,7 @@ PATH_spaces:
       content:
         application/json:
           schema:
-            $ref: "../schemas/_index.yml#/updateSpacePayload"
+            $ref: "../schemas/_index.yml#/Place"
     parameters:
       - in: path
         name: spaceId
@@ -91,8 +104,12 @@ PATH_spaces:
                 space:
                   $ref: "../schemas/_index.yml#/Space"
             example:
-              type: object
-              properties:
-                message: "Space has successfully been updated."
-                space: {}
+              {
+                message: "Space has successfully been updated.",
+                space: {
+                  place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                  formatted_address: "123 Apple St. Anchorage, AL 12345",
+                  name: "aPlaceInAlaska"
+                }
+              }
       
