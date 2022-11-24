@@ -1,9 +1,8 @@
 <script lang="ts" setup>
+import type { CallbackTypes } from "vue3-google-login";
 import { post } from "../utils";
-interface IGetUserAuthInfoResponse extends Response {
-  credential: string;
-}
-const callback = (response: IGetUserAuthInfoResponse) => {
+
+const callback: CallbackTypes.CredentialCallback = (response) => {
   // This callback will be triggered when the user selects or login to
   // his Google account from the popup
   post("/api/users/session/token-auth", {
