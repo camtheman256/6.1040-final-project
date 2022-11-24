@@ -19,7 +19,7 @@ const activeRoute = useRoute();
 <template>
   <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid">
-      <RouterLink class="navbar-brand" to="/">🎯 Requests by Roomba</RouterLink>
+      <RouterLink class="navbar-brand" to="/">🎯 OurSpace</RouterLink>
       <button
         class="navbar-toggler"
         data-bs-toggle="collapse"
