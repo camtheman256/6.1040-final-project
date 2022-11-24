@@ -8,9 +8,12 @@ type SpaceResponse = {
   formatted_address: string,
   formatted_phone_number: string,
   name: string,
-  photos: Array<string> //see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto
-  url: string, //ref to google's official place embed
-  website: string //place's external website
+  /** see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto */
+  photos: Array<string>
+  /** ref to google's official place embed */
+  url: string,
+  /** place's external website */
+  website: string
 };
 
 /**
