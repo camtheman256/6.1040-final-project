@@ -7,6 +7,10 @@ const navLinks = [
     route: "/about",
     label: "About",
   },
+  {
+    route: "/place-search",
+    label: "Place Search",
+  },
 ];
 
 const activeRoute = useRoute();
