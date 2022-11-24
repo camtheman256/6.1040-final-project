@@ -23,7 +23,6 @@ async function handleSignOut() {
 </script>
 
 <template>
-  <!-- TODO: render sign out button too -->
   <div v-if="userStore.user">
     <span class="navbar-text me-3" :title="userStore.user.email">{{
       userStore.user.name
