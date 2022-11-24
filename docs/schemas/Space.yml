@@ -1,4 +1,4 @@
-type: Object
+type: object
 required:
   - place_id
   - formatted_address
