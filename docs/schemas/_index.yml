@@ -5,7 +5,7 @@ Space:
   $ref: "./Space.yml"
 
 Place:
-  $ref: "./gmap_schemas/Place.yml"
+  $ref: "https://raw.githubusercontent.com/googlemaps/openapi-specification/main/dist/google-maps-platform-openapi3.yml#/components/schemas/Place"
 
 gapiAuthPayload:
   type: object
