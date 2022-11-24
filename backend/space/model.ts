@@ -3,14 +3,16 @@ import { Schema, model } from "mongoose";
 
 export type Space = {
   _id: Types.ObjectId; //mongoDB
-  place_id: string,
-  formatted_address: string,
-  formatted_phone_number: string,
-  name: string,
-  photos: Array<string> //see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto
-  url: string, //ref to google's official place embed
-  website: string //place's external website
-
+  place_id: string;
+  formatted_address: string;
+  formatted_phone_number: string;
+  name: string;
+  /** see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto */
+  photos: Array<string>;
+  /** ref to google's official place embed */
+  url: string;
+  /** place's external website */
+  website: string;
 };
 
 const SpaceSchema = new Schema({
@@ -28,20 +30,20 @@ const SpaceSchema = new Schema({
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   photos: {
     type: Array<String>,
-    required: false
+    required: false,
   },
   url: {
     type: String,
-    required: false
+    required: false,
   },
   website: {
     type: String,
-    required: false
-  }
+    required: false,
+  },
 });
 
 const SpaceModel = model<Space>("Space", SpaceSchema);
