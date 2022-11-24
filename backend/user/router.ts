@@ -29,11 +29,11 @@ router.post(
     const name: string | undefined = payload.name;
     const imageUrl: string | undefined = payload.picture;
     const email: string | undefined = payload.email;
-    res.status(201).json({
-      message: "You have signed in successfully.",
-    });
     const userDoc = await userMiddleware.createUserFromGapiAuth(payload);
     req.session.userId = userDoc.gapiUserId;
+    res.status(200).json({
+      message: "You have signed in successfully.",
+    });
   }
 );
 

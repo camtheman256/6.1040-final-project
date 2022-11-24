@@ -27,6 +27,7 @@
     "vue": "^3.2.41",
     "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.1.5"
+    "vue3-google-login": "^2.0.12"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",

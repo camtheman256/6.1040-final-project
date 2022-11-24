@@ -40,6 +40,7 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       clientPromise: client,
+      dbName: process.env.DB_NAME || "dev",
     }),
   })
 );
