@@ -18,10 +18,11 @@ PATH_users-gapi-token-auth:
               properties:
                 message: 
                   type: string
+                user:
+                  $ref: '../schemas/_index.yml#User'
             example:
-              type: object
-              properties:
-                message: "You have signed in successfully."
+              message: "You have signed in successfully."
+              user:
       '401':
         description: 'Unauthorized'
         content:
@@ -32,9 +33,7 @@ PATH_users-gapi-token-auth:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "Unable to verify authentication token."
+              message: "Unable to verify authentication token."
       '403':
         description: 'Forbidden'
         content:
@@ -45,9 +44,7 @@ PATH_users-gapi-token-auth:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "You are already signed in."
+              message: "You are already signed in."
 
   delete:
     summary: Google Auth Token sign out
@@ -63,9 +60,7 @@ PATH_users-gapi-token-auth:
                 message: 
                   type: string
             example:
-              type: object
-              properties:
-                message: "You have signed out successfully."
+              message: "You have signed out successfully."
       '403':
         description: 'Forbidden'
         content:
@@ -76,9 +71,7 @@ PATH_users-gapi-token-auth:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "User is not logged in."
+              message: "User is not logged in."
 
 PATH_users-session:
   get:
@@ -90,7 +83,10 @@ PATH_users-session:
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yml#/User"
+              type: object
+              properties:
+                user: 
+                  $ref: "../schemas/_index.yml#/User"
       '403':
         description: 'Forbidden'
         content:
@@ -101,9 +97,7 @@ PATH_users-session:
                 message:
                   type: string
             example:
-              type: object
-              properties: 
-                message: "User is not logged in."
+              message: "User is not logged in."
 
 PATH_users:
     get:
@@ -115,7 +109,7 @@ PATH_users:
             required: true
             schema:
                 type: string
-        resposnes:
+        responses:
             '200':
                 description: 'OK'
                 content:
