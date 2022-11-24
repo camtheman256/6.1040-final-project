@@ -1,4 +1,4 @@
-type: Object
+type: object
 required:
   - name
   - address
