@@ -19,11 +19,13 @@
   "ts-node": {
     "files" : true,
     "compilerOptions": {
-      "module": "CommonJS"
+      "module": "CommonJS",
+      "types": ["google.maps"]
     },
   },
   "files": [
     "src/types/express-session/index.d.ts",
+    "src/types/google.maps/index.d.ts"
   ],
   
 }

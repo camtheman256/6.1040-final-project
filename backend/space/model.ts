@@ -3,13 +3,13 @@ import { Schema, model } from "mongoose";
 
 export type Space = {
   _id: Types.ObjectId; //mongoDB
-  place_id: String,
-  formatted_address: String,
-  formatted_phone_number: String,
-  name: String,
-  photos: Array<String> //see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto
-  url: String, //ref to google's official place embed
-  website: String //place's external website
+  place_id: string,
+  formatted_address: string,
+  formatted_phone_number: string,
+  name: string,
+  photos: Array<string> //see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto
+  url: string, //ref to google's official place embed
+  website: string //place's external website
 
 };
 
@@ -31,7 +31,7 @@ const SpaceSchema = new Schema({
     required: true
   },
   photos: {
-    type: String,
+    type: Array<String>,
     required: false
   },
   url: {

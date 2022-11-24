@@ -22,13 +22,34 @@ PATH_spaces:
                   $ref: "../schemas/_index.yml#/Space"
             example:
               message: "Space has successfully been created."
-
+      '403':
+        description: 'Forbidden'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: "Space with place_id: ChIJN1t_tDeuEmsRUsoyG83frY4 already exists."
+      '400':
+        description: 'Bad Request'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: "Provided place details do not have one of [place_id, formatted_address, name]"
   get:
     summary: Find a space
     description: Used to get the space in collection based on spaceId.
     parameters:
       - in: path
-        name: spaceId
+        name: place_id
         required: true
         schema:
           type: string
@@ -46,21 +67,30 @@ PATH_spaces:
                   $ref: "../schemas/_index.yml#/Space"
             example:
               {
-                message: "Successfuly found space.",
                 space: {
                   place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
                   formatted_address: "123 Apple St. Anchorage, AL 12345",
                   name: "aPlaceInAlaska"
                 }
               }
-
+      '404':
+        description: 'Not Found'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: "Space with place_id: ChIJN1t_tDeuEmsRUsoyG83frY4 does not exist."
 
   delete:
     summary: Delete a space
     description: Used to delete a space from collection.
     parameters:
       - in: path
-        name: spaceId
+        name: place_id
         required: true
         schema:
           type: string
@@ -76,6 +106,18 @@ PATH_spaces:
                   type: string
             example:
               message: "Space has successfully been deleted."
+      '404':
+        description: 'Not Found'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: "Space with place_id: ChIJN1t_tDeuEmsRUsoyG83frY4 does not exist."
+
   put:
     summary: Update a space
     description: Used to update a space in collection.
@@ -87,7 +129,7 @@ PATH_spaces:
             $ref: "../schemas/_index.yml#/Place"
     parameters:
       - in: path
-        name: spaceId
+        name: place_id
         required: true
         schema:
           type: string
