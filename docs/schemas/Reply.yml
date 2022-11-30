@@ -1,0 +1,12 @@
+type: object
+required:
+  - name
+  - address
+  - gapiReplyId
+properties:
+  name:
+    type: string
+  address:
+    type: string
+  gapiReplyId:
+    type: string

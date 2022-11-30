@@ -1,0 +1,98 @@
+PATH_replies:
+  post:
+    summary: Create new reply
+    description: Used to create a new reply in collection.
+    replyBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/createReplyPayload"
+    responses:
+      '201':
+        description: 'Created'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "Reply has successfully been created."
+
+  get:
+    summary: Find a reply
+    description: Used to get the reply in collection based on replyId.
+    parameters:
+      - in: path
+        name: replyId
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yml#/Reply"
+
+  delete:
+    summary: Delete a reply
+    description: Used to delete a reply from collection.
+    parameters:
+      - in: path
+        name: replyId
+        required: true
+        schema:
+          type: string
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "Reply has successfully been deleted."
+  put:
+    summary: Update a reply
+    description: Used to update a reply in collection.
+    replyBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/updateReplyPayload"
+    parameters:
+      - in: path
+        name: replyId
+        required: true
+        schema:
+          type: string
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+                reply:
+                  $ref: "../schemas/_index.yml#/Reply"
+            example:
+              type: object
+              properties:
+                message: "Reply has successfully been updated."
+                reply: {}
+      

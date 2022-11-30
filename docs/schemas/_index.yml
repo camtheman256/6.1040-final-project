@@ -4,6 +4,12 @@ User:
 Space:
   $ref: "./Space.yml"
 
+Request:
+  $ref: "./Request.yml"
+
+Reply:
+  $ref: "./Reply.yml"
+
 
 gapiAuthPayload:
   type: object
@@ -22,6 +28,38 @@ createSpacePayload:
       type: string
 
 updateSpacePayload:
+  type: object
+  required:
+    -temp
+  properties:
+    temp:
+      type: string
+
+createRequestPayload:
+  type: object
+  required:
+    - temp
+  properties:
+    temp:
+      type: string
+
+updateRequestPayload:
+  type: object
+  required:
+    -temp
+  properties:
+    temp:
+      type: stringc
+
+createReplyPayload:
+  type: object
+  required:
+    - temp
+  properties:
+    temp:
+      type: string
+
+updateReplyPayload:
   type: object
   required:
     -temp

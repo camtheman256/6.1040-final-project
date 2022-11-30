@@ -1,0 +1,98 @@
+PATH_requests:
+  post:
+    summary: Create new request
+    description: Used to create a new request in collection.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/createRequestPayload"
+    responses:
+      '201':
+        description: 'Created'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "Request has successfully been created."
+
+  get:
+    summary: Find a request
+    description: Used to get the request in collection based on requestId.
+    parameters:
+      - in: path
+        name: requestId
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yml#/Request"
+
+  delete:
+    summary: Delete a request
+    description: Used to delete a request from collection.
+    parameters:
+      - in: path
+        name: requestId
+        required: true
+        schema:
+          type: string
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+            example:
+              type: object
+              properties:
+                message: "Request has successfully been deleted."
+  put:
+    summary: Update a request
+    description: Used to update a request in collection.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/_index.yml#/updateRequestPayload"
+    parameters:
+      - in: path
+        name: requestId
+        required: true
+        schema:
+          type: string
+    responses:  
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+                request:
+                  $ref: "../schemas/_index.yml#/Request"
+            example:
+              type: object
+              properties:
+                message: "Request has successfully been updated."
+                request: {}
+      
