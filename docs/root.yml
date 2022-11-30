@@ -25,9 +25,9 @@ paths:
     $ref: "./paths/users.yml#/PATH_users-gapi-token-auth"
   /api/users/session:
     $ref: "./paths/users.yml#/PATH_users-session"
-  /api/users/{userId}:
+  /api/users:
     $ref: "./paths/users.yml#/PATH_users"
-  /api/spaces/{spaceId}:
+  /api/spaces:
     $ref: "./paths/spaces.yml#/PATH_spaces"
 
 components:
