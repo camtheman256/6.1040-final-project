@@ -4,12 +4,17 @@ User:
 Space:
   $ref: "./Space.yml"
 
-Request:
-  $ref: "./Request.yml"
-
 Reply:
   $ref: "./Reply.yml"
 
+Place:
+  $ref: "https://raw.githubusercontent.com/googlemaps/openapi-specification/main/dist/google-maps-platform-openapi3.yml#/components/schemas/Place"
+
+PlaceRequest:
+  $ref: "./PlaceRequest.yml"
+  
+CheckIn:
+  $ref: "./CheckIn.yml"
 
 gapiAuthPayload:
   type: object
@@ -19,18 +24,33 @@ gapiAuthPayload:
     token: 
       type: string
 
-createSpacePayload:
+requestCreatePayload:
   type: object
   required:
-    - temp
+    - author
+    - space
+    - title
+    - textContent
+    - tags
+    - anonymous
   properties:
-    temp:
+    author:
       type: string
+    space:
+      type: string
+    title:
+      type: string
+    textContent:
+      type: string
+    tags:
+      type: array
+      items: 
+        type: string
+    anonymous:
+      type: boolean
 
-updateSpacePayload:
-  type: object
-  required:
-    -temp
+checkInUserCountsResponse:
+  type: array
   properties:
     temp:
       type: string

@@ -1,0 +1,16 @@
+type: object
+required:
+  - userId
+  - spaceId
+  - date
+  - count
+properties:
+  userId:
+    type: string
+  spaceId:
+    type: string
+  date:
+    type: string
+  count:
+    type: integer
+

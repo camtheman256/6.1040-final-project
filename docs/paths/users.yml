@@ -19,10 +19,10 @@ PATH_users-gapi-token-auth:
                 message: 
                   type: string
                 user:
-                  $ref: '../schemas/_index.yml#User'
+                  $ref: '../schemas/_index.yml#/User'
             example:
               message: "You have signed in successfully."
-              user:
+              user: 
       '401':
         description: 'Unauthorized'
         content:
