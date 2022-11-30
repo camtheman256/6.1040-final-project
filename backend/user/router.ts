@@ -33,6 +33,7 @@ router.post(
     req.session.userId = userDoc.gapiUserId;
     res.status(200).json({
       message: "You have signed in successfully.",
+      user: constructUserResponse(userDoc),
     });
   }
 );
@@ -66,7 +67,7 @@ router.get(
       });
     } else {
       res.status(200).json({
-        User: constructUserResponse(user),
+        user: constructUserResponse(user),
       });
     }
   }

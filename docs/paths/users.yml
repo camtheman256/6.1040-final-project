@@ -18,8 +18,11 @@ PATH_users-gapi-token-auth:
               properties:
                 message: 
                   type: string
+                user:
+                  $ref: '../schemas/_index.yml#User'
             example:
               message: "You have signed in successfully."
+              user:
       '401':
         description: 'Unauthorized'
         content:
@@ -80,7 +83,10 @@ PATH_users-session:
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yml#/User"
+              type: object
+              properties:
+                user: 
+                  $ref: "../schemas/_index.yml#/User"
       '403':
         description: 'Forbidden'
         content:
@@ -103,7 +109,7 @@ PATH_users:
             required: true
             schema:
                 type: string
-        resposnes:
+        responses:
             '200':
                 description: 'OK'
                 content:

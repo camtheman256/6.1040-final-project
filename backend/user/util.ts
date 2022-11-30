@@ -2,7 +2,7 @@ import type { HydratedDocument } from "mongoose";
 import moment from "moment";
 import type { User } from "./model";
 
-type UserResponse = {
+export type UserResponse = {
   _id: string;
   gapiUserId: string;
   name: string;

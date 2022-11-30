@@ -8,7 +8,8 @@ export async function post(url: string, body: object) {
     headers: { "Content-Type": "application/json" },
     // credentials: "same-origin", // Sends express-session credentials with request
   };
-  return fetch(url, options).then((r) =>
-    console.log("POST sent. Received:", r)
-  );
+  return fetch(url, options).then((r) => {
+    console.log("POST sent. Received:", r);
+    return r.json();
+  });
 }
