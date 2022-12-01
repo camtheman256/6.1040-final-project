@@ -13,6 +13,9 @@ export type Space = {
   url: string;
   /** place's external website */
   website: string;
+
+  requests: Array<string>;
+  /** requestIds of all requests associarted with this space */
 };
 
 const SpaceSchema = new Schema({

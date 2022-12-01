@@ -30,6 +30,10 @@ class SpaceCollection {
         });
     }
 
+    static async findAll(): Promise<Array<HydratedDocument<Space>>>{
+        return SpaceModel.find({});
+    }
+
     static async deleteOne(place_id: string): Promise<void>{
         SpaceModel.deleteOne({place_id: place_id});
     }
