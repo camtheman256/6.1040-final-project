@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { CallbackTypes } from "vue3-google-login";
-import { post } from "../utils";
+import { post, _delete } from "../utils";
 import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
@@ -16,8 +16,7 @@ const callback: CallbackTypes.CredentialCallback = async (response) => {
 };
 
 async function handleSignOut() {
-  // TODO(porderiq): replace with delete util if you want and/or make a utility signOut method
-  await fetch("/api/users/session/token-auth", { method: "DELETE" });
+  await _delete("/api/users/session/token-auth");
   userStore.logOut();
 }
 </script>
