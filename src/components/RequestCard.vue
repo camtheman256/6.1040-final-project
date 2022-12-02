@@ -13,7 +13,7 @@ const onCardClick = () =>
         {{ props.request.title }}
         <span class="text-muted">
           {{ props.request.upvotingUsers.length }}
-          <a href="#" class="btn btn-sm btn-primary">▲</a>
+          <a href="#" class="btn btn-sm btn-primary">👍</a>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
