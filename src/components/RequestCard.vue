@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 // TODO(porderiq): Add type of request.
 const props = defineProps(["request"]);
+const onCardClick = () =>
+  // TODO(porderiq): redirect to correct view.
+  console.log("Go to page for this card:", props.request);
 </script>
 
 <template>
-  <div class="card text-white bg-dark" style="width: 26rem">
+  <div class="requestCard card text-white bg-dark" @click="onCardClick">
     <div class="card-body">
       <h5 class="card-title spanned">
         {{ props.request.title }}
@@ -36,6 +39,13 @@ const props = defineProps(["request"]);
 </template>
 
 <style scoped>
+.requestCard {
+  box-shadow: -7px -7px rgb(188, 188, 188);
+}
+.requestCard:hover {
+  cursor: pointer;
+  box-shadow: -10px -10px rgb(188, 188, 188);
+}
 .spanned {
   display: flex;
   justify-content: space-between;

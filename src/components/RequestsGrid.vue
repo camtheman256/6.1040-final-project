@@ -1,9 +1,15 @@
 <script lang="ts" setup>
 import RequestSearch from "./RequestSearch.vue";
 import RequestCard from "./RequestCard.vue";
+// import { useUserStore } from "@/stores/user";
+// import { get } from "../utils";
 import { ref } from "vue";
 
-// TODO: Make api call to requests for signed in user.
+// TODO(porderique): Replace fake data with api call for signed in user.
+// const userStore = useUserStore();
+// const ownRequests = userStore.user
+//   ? await get(`/api/api/requests?user=${userStore.user.gapiUserId}`)
+//   : [];
 const ownRequests = [
   {
     author: "signed-in-user's-googleAuth-userId-token",
@@ -54,13 +60,11 @@ const filter = ref("");
 const filteredRequests = ref(ownRequests);
 const updateFilter = (event: string) => {
   filter.value = event;
-  filteredRequests.value = filter.value
-    ? ownRequests.filter(
-        (req) =>
-          req.title.toLowerCase().includes(filter.value.toLowerCase()) ||
-          req.textContent.toLowerCase().includes(filter.value.toLowerCase())
-      )
-    : ownRequests;
+  filteredRequests.value = ownRequests.filter(
+    (req) =>
+      req.title.toLowerCase().includes(filter.value.toLowerCase()) ||
+      req.textContent.toLowerCase().includes(filter.value.toLowerCase())
+  );
 };
 </script>
 
@@ -71,8 +75,29 @@ const updateFilter = (event: string) => {
       filter: {{ filter }}
       <RequestSearch @filter="updateFilter($event)" />
     </section>
-    <div v-for="request in filteredRequests" :key="request.dateCreated">
-      <RequestCard :request="request" />
+    <div
+      class="row bottom-buffer"
+      v-for="index in Math.floor(
+        // 3 columns per row
+        filteredRequests.length / 3 + (filteredRequests.length % 3 != 0 ? 1 : 0)
+      )"
+      :key="index"
+    >
+      <div class="col-sm-4" v-if="3 * (index - 1) < filteredRequests.length">
+        <RequestCard :request="filteredRequests[3 * (index - 1)]" />
+      </div>
+      <div
+        class="col-sm-4"
+        v-if="3 * (index - 1) + 1 < filteredRequests.length"
+      >
+        <RequestCard :request="filteredRequests[3 * (index - 1) + 1]" />
+      </div>
+      <div
+        class="col-sm-4"
+        v-if="3 * (index - 1) + 2 < filteredRequests.length"
+      >
+        <RequestCard :request="filteredRequests[3 * (index - 1) + 2]" />
+      </div>
     </div>
   </div>
 </template>
@@ -81,5 +106,9 @@ const updateFilter = (event: string) => {
 .spanned {
   display: flex;
   justify-content: space-between;
+}
+
+.bottom-buffer {
+  margin-bottom: 1rem;
 }
 </style>

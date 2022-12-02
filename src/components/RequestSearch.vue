@@ -4,7 +4,7 @@ const searchbox = ref();
 </script>
 
 <template>
-  <div class="input-group mb-3 smallWidth">
+  <form class="input-group mb-3 smallWidth">
     <input
       type="text"
       class="form-control"
@@ -21,7 +21,7 @@ const searchbox = ref();
         Search
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 <style scoped>
