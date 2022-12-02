@@ -72,7 +72,6 @@ const updateFilter = (event: string) => {
   <div>
     <section class="spanned">
       <h5>My Requests</h5>
-      filter: {{ filter }}
       <RequestSearch @filter="updateFilter($event)" />
     </section>
     <div
