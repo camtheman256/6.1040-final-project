@@ -2,6 +2,7 @@
 import TheWelcome from "../components/TheWelcome.vue";
 import RequestsGrid from "../components/RequestsGrid.vue";
 import { useUserStore } from "@/stores/user";
+
 const userStore = useUserStore();
 const getFirstName = (fullname: string): string =>
   fullname.substring(0, fullname.indexOf(" "));
@@ -35,10 +36,5 @@ const formatDate = (dateString: string): string =>
 .emphasized {
   font-style: italic;
   color: rgb(142, 142, 142);
-}
-
-.spanned {
-  display: flex;
-  justify-content: space-between;
 }
 </style>
