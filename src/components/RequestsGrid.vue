@@ -74,28 +74,13 @@ const updateFilter = (event: string) => {
       <h5>My Requests</h5>
       <RequestSearch @filter="updateFilter($event)" />
     </section>
-    <div
-      class="row bottom-buffer"
-      v-for="index in Math.floor(
-        // 3 columns per row
-        filteredRequests.length / 3 + (filteredRequests.length % 3 != 0 ? 1 : 0)
-      )"
-      :key="index"
-    >
-      <div class="col-sm-4" v-if="3 * (index - 1) < filteredRequests.length">
-        <RequestCard :request="filteredRequests[3 * (index - 1)]" />
-      </div>
+    <div class="row row-cols-3">
       <div
-        class="col-sm-4"
-        v-if="3 * (index - 1) + 1 < filteredRequests.length"
+        v-for="request in filteredRequests"
+        :key="request.dateCreated"
+        class="bottom-buffer"
       >
-        <RequestCard :request="filteredRequests[3 * (index - 1) + 1]" />
-      </div>
-      <div
-        class="col-sm-4"
-        v-if="3 * (index - 1) + 2 < filteredRequests.length"
-      >
-        <RequestCard :request="filteredRequests[3 * (index - 1) + 2]" />
+        <RequestCard :request="request" />
       </div>
     </div>
   </div>

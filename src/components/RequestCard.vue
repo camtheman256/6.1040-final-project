@@ -4,6 +4,18 @@ const props = defineProps(["request"]);
 const onCardClick = () =>
   // TODO(porderiq): redirect to correct view.
   console.log("Go to page for this card:", props.request);
+
+const requestStatus = (): string => {
+  if (props.request?.resolved) return "Resolved";
+  if (props.request?.inProcess) return "In Progress";
+  return "Not Addressed";
+};
+
+const statusStyle = {
+  "bg-secondary": requestStatus() === "Not Addressed",
+  "bg-warning": requestStatus() === "In Progress",
+  "bg-success": requestStatus() === "Resolved",
+};
 </script>
 
 <template>
@@ -21,20 +33,8 @@ const onCardClick = () =>
         {{ props.request.textContent }}
       </p>
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
-      <div
-        v-if="props.request.resolved"
-        class="bg-success btn status text-white"
-      >
-        Status: Resolved
-      </div>
-      <div
-        v-else-if="props.request.inProcess"
-        class="bg-warning btn status text-white"
-      >
-        Status: In Progress
-      </div>
-      <div v-else class="bg-secondary btn status text-white">
-        Status: Not Addressed
+      <div class="btn status text-white" :class="statusStyle">
+        Status: {{ requestStatus() }}
       </div>
     </div>
   </div>
