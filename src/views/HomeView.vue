@@ -18,7 +18,7 @@ const formatDate = (dateString: string): string =>
         {{ getFirstName(userStore.user.name) }}
       </h2>
       <p class="emphasized">
-        Contributer since {{ formatDate(userStore.user.dateJoined) }}
+        Contributor since {{ formatDate(userStore.user.dateJoined) }}
       </p>
       <hr />
       <RequestsGrid />
