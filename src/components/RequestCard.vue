@@ -20,20 +20,22 @@ const onCardClick = () =>
       <p class="card-text">
         {{ props.request.textContent }}
       </p>
-      <p class="emphasized">{{ props.request.dateCreated }}</p>
+      <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div
         v-if="props.request.resolved"
         class="bg-success btn status text-white"
       >
-        Resolved
+        Status: Resolved
       </div>
       <div
         v-else-if="props.request.inProcess"
         class="bg-warning btn status text-white"
       >
-        In Progress
+        Status: In Progress
       </div>
-      <div v-else class="bg-secondary btn status text-white">Not Addressed</div>
+      <div v-else class="bg-secondary btn status text-white">
+        Status: Not Addressed
+      </div>
     </div>
   </div>
 </template>
