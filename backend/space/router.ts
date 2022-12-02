@@ -53,7 +53,7 @@ router.delete(
  * @name GET /api/spaces/{place_id}
  */
 router.get(
-    "/{place_id}",
+    "/",
     async (req: Request, res: Response, next: NextFunction) => {
         if (req.params.place_id !== undefined){
             next();

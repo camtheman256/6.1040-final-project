@@ -1,0 +1,33 @@
+type: object
+required:
+  - author
+  - space
+  - title
+  - textContent
+  - anonymous
+  - tags
+properties:
+  author:
+    type: string
+  space:
+    type: string
+  title:
+    type: string
+  textContent:
+    type: string
+  dateCreated:
+    type: string
+  tags:
+    type: array
+    items: 
+      type: string
+  anonymous:
+    type: boolean
+  upvotingUsers:
+    type: array
+    items: 
+      type: string
+  resolved:
+    type: boolean
+  inProcess:
+    type: boolean

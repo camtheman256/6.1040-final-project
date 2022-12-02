@@ -41,7 +41,15 @@ const isValidGetPlaceRequestQuery = async(req: Request, res: Response, next: Nex
  */
 const isValidCreateRequestPayload = async(req: Request, res: Response, next: NextFunction) => {
     const createRequestPayload = req.body;
-    //TODO
+    if(!createRequestPayload.author || !createRequestPayload.space ||
+        !createRequestPayload.title || !createRequestPayload.textContent ||
+        !createRequestPayload.anonymous || !createRequestPayload.tags){
+            res.status(400).json({
+                message: `Missing at least one of the following values: [author, space, title, textContent, anonymous]`
+            });
+            return;
+        }
+    next();
 }
 
 /**

@@ -4,20 +4,21 @@ import PlaceRequestModel from "./model";
 
 class PlaceRequestCollection {
     static async addOne(author: string, space: string, title: string, textContent: string,
-                        dateCreated: Date, tags: Array<string>, anonymous: boolean, upvotingUsers: Array<string>,
-                        resolved: boolean, inProcess: boolean): Promise<HydratedDocument<PlaceRequest>> {
-        
+                        /*dateCreated: Date,*/ tags: Array<string>, anonymous: boolean, /*upvotingUsers: Array<string>,*/
+                        /*resolved: boolean,*/ /*inProcess: boolean*/): Promise<HydratedDocument<PlaceRequest>> {
+        const date = new Date();
+        const userArray: Array<string> = []
         const request = new PlaceRequestModel({
             author,
             space,
             title,
             textContent, 
-            dateCreated,
+            dateCreated: date,
             tags, 
             anonymous,
-            upvotingUsers,
-            resolved,
-            inProcess
+            upvotingUsers: userArray,
+            resolved: false,
+            inProcess: false
         });
         await request.save();
         return request;

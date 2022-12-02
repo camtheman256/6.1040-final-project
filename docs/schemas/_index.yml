@@ -7,6 +7,9 @@ Space:
 Place:
   $ref: "https://raw.githubusercontent.com/googlemaps/openapi-specification/main/dist/google-maps-platform-openapi3.yml#/components/schemas/Place"
 
+PlaceRequest:
+  $ref: "./PlaceRequest.yml"
+
 gapiAuthPayload:
   type: object
   required:
@@ -15,3 +18,27 @@ gapiAuthPayload:
     token: 
       type: string
 
+requestCreatePayload:
+  type: object
+  required:
+    - author
+    - space
+    - title
+    - textContent
+    - tags
+    - anonymous
+  properties:
+    author:
+      type: string
+    space:
+      type: string
+    title:
+      type: string
+    textContent:
+      type: string
+    tags:
+      type: array
+      items: 
+        type: string
+    anonymous:
+      type: boolean

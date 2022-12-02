@@ -44,10 +44,10 @@ router.get(
 )
 
 /**
- * @name POST /api/requests/{spaceId}
+ * @name POST /api/requests/{place_id}
  */
 router.post(
-    "/",
+    "/:place_id",
     [
         userMiddleware.isUserLoggedIn,
         spaceMiddleware.isPlaceExists,
@@ -55,14 +55,23 @@ router.post(
     ],
     async (req: Request, res: Response, next: NextFunction) => {
         const requestPayload = req.body;
-        /*
+        
         const newRequest = await PlaceRequestCollection.addOne(
-            //TODO
-            );
-        */
+            req.body.author,
+            req.body.space,
+            req.body.title,
+            req.body.textContent,
+            //req.body.dateCreated,
+            req.body.tags,
+            req.body.anonymous,
+            //req.body.upvotingUsers,
+            //req.body.resolved,
+            //req.body.inProcess
+        );
+        
         res.status(201).json({
             message: "Request was successfully created.",
-            //space: constructPlaceRequestResponse(newRequest)
+            request: constructPlaceRequestResponse(newRequest)
         });
     }
 )
@@ -91,3 +100,4 @@ router.delete(
  * @name PUT /api/request
  */
 
+ export { router as requestRouter };
