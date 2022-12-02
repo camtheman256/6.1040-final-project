@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { get } from "../utils";
 import { ref } from "vue";
 const searchbox = ref();
 </script>
