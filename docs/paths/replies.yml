@@ -1,6 +1,6 @@
 PATH_replies:
   get:
-    summary: Find a RequestReply
+    summary: Find a Reply
     description: Used to get the reply in collection based on requestId and/or userId. 
     parameters:
       - in: query
