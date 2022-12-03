@@ -15,9 +15,9 @@ async function verifyGoogleAuthToken(
 ): Promise<TokenPayload | void> {
   const client = new OAuth2Client(req.body.client_id);
   const ticket = await client.verifyIdToken({
-    idToken: req.body.token,
-    audience:
-      "681310618538-s6g1aq6eposlcsh028n5gu8f68k8l56l.apps.googleusercontent.com",
+	idToken: req.body.token,
+	audience:
+	  "681310618538-s6g1aq6eposlcsh028n5gu8f68k8l56l.apps.googleusercontent.com",
   });
   const payload = ticket.getPayload();
   return payload;
@@ -33,13 +33,13 @@ async function createUserFromGapiAuth(
 ): Promise<HydratedDocument<User>> {
   const user = await UserCollection.findOneFromGapiUserId(payload.sub);
   if (!user) {
-    const newUser = await UserCollection.addOne(
-      payload.sub,
-      payload.name,
-      payload.picture,
-      payload.email
-    );
-    return newUser;
+	const newUser = await UserCollection.addOne(
+	  payload.sub,
+	  payload.name,
+	  payload.picture,
+	  payload.email
+	);
+	return newUser;
   }
   return user;
 }
@@ -49,10 +49,10 @@ async function createUserFromGapiAuth(
  */
 const isUserLoggedIn = (req: Request, res: Response, next: NextFunction) => {
   if (!req.session.userId) {
-    res.status(403).json({
-      message: "User is not logged in.",
-    });
-    return;
+	res.status(403).json({
+	  message: "User is not logged in.",
+	});
+	return;
   }
   next();
 };
@@ -62,12 +62,31 @@ const isUserLoggedIn = (req: Request, res: Response, next: NextFunction) => {
  */
 const isUserLoggedOut = (req: Request, res: Response, next: NextFunction) => {
   if (req.session.userId) {
-    res.status(403).json({
-      error: "You are already signed in.",
-    });
-    return;
+	res.status(403).json({
+	  error: "You are already signed in.",
+	});
+	return;
   }
 
+  next();
+};
+
+/**
+ * Checks if req.query.userId exists if provided, otherwise move on.
+ */
+const isUserQueryExists = async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.query.user){
+	next();
+	return;
+  }
+  const userId: string = req.query.user as string;
+  const user = await UserCollection.findOneFromGapiUserId(userId);
+  if (!user) {
+	res.status(404).json({
+	  message: `User with userId: ${userId} does not exist.`
+	});
+	return;
+  }
   next();
 };
 
@@ -77,17 +96,18 @@ const isCurrentSessionUserExists = async (
   next: NextFunction
 ) => {
   if (req.session.userId) {
-    const user = await UserCollection.findOneFromGapiUserId(req.session.userId);
-    if (!user) {
-      req.session.userId = undefined;
-      res.status(500).json({
-        message: "User session was not recognized.",
-      });
-      return;
-    }
+	const user = await UserCollection.findOneFromGapiUserId(req.session.userId);
+	if (!user) {
+	  req.session.userId = undefined;
+	  res.status(500).json({
+		message: "User session was not recognized.",
+	  });
+	  return;
+	}
   }
   next();
 };
+
 
 export {
   verifyGoogleAuthToken,
@@ -95,4 +115,5 @@ export {
   isUserLoggedIn,
   isUserLoggedOut,
   isCurrentSessionUserExists,
+  isUserQueryExists
 };

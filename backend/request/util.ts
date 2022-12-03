@@ -37,7 +37,7 @@ type PlaceRequestResponse = {
 const formatDate = (date: Date): string => moment(date).format('MMMM Do YYYY, h:mm:ss a');
 
 /**
- * @param {HydratedDocument<PlaceReuqest>} 
+ * @param {HydratedDocument<PlaceRequest>} 
  * @returns {PlaceRequestResponse} 
  */
 const constructPlaceRequestResponse = (placeRequest: HydratedDocument<PlaceRequest>): PlaceRequestResponse => {

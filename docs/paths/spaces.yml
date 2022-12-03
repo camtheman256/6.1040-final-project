@@ -61,17 +61,20 @@ PATH_spaces:
             schema:
               type: object
               properties:
-                message:
-                  type: string
-                space: 
-                  $ref: "../schemas/_index.yml#/Space"
+                spaces: 
+                  type: array
+                  properties:
+                    space:
+                      $ref: "../schemas/_index.yml#/Space"
             example:
               {
-                space: {
-                  place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                  formatted_address: "123 Apple St. Anchorage, AL 12345",
-                  name: "aPlaceInAlaska"
-                }
+                spaces: [
+                  {
+                    place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                    formatted_address: "123 Apple St. Anchorage, AL 12345",
+                    name: "aPlaceInAlaska"
+                  }
+                ]
               }
       '404':
         description: 'Not Found'

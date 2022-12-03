@@ -19,6 +19,10 @@ const router = express.Router();
  */
 router.get(
     "/",
+    [
+        spaceMiddleware.isPlaceQueryExists,
+        userMiddleware.isUserQueryExists
+    ],
     async (req: Request, res: Response, next: NextFunction) => {
         if (req.query.space !== undefined || req.query.user !== undefined){
             next();
@@ -27,11 +31,11 @@ router.get(
         const allRequests = await PlaceRequestCollection.findAll();
         res.status(200).json({
             requests: allRequests.map(constructPlaceRequestResponse)
-        })
+        });
     },
     [
         userMiddleware.isUserLoggedIn,
-        placeRequestMiddleware.isValidGetPlaceRequestQuery
+        //placeRequestMiddleware.isValidGetPlaceRequestQuery
     ],
     async (req: Request, res: Response) => {
         const space = await SpaceCollection.findOne(req.query.space as string);
@@ -39,7 +43,7 @@ router.get(
         const allRequests = await PlaceRequestCollection.findByAuthorSpace(space?.place_id, user?.gapiUserId);
         res.status(200).json({
             requests: allRequests.map(constructPlaceRequestResponse)
-        })
+        });
     }
 )
 
@@ -92,7 +96,7 @@ router.delete(
         await PlaceRequestCollection.deleteOne(requestId);
         res.status(200).json({
             message: "Request was successfully deleted."
-        })
+        });
     }
 )
 

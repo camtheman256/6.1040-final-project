@@ -9,6 +9,9 @@ Place:
 
 PlaceRequest:
   $ref: "./PlaceRequest.yml"
+  
+CheckIn:
+  $ref: "./CheckIn.yml"
 
 gapiAuthPayload:
   type: object
@@ -42,3 +45,14 @@ requestCreatePayload:
         type: string
     anonymous:
       type: boolean
+
+checkInUserCountsResponse:
+  type: array
+  properties:
+    checkInCounts:
+      type: object
+      properties:
+        userId:
+          type: string
+        count:
+          type: integer
