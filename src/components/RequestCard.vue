@@ -46,7 +46,7 @@ const statusStyle = {
 }
 .requestCard:hover {
   cursor: pointer;
-  box-shadow: -10px -10px rgb(188, 188, 188);
+  transform: scale(1.02);
 }
 .spanned {
   display: flex;

@@ -3,6 +3,9 @@ import type { SpaceResponse } from "../../backend/space/util";
 import FilterInput from "./FilterInput.vue";
 import SpaceCard from "./SpaceCard.vue";
 import { ref } from "vue";
+import { openModal } from "jenesius-vue-modal";
+import CreateSpaceModal from "./CreateSpaceModal.vue";
+import { container } from "jenesius-vue-modal";
 
 const allSpaces: SpaceResponse[] = [
   {
@@ -55,14 +58,21 @@ const updateFilter = (event: string) => {
     space.name.toLowerCase().includes(filter.value)
   );
 };
+
+const createSpaceClick = () => {
+  openModal(CreateSpaceModal);
+};
 </script>
 
 <template>
-  <div>
+  <section>
     <section class="spanned bottom-buffer">
-      <h3>All Spaces</h3>
+      <button type="button" class="btn btn-dark" @click="createSpaceClick">
+        Create Space ➕
+      </button>
       <FilterInput placeholder="Filter Spaces" @filter="updateFilter($event)" />
     </section>
+    <h5 class="bottom-buffer">All Spaces</h5>
     <div class="row row-cols-3">
       <div
         v-for="space in filteredSpaces"
@@ -72,16 +82,18 @@ const updateFilter = (event: string) => {
         <SpaceCard :space="space" />
       </div>
     </div>
-  </div>
+    <container />
+  </section>
 </template>
 
 <style scoped>
 .spanned {
   display: flex;
   justify-content: space-between;
+  height: min-content;
 }
 
 .bottom-buffer {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 </style>

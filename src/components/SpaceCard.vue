@@ -30,7 +30,7 @@ const hasWebsite = () => Boolean(props.space.website);
 }
 .requestCard:hover {
   cursor: pointer;
-  box-shadow: -10px -10px rgb(188, 188, 188);
+  transform: scale(1.03);
 }
 .spanned {
   display: flex;
