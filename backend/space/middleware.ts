@@ -39,10 +39,11 @@ const isPlaceAlreadyExists = async (req: Request, res: Response, next: NextFunct
 };
 
 /**
- * Checks if place in req.params exists
+ * Checks if place_id in req.params exists
  */
  const isPlaceExists = async (req: Request, res: Response, next: NextFunction) => {
     const place_id: string = req.params.place_id
+    console.log(req.params)
     const space = await SpaceCollection.findOne(place_id);
     if (!space) {
       res.status(404).json({
@@ -52,6 +53,8 @@ const isPlaceAlreadyExists = async (req: Request, res: Response, next: NextFunct
     }
     next();
 };
+
+
 
 export {
     isValidPlaceResponse,

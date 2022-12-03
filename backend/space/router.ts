@@ -53,7 +53,18 @@ router.delete(
  * @name GET /api/spaces/{place_id}
  */
 router.get(
-    "/{place_id}",
+    "/",
+    async (req: Request, res: Response, next: NextFunction) => {
+        if (req.params.place_id !== undefined){
+            next();
+            return;
+        }
+        const allSpaces = await SpaceCollection.findAll();
+        const allSpacesResponse = allSpaces.map(constructSpaceResponse);
+        res.status(200).json({
+            spaces: allSpacesResponse //[TODO] think about spaces vs. space... do we want to split this path into two?
+        })
+    },
     [
         spaceMiddleware.isPlaceExists
     ],

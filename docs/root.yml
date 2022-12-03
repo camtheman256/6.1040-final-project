@@ -29,6 +29,10 @@ paths:
     $ref: "./paths/users.yml#/PATH_users"
   /api/spaces:
     $ref: "./paths/spaces.yml#/PATH_spaces"
+  /api/requests/{place_id}:
+    $ref: "./paths/requests.yml#/PATH_requests_post"
+  /api/requests:
+    $ref: "./paths/requests.yml#/PATH_requests"
 
 components:
   schemas:
