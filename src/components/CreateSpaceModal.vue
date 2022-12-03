@@ -27,7 +27,9 @@ const onSubmit = () => {
           placeholder="Place Search Here?"
         />
       </div>
-      <button class="btn btn-outline-success" type="submit" @click="onSubmit">Create ➕</button>
+      <button class="btn btn-outline-success" type="submit" @click="onSubmit">
+        Create ➕
+      </button>
     </form>
   </section>
 </template>
