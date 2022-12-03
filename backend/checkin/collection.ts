@@ -53,6 +53,9 @@ class CheckInCollection {
         }
     }
 
+    static async findAllBySpace(spaceId: string): Promise<Array<HydratedDocument<CheckIn>>>{
+        return CheckInModel.find({space: spaceId});
+    }
 
 
 

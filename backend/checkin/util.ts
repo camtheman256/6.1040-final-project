@@ -4,16 +4,26 @@ import type { CheckIn } from "./model";
 
 type CheckInResponse = {
     _id: string; //mongoDB
-    user: string;
-    /** corresponds to google Auth's userId token */
 
-    space: string;
+    /** corresponds to google Auth's userId token */
+    user: string;
+
     /** corresponds to placeId of space */
+    space: string;
 
     date: string;
 
-    count: number;
     /** Count of all checkins by this user at this space, including this one. */
+    count: number;
+};
+
+type CheckInCountsResponse = {
+     /** corresponds to google Auth's userId token */
+    user: string;
+
+    /** Count of all checkins by this user at this space. */
+    count: number;
+
 };
 
 /**
@@ -39,6 +49,6 @@ const constructCheckInResponse = (checkin: HydratedDocument<CheckIn>): CheckInRe
       _id: checkinCopy._id.toString(),
       date: formatDate(checkinCopy.date)
     };
-  };
+};
   
   export { constructCheckInResponse };

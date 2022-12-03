@@ -99,3 +99,32 @@ PATH_checkin:
                     count: 100
                 }
               ]
+
+PATH_checkin_counts:
+  get:
+    summary: Get checkin counts for all users in this space
+    description: Get all counts of check ins for all users that have checked in to this space historically.
+    parameters:
+      - in: path
+        name: place_id
+        schema:
+          type: string
+        description: place_id of the Space of desired checkin count 
+    responses:
+      '200':
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yml#/checkInUserCountsResponse"
+            example:
+              checkInCounts : [
+                {
+                    userId: "105454022127406520411",
+                    count: 100
+                },
+                {
+                    userId: "294853249127406530284",
+                    count: 50
+                }
+              ]

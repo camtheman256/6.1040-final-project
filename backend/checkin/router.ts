@@ -88,4 +88,21 @@ router.get(
     }
 )
 
+/**
+ * @name GET /api/checkin/count/{place_id}
+ */
+router.get(
+    "/count/:place_id",
+    [
+        spaceMiddleware.isPlaceExists
+    ],
+    async (req: Request, res: Response, next: NextFunction) => {
+        const checkIns = await CheckInCollection.findAllBySpace(req.params.place_id);
+        const finalCheckInCounts: Map<string, number> = checkInMiddleware.countCheckInsByUser(checkIns);
+        res.status(200).json({
+            checkInCounts: Array.from( finalCheckInCounts ).map(([key, value]) => ({ userId: key, count: value }))
+        });
+    }
+)
+
 export { router as checkinRouter };

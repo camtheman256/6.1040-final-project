@@ -39,7 +39,8 @@ paths:
     $ref: "./paths/checkins.yml#/PATH_checkin_today_session"
   /api/checkins:
     $ref: "./paths/checkins.yml#/PATH_checkin"
-  
+  /api/checkins/count/{place_id}:
+    $ref: "./paths/checkins.yml#/PATH_checkin_counts"
 components:
   schemas:
     $ref: "./schemas/_index.yml"
