@@ -1,12 +1,22 @@
 type: object
 required:
-  - name
-  - address
-  - gapiReplyId
+  - author
+  - request
+  - title
+  - textContent
+  - anonymous
 properties:
-  name:
+  author:
     type: string
-  address:
+  request:
     type: string
-  gapiReplyId:
+  textContent:
     type: string
+  dateCreated:
+    type: string
+  anonymous:
+    type: boolean
+  upvotingUsers:
+    type: array
+    items: 
+      type: string

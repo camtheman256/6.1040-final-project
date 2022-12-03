@@ -1,44 +1,44 @@
 PATH_replies:
-  post:
-    summary: Create new reply
-    description: Used to create a new reply in collection.
-    replyBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "../schemas/_index.yml#/createReplyPayload"
-    responses:
-      '201':
-        description: 'Created'
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                message: 
-                  type: string
-            example:
-              type: object
-              properties:
-                message: "Reply has successfully been created."
-
   get:
-    summary: Find a reply
-    description: Used to get the reply in collection based on replyId.
+    summary: Find a RequestReply
+    description: Used to get the reply in collection based on requestId and/or userId. 
     parameters:
-      - in: path
-        name: replyId
-        required: true
+      - in: query
+        name: request
+        required: false
         schema:
           type: string
+        description: corresponding requestId of request
+      - in: query
+        name: user
+        required: false
+        schema:
+          type: string
+        description: gapi userId
     responses:
       '200':
         description: 'OK'
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yml#/Reply"
+              type: array
+              properties:
+                request: 
+                  $ref: "../schemas/_index.yml#/Reply"
+            example:
+              {
+                replies: [
+                  {
+                    "_id": "reply id",
+                    "author": "105454022127406520411",
+                    "request": "638a77f66e0efba60f844cad",
+                    "textContent": "content",
+                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
+                    "anonymous": true,
+                    "upvotingUsers": [],
+                  }
+                ]
+              }
 
   delete:
     summary: Delete a reply
@@ -60,25 +60,25 @@ PATH_replies:
                 message: 
                   type: string
             example:
-              type: object
-              properties:
-                message: "Reply has successfully been deleted."
-  put:
-    summary: Update a reply
-    description: Used to update a reply in collection.
-    replyBody:
+              message: "Reply has successfully been deleted."
+PATH_replies_post:
+  post:
+    summary: Create a reply
+    description: Create a reply as a user for a request
+    parameters:
+      - in: path
+        name: request_id
+        required: true
+        schema:
+          type: string
+        description: corresponding requestId of request to create reply under
+    requestBody:
       required: true
       content:
         application/json:
           schema:
-            $ref: "../schemas/_index.yml#/updateReplyPayload"
-    parameters:
-      - in: path
-        name: replyId
-        required: true
-        schema:
-          type: string
-    responses:  
+            $ref: "../schemas/_index.yml#/replyCreatePayload"
+    responses:
       '200':
         description: 'OK'
         content:
@@ -88,11 +88,12 @@ PATH_replies:
               properties:
                 message: 
                   type: string
-                reply:
-                  $ref: "../schemas/_index.yml#/Reply"
+                request:
+                  $ref: '../schemas/_index.yml#/Reply'
             example:
-              type: object
-              properties:
-                message: "Reply has successfully been updated."
-                reply: {}
-      
+              message: "Successfully created reply"
+              request: {
+                  author: "105454022127406520411",
+                  request: "638a77f66e0efba60f844cad",
+                  content: "reply content",
+              }
