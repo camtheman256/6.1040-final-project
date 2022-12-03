@@ -7,7 +7,7 @@ class ReplyCollection {
     author: string,
     request: string,
     textContent: string,
-    /*dateCreated: Date,*/ tags: Array<string>,
+    /*dateCreated: Date,*/
     anonymous: boolean /*upvotingUsers: Array<string>,*/ /*inProcess: boolean*/
     /*resolved: boolean,*/
   ): Promise<HydratedDocument<Reply>> {

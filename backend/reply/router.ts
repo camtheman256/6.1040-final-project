@@ -9,7 +9,7 @@ import UserCollection from "../user/collection";
 import { constructReplyResponse } from "./util";
 
 import * as userMiddleware from "../user/middleware";
-import * as spaceMiddleware from "../space/middleware";
+import * as requestMiddleware from "../request/middleware";
 import * as replyMiddleware from "./middleware";
 
 const router = express.Router();
@@ -20,7 +20,8 @@ const router = express.Router();
 router.get(
   "/",
   [
-    // insert middleware
+    userMiddleware.isUserQueryExists,
+    requestMiddleware.isValidGetPlaceRequestQuery,
   ],
   async (req: Request, res: Response) => {
     const request = await RequestCollection.findOneById(
@@ -45,7 +46,9 @@ router.get(
 router.post(
   "/:place_id",
   [
-    // insert middleware
+    userMiddleware.isUserLoggedIn,
+    requestMiddleware.isRequestExists,
+    replyMiddleware.isValidCreateReplyPayload,
   ],
   async (req: Request, res: Response) => {
     const replyPayload = req.body;
@@ -72,7 +75,9 @@ router.post(
 router.delete(
   "/",
   [
-    // insert middleware
+    userMiddleware.isUserLoggedIn,
+    replyMiddleware.isReplyExists,
+    replyMiddleware.isReplyAuthor,
   ],
   async (req: Request, res: Response) => {
     const replyId = req.params.replyId;
