@@ -8,6 +8,10 @@ const navLinks = [
     label: "About",
   },
   {
+    route: "/spaces",
+    label: "Spaces",
+  },
+  {
     route: "/place-search",
     label: "Place Search",
   },
@@ -42,8 +46,6 @@ const activeRoute = useRoute();
             >
           </li>
         </ul>
-        <!-- TODO: replace this button with our Google Sign in button
-          also need to handle logged-in state here -->
         <GoogleLogin />
       </div>
     </div>

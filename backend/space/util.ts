@@ -2,7 +2,7 @@ import type { HydratedDocument } from "mongoose";
 import moment from "moment";
 import type { Space } from "./model";
 
-type SpaceResponse = {
+export type SpaceResponse = {
   _id: string;
   place_id: string,
   formatted_address: string,
