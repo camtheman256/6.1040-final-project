@@ -1,20 +1,23 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 const searchbox = ref();
+const props = defineProps({
+  placeholder: { type: String },
+});
 </script>
 
 <template>
   <form class="input-group mb-3 smallWidth">
-    <div class="input-group-prepend">
+    <div class="input-group">
       <div class="btn static btn-outline-secondary" type="button">Filter:</div>
+      <input
+        type="text"
+        class="form-control"
+        ref="searchbox"
+        :placeholder="props.placeholder ? props.placeholder : ''"
+        @input="$emit('filter', searchbox.value)"
+      />
     </div>
-    <input
-      type="text"
-      class="form-control"
-      ref="searchbox"
-      placeholder="filter requests"
-      @input="$emit('filter', searchbox.value)"
-    />
   </form>
 </template>
 
