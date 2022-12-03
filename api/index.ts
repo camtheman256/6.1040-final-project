@@ -8,6 +8,8 @@ import http from "http";
 
 import { userRouter } from "../backend/user/router";
 import { spaceRouter } from "../backend/space/router";
+import { requestRouter } from "../backend/request/router";
+import { checkinRouter } from "../backend/checkin/router";
 
 // Configure .env file
 dotenv.config();
@@ -48,6 +50,8 @@ app.use(
 
 app.use("/api/users", userRouter);
 app.use("/api/spaces", spaceRouter);
+app.use("/api/requests", requestRouter);
+app.use("/api/checkins", checkinRouter);
 
 app.get("/api", (req, res) => {
   res.status(200).json({
