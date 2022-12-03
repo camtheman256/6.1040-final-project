@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 const searchbox = ref();
+const props = defineProps({
+  placeholder: { type: String },
+});
 </script>
 
 <template>
@@ -12,7 +15,7 @@ const searchbox = ref();
       type="text"
       class="form-control"
       ref="searchbox"
-      placeholder="filter requests"
+      :placeholder="props.placeholder ? props.placeholder : ''"
       @input="$emit('filter', searchbox.value)"
     />
   </form>
