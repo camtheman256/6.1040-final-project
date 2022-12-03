@@ -71,6 +71,25 @@ const isUserLoggedOut = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
+/**
+ * Checks if req.query.userId exists if provided, otherwise move on.
+ */
+const isUserQueryExists = async (req: Request, res: Response, next: NextFunction) => {
+  if (!req.query.user){
+    next();
+    return;
+  }
+  const userId: string = req.query.user as string;
+  const user = await UserCollection.findOneFromGapiUserId(userId);
+  if (!user) {
+    res.status(404).json({
+      message: `User with userId: ${userId} does not exist.`
+    });
+    return;
+  }
+  next();
+};
+
 const isCurrentSessionUserExists = async (
   req: Request,
   res: Response,
@@ -95,4 +114,5 @@ export {
   isUserLoggedIn,
   isUserLoggedOut,
   isCurrentSessionUserExists,
+  isUserQueryExists
 };

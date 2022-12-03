@@ -33,7 +33,13 @@ paths:
     $ref: "./paths/requests.yml#/PATH_requests_post"
   /api/requests:
     $ref: "./paths/requests.yml#/PATH_requests"
-
+  /api/checkins/session/{place_id}:
+    $ref: "./paths/checkins.yml#/PATH_checkin_session"
+  /api/checkins/today/session/{place_id}:
+    $ref: "./paths/checkins.yml#/PATH_checkin_today_session"
+  /api/checkins:
+    $ref: "./paths/checkins.yml#/PATH_checkin"
+  
 components:
   schemas:
     $ref: "./schemas/_index.yml"

@@ -1,0 +1,101 @@
+PATH_checkin_session:
+  post:
+    summary: Check in a user to a space
+    description: Check in the current session user into a space
+    parameters:
+      - in: path
+        name: place_id
+        required: true
+        schema:
+          type: string
+        description: corresponding placeId of space to check user into.
+    responses:
+      '201':
+        description: 'Created'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+                checkin:
+                  $ref: '../schemas/_index.yml#/CheckIn'
+            example:
+              message: "Successfully checked in user."
+              checkin: {
+                  userId: "105454022127406520411",
+                  spaceId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                  date: "2022-11-23T22:31:29.847+00:00",
+                  count: 100
+              }
+
+PATH_checkin_today_session:
+  get:
+    summary: Get checkin for space for this current day
+    description: Can be used to validate if session user has already checked in to a space today
+    parameters:
+      - in: path
+        name: place_id
+        required: true
+        schema:
+          type: string
+        description: place_id of the Space of desired checkin
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+                checkin:
+                  $ref: '../schemas/_index.yml#/CheckIn'
+            example:
+              message: "Successfully found today's checkin."
+              checkin: {
+                  userId: "105454022127406520411",
+                  spaceId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                  date: "2022-11-23T22:31:29.847+00:00",
+                  count: 100
+              }
+
+PATH_checkin:
+  get:
+    summary: Get check ins for space/user combination
+    description: Get all the check ins that a given user has at a given space.
+    parameters:
+      - in: query
+        name: place_id
+        schema:
+          type: string
+        description: place_id of the Space of desired checkin
+      - in: query
+        name: userId 
+        schema:
+          type: string
+        description: google API userId of the desired checkin
+    responses:
+      '200':
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                checkins:
+                  type: array
+                  properties:
+                    checkin:
+                      $ref: '../schemas/_index.yml#/CheckIn'
+            example:
+              checkins: [
+                {
+                    userId: "105454022127406520411",
+                    spaceId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                    date: "2022-11-23T22:31:29.847+00:00",
+                    count: 100
+                }
+              ]

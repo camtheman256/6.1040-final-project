@@ -9,6 +9,9 @@ Place:
 
 PlaceRequest:
   $ref: "./PlaceRequest.yml"
+  
+CheckIn:
+  $ref: "./CheckIn.yml"
 
 gapiAuthPayload:
   type: object
