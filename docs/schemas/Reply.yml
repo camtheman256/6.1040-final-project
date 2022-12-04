@@ -1,0 +1,22 @@
+type: object
+required:
+  - author
+  - request
+  - title
+  - textContent
+  - anonymous
+properties:
+  author:
+    type: string
+  request:
+    type: string
+  textContent:
+    type: string
+  dateCreated:
+    type: string
+  anonymous:
+    type: boolean
+  upvotingUsers:
+    type: array
+    items: 
+      type: string

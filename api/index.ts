@@ -10,6 +10,7 @@ import { userRouter } from "../backend/user/router";
 import { spaceRouter } from "../backend/space/router";
 import { requestRouter } from "../backend/request/router";
 import { checkinRouter } from "../backend/checkin/router";
+import { replyRouter } from "../backend/reply/router";
 
 // Configure .env file
 dotenv.config();
@@ -51,6 +52,7 @@ app.use(
 app.use("/api/users", userRouter);
 app.use("/api/spaces", spaceRouter);
 app.use("/api/requests", requestRouter);
+app.use("/api/replies", replyRouter);
 app.use("/api/checkins", checkinRouter);
 
 app.get("/api", (req, res) => {
