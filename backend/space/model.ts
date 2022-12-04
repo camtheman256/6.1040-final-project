@@ -19,7 +19,7 @@ export type Space = {
   website: string;
 
   /** LatLong object of space defined by google maps api */
-  latlng?: google.maps.LatLng;
+  latlng?: google.maps.LatLngLiteral;
 
   
   /** requestIds of all requests associated with this space */
@@ -45,7 +45,6 @@ const SpaceSchema = new Schema({
     required: true,
   },
   photos: {
-    type: Array<google.maps.places.PlacePhoto>,
     required: false,
   },
   url: {
@@ -59,7 +58,6 @@ const SpaceSchema = new Schema({
   
   //backend/space/model.ts -> SpaceSchema.latlng
   latlng: {
-    type: google.maps.LatLng,
     required: false
   },
   /*
