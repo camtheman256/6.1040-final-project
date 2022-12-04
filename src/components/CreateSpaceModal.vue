@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { post } from "@/utils";
 import type {} from "google.maps";
-import type {} from "bootstrap";
 import { ref } from "vue";
 import PlaceSearch from "./PlaceSearch.vue";
 import { Modal } from "bootstrap";
