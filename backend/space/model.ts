@@ -1,21 +1,30 @@
 import type { Types } from "mongoose";
 import { Schema, model } from "mongoose";
 
+
+
+
 export type Space = {
   _id: Types.ObjectId; //mongoDB
   place_id: string;
   formatted_address: string;
   formatted_phone_number: string;
   name: string;
+
   /** see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto */
-  photos: Array<string>;
+  photos?: google.maps.places.PlacePhoto[];
   /** ref to google's official place embed */
   url: string;
   /** place's external website */
   website: string;
 
-  requests: Array<string>;
-  /** requestIds of all requests associarted with this space */
+  /** LatLong object of space defined by google maps api */
+  latlng?: google.maps.LatLng;
+
+  
+  /** requestIds of all requests associated with this space */
+  //requests: Array<string>;
+  
 };
 
 const SpaceSchema = new Schema({
@@ -36,7 +45,7 @@ const SpaceSchema = new Schema({
     required: true,
   },
   photos: {
-    type: Array<String>,
+    type: Array<google.maps.places.PlacePhoto>,
     required: false,
   },
   url: {
@@ -47,6 +56,18 @@ const SpaceSchema = new Schema({
     type: String,
     required: false,
   },
+  
+  //backend/space/model.ts -> SpaceSchema.latlng
+  latlng: {
+    type: google.maps.LatLng,
+    required: false
+  },
+  /*
+  requests: {
+    type: Array<String>,
+    required: true
+  }
+  */
 });
 
 const SpaceModel = model<Space>("Space", SpaceSchema);

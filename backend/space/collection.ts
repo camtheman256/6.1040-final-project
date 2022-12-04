@@ -11,6 +11,7 @@ class SpaceCollection {
         const photos = gmaps_place_payload.photos;
         const url = gmaps_place_payload.url;
         const website = gmaps_place_payload.website;
+        const latlng = gmaps_place_payload.geometry?.location;
         const space = new SpaceModel({
             place_id,
             formatted_address,
@@ -18,7 +19,9 @@ class SpaceCollection {
             name,
             photos,
             url,
-            website
+            website,
+            latlng,
+            //requests: []
         });
         await space.save();
         return space;
