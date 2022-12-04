@@ -2,7 +2,7 @@
 import type { SpaceResponse } from "../../backend/space/util";
 import FilterInput from "./FilterInput.vue";
 import SpaceCard from "./SpaceCard.vue";
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, ref } from "vue";
 import CreateSpaceModal from "./CreateSpaceModal.vue";
 import { useUserStore } from "@/stores/user";
 import { get } from "@/utils";
