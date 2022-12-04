@@ -7,17 +7,30 @@ import type { PlaceRequestResponse } from "../../backend/request/util";
 import type { SpaceResponse } from "../../backend/space/util";
 import { onMounted, ref } from "vue";
 import { get } from "../utils";
+import { useUserStore } from "@/stores/user";
 
 const route = useRoute();
-console.log(route.params);
+const userStore = useUserStore();
 
-// TODO: GET request space by route params :id
+const placeId = route.params.id.toString();
+
 const space = ref<SpaceResponse>();
 const spaceRequests = ref<PlaceRequestResponse[]>([]);
-onMounted(async () => {
-  const response = await get(`/api/spaces/${route.params.id}`);
+
+const loadSpace = async () => {
+  const response = await get(`/api/spaces/${placeId}`);
   space.value = response.space;
-});
+  if (space.value !== undefined) {
+    loadRequests();
+  }
+};
+
+const loadRequests = async () => {
+  const requestsResponse = await get(`/api/requests?space=${placeId}`);
+  spaceRequests.value = requestsResponse.requests;
+};
+
+onMounted(loadSpace);
 </script>
 
 <template>
@@ -29,7 +42,11 @@ onMounted(async () => {
             <SpaceInfo :space="space" />
           </div>
           <div class="row">
-            <CreateRequestForm />
+            <CreateRequestForm
+              v-if="userStore.user"
+              @created="loadRequests"
+              :place_id="placeId"
+            />
           </div>
         </div>
         <div class="col-lg-8">
