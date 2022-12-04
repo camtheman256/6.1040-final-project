@@ -19,7 +19,8 @@ const hasWebsite = () => Boolean(props.space.website);
         {{ props.space.formatted_address }}
       </h6>
       <p v-if="hasWebsite()" class="card-text emphasized">
-        External information <a :href="props.space.website">here</a>
+        External information
+        <a :href="props.space.website" target="_blank">here</a>
       </p>
     </div>
   </div>

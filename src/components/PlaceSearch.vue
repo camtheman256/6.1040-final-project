@@ -4,7 +4,10 @@ import type {} from "google.maps";
 import { ref } from "vue";
 
 const searchbox = ref();
-const placeDetails = ref();
+
+const emit = defineEmits<{
+  (e: "selected", value: google.maps.places.PlaceResult): void;
+}>();
 
 /* global google */
 loadScript(
@@ -12,21 +15,26 @@ loadScript(
 ).then(() => {
   const autocomplete = new google.maps.places.Autocomplete(searchbox.value, {
     componentRestrictions: { country: "us" },
-    fields: ["name", "place_id", "url", "geometry"],
+    fields: [
+      "name",
+      "place_id",
+      "url",
+      "geometry",
+      "formatted_address",
+      "formatted_phone_number",
+      "website",
+      "photos",
+    ],
   });
   autocomplete.addListener("place_changed", () => {
-    placeDetails.value = autocomplete.getPlace();
+    emit("selected", autocomplete.getPlace());
   });
 });
 </script>
 
 <template>
-  <div>
-    <h3>Selected place:</h3>
-    <p>{{ placeDetails }}</p>
-    <div>
-      <label for="place-search" class="form-label">Place Search</label>
-      <input type="text" class="form-control" ref="searchbox" />
-    </div>
+  <div class="form-group mb-3">
+    <label for="place-search" class="form-label">Location</label>
+    <input type="text" class="form-control" ref="searchbox" form="" />
   </div>
 </template>

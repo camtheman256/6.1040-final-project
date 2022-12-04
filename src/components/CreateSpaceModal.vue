@@ -1,37 +1,59 @@
 <script lang="ts" setup>
-const onSubmit = () => {
-  console.log("form submitted!");
+import { post } from "@/utils";
+import type {} from "google.maps";
+import { ref } from "vue";
+import PlaceSearch from "./PlaceSearch.vue";
+import { Modal } from "bootstrap";
+
+const emit = defineEmits<{ (event: "created"): void }>();
+
+/* global google */
+const locationDetails = ref<google.maps.places.PlaceResult>();
+
+const onSubmit = async () => {
+  if (locationDetails.value === undefined) return;
+  await post("/api/spaces", locationDetails.value);
+
+  const modal = Modal.getOrCreateInstance("#createSpaceModal");
+  modal.toggle();
+  emit("created");
 };
 </script>
 <template>
-  <section class="bg bg-dark text-white">
-    <h4 class="bottom-buffer">Create Space</h4>
-    <form class="mb-3 smallWidth">
-      <div class="input-group bottom-buffer">
-        <div class="btn static btn-outline-secondary" type="button">Name</div>
-        <input
-          type="text"
-          class="form-control"
-          ref="searchbox"
-          placeholder="Space Name"
-        />
-      </div>
-      <div class="input-group bottom-buffer">
-        <div class="btn static btn-outline-secondary" type="button">
-          Location
+  <div class="modal fade" id="createSpaceModal">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark bg text-white">
+        <div class="modal-header">
+          <h4 class="modal-title">Create Space</h4>
+          <button class="btn btn-outline-light" data-bs-dismiss="modal">
+            ❌
+          </button>
         </div>
-        <input
-          type="text"
-          class="form-control"
-          ref="searchbox"
-          placeholder="Place Search Here?"
-        />
+        <div class="modal-body">
+          <p>Use the Google Maps lookup below to find a space to create.</p>
+          <form class="mb-3 smallWidth" @submit.prevent="onSubmit">
+            <PlaceSearch @selected="(value) => (locationDetails = value)" />
+            <div v-if="locationDetails">
+              <p><b>Name:</b> {{ locationDetails.name }}</p>
+              <p>
+                <a
+                  :href="locationDetails.url"
+                  v-if="locationDetails.url"
+                  target="_blank"
+                  >Google Maps Link</a
+                >
+              </p>
+              <p><b>Address:</b> {{ locationDetails.formatted_address }}</p>
+            </div>
+            <div v-else class="alert alert-danger">A location is required.</div>
+            <button class="btn btn-outline-success" type="submit">
+              Create ➕
+            </button>
+          </form>
+        </div>
       </div>
-      <button class="btn btn-outline-success" type="submit" @click="onSubmit">
-        Create ➕
-      </button>
-    </form>
-  </section>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -42,16 +64,10 @@ const onSubmit = () => {
 .static {
   pointer-events: none;
 }
+</style>
 
-.bg {
-  width: 400px;
-  height: 70%;
-  padding: 2rem;
-  border-radius: 30px;
-  box-shadow: -7px -7px rgb(141, 141, 141);
-}
-
-.bottom-buffer {
-  margin-bottom: 2rem;
+<style>
+.pac-container {
+  z-index: 9999;
 }
 </style>
