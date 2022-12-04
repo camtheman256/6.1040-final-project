@@ -13,7 +13,7 @@ const description = ref<string>();
 
 const onSubmit = async () => {
   await post(`/api/requests/${props.place_id}`, {
-    author: userStore.user?.name,
+    author: userStore.user?.gapiUserId,
     space: props.place_id,
     title: name.value,
     textContent: description.value,

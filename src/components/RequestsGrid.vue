@@ -1,72 +1,35 @@
 <script lang="ts" setup>
 import FilterInput from "./FilterInput.vue";
 import RequestCard from "./RequestCard.vue";
-// import { useUserStore } from "@/stores/user";
-// import { get } from "../utils";
-import { ref } from "vue";
+import { get } from "../utils";
+import { onMounted, ref } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
+import { useUserStore } from "@/stores/user";
 
-// TODO(porderique): Replace fake data with api call for signed in user.
-// const userStore = useUserStore();
-// const ownRequests = userStore.user
-//   ? await get(`/api/api/requests?user=${userStore.user.gapiUserId}`)
-//   : [];
-const ownRequests = [
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "placeId of space1",
-    title: "More Bananas",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "November 25th 2022, 11:04pm",
-    upvotingUsers: ["u1", "u2", "u3"],
-    resolved: false,
-    inProcess: false,
-  },
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "placeId of space2",
-    title: "More Whiteboards in Stud5",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "November 27th 2022, 1:56pm",
-    upvotingUsers: ["u1", "u2", "u3", "u4", "u5"],
-    resolved: false,
-    inProcess: true,
-  },
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "placeId of space3",
-    title: "No coffee in course 6 lounge",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "November 30th 2022, 9:06am",
-    upvotingUsers: [],
-    resolved: true,
-    inProcess: false,
-  },
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "placeId of space4",
-    title: "Add Christmas tree to LCC lounge",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "December 1st 2022, 9:00pm",
-    upvotingUsers: ["fabrizzio"],
-    resolved: true,
-    inProcess: false,
-  },
-] as PlaceRequestResponse[];
+const userStore = useUserStore();
+
+const ownRequests = ref<PlaceRequestResponse[]>([]);
 const filter = ref("");
-const filteredRequests = ref(ownRequests);
+const filteredRequests = ref<PlaceRequestResponse[]>(ownRequests.value);
 const updateFilter = (event: string) => {
   filter.value = event;
-  filteredRequests.value = ownRequests.filter(
+  filteredRequests.value = ownRequests.value.filter(
     (req) =>
       req.title.toLowerCase().includes(filter.value.toLowerCase()) ||
       req.textContent.toLowerCase().includes(filter.value.toLowerCase())
   );
 };
+
+async function loadMyRequests() {
+  const response = await get(
+    `/api/requests?user=${userStore.user?.gapiUserId}`
+  );
+  ownRequests.value = response.requests;
+  filteredRequests.value = ownRequests.value;
+  filter.value = "";
+}
+
+onMounted(loadMyRequests);
 </script>
 
 <template>

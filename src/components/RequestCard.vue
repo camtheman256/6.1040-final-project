@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import DOMPurify from "dompurify";
+import { marked } from "marked";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
@@ -20,6 +22,13 @@ const statusStyle = {
   "bg-warning": requestStatus.value === "In Progress",
   "bg-success": requestStatus.value === "Resolved",
 };
+
+const purify = DOMPurify(window);
+const requestTagline = computed(() =>
+  purify.sanitize(marked.parseInline(props.request.textContent, {}), {
+    FORBID_TAGS: ["img"],
+  })
+);
 </script>
 
 <template>
@@ -33,9 +42,7 @@ const statusStyle = {
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
-      <p class="card-text">
-        {{ props.request.textContent }}
-      </p>
+      <p class="card-text" v-html="requestTagline"></p>
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
