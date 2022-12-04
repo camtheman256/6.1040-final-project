@@ -20,10 +20,6 @@ export type Space = {
 
   /** LatLong object of space defined by google maps api */
   latlng?: google.maps.LatLngLiteral;
-
-  
-  /** requestIds of all requests associated with this space */
-  //requests: Array<string>;
   
 };
 
@@ -56,16 +52,10 @@ const SpaceSchema = new Schema({
     required: false,
   },
   
-  //backend/space/model.ts -> SpaceSchema.latlng
+  
   latlng: {
     required: false
   },
-  /*
-  requests: {
-    type: Array<String>,
-    required: true
-  }
-  */
 });
 
 const SpaceModel = model<Space>("Space", SpaceSchema);

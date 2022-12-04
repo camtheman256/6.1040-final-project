@@ -21,7 +21,6 @@ class SpaceCollection {
             url,
             website,
             latlng,
-            //requests: []
         });
         await space.save();
         return space;
