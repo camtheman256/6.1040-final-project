@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-const props = defineProps(["space"]);
+import type { SpaceResponse } from "../../backend/space/util";
+
+const props = defineProps<{ space: SpaceResponse }>();
 </script>
 
 <template>

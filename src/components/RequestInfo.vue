@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { computed } from "vue";
+import type { PlaceRequestResponse } from "../../backend/request/util";
 
 // TODO(porderiq): Add type of request.
-const props = defineProps(["request"]);
+const props = defineProps<{ request: PlaceRequestResponse }>();
 const onCardClick = () =>
   // TODO(porderiq): redirect to correct view.
   console.log("Go to page for this card:", props.request);

@@ -1,13 +1,19 @@
 <script lang="ts" setup>
+import { computed } from "vue";
+import type { PlaceRequestResponse } from "../../backend/request/util";
 import RequestInfo from "./RequestInfo.vue";
-const props = defineProps(["spaceRequests"]);
 
-const getNumPending = () =>
-  props.spaceRequests?.filter((req: any) => req.inProcess).length;
+const props = defineProps<{ spaceRequests: PlaceRequestResponse[] }>();
 
-const getNumUnresolved = () =>
-  props.spaceRequests?.filter((req: any) => !req.isPending && !req.resolved)
-    .length;
+const numPending = computed(
+  () => props.spaceRequests?.filter((req: any) => req.inProcess).length
+);
+
+const numUnresolved = computed(
+  () =>
+    props.spaceRequests?.filter((req: any) => !req.isPending && !req.resolved)
+      .length
+);
 </script>
 
 <template>
@@ -17,12 +23,12 @@ const getNumUnresolved = () =>
       <div>
         <p class="status">
           🟡
-          <span class="emphasized">{{ getNumPending() }} pending requests</span>
+          <span class="emphasized">{{ numPending }} pending requests</span>
         </p>
         <p class="status">
           🔴
           <span class="emphasized"
-            >{{ getNumUnresolved() }} unresolved requests</span
+            >{{ numUnresolved }} unresolved requests</span
           >
         </p>
       </div>
