@@ -4,6 +4,7 @@ import RequestCard from "./RequestCard.vue";
 // import { useUserStore } from "@/stores/user";
 // import { get } from "../utils";
 import { ref } from "vue";
+import type { PlaceRequestResponse } from "../../backend/request/util";
 
 // TODO(porderique): Replace fake data with api call for signed in user.
 // const userStore = useUserStore();
@@ -55,7 +56,7 @@ const ownRequests = [
     resolved: true,
     inProcess: false,
   },
-];
+] as PlaceRequestResponse[];
 const filter = ref("");
 const filteredRequests = ref(ownRequests);
 const updateFilter = (event: string) => {
