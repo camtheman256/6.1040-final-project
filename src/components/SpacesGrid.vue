@@ -3,9 +3,10 @@ import type { SpaceResponse } from "../../backend/space/util";
 import FilterInput from "./FilterInput.vue";
 import SpaceCard from "./SpaceCard.vue";
 import { ref } from "vue";
-import { openModal } from "jenesius-vue-modal";
 import CreateSpaceModal from "./CreateSpaceModal.vue";
-import { container } from "jenesius-vue-modal";
+import { useUserStore } from "@/stores/user";
+
+const userStore = useUserStore();
 
 const allSpaces: SpaceResponse[] = [
   {
@@ -58,16 +59,18 @@ const updateFilter = (event: string) => {
     space.name.toLowerCase().includes(filter.value)
   );
 };
-
-const createSpaceClick = () => {
-  openModal(CreateSpaceModal);
-};
 </script>
 
 <template>
   <section>
     <section class="spanned bottom-buffer">
-      <button type="button" class="btn btn-dark" @click="createSpaceClick">
+      <button
+        type="button"
+        class="btn btn-dark"
+        data-bs-toggle="modal"
+        data-bs-target="#createSpaceModal"
+        v-if="userStore.user"
+      >
         Create Space ➕
       </button>
       <FilterInput placeholder="Filter Spaces" @filter="updateFilter($event)" />
@@ -82,7 +85,7 @@ const createSpaceClick = () => {
         <SpaceCard :space="space" />
       </div>
     </div>
-    <container />
+    <CreateSpaceModal />
   </section>
 </template>
 
