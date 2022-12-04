@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import RequestSearch from "./RequestSearch.vue";
+import FilterInput from "./FilterInput.vue";
 import RequestCard from "./RequestCard.vue";
 // import { useUserStore } from "@/stores/user";
 // import { get } from "../utils";
 import { ref } from "vue";
+import type { PlaceRequestResponse } from "../../backend/request/util";
 
 // TODO(porderique): Replace fake data with api call for signed in user.
 // const userStore = useUserStore();
@@ -55,7 +56,7 @@ const ownRequests = [
     resolved: true,
     inProcess: false,
   },
-];
+] as PlaceRequestResponse[];
 const filter = ref("");
 const filteredRequests = ref(ownRequests);
 const updateFilter = (event: string) => {
@@ -72,9 +73,9 @@ const updateFilter = (event: string) => {
   <div>
     <section class="spanned">
       <h5>My Requests</h5>
-      <RequestSearch @filter="updateFilter($event)" />
+      <FilterInput @filter="updateFilter($event)" />
     </section>
-    <div class="row row-cols-3">
+    <div class="row row-cols-lg-3">
       <div
         v-for="request in filteredRequests"
         :key="request.dateCreated"

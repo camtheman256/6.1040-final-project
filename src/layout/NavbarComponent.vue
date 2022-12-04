@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from "vue-router";
 import GoogleLogin from "../components/GoogleLogin.vue";
+import { Collapse } from "bootstrap";
 
 const navLinks = [
   {
-    route: "/about",
-    label: "About",
-  },
-  {
-    route: "/place-search",
-    label: "Place Search",
+    route: "/spaces",
+    label: "Spaces",
   },
 ];
 
@@ -42,8 +39,6 @@ const activeRoute = useRoute();
             >
           </li>
         </ul>
-        <!-- TODO: replace this button with our Google Sign in button
-          also need to handle logged-in state here -->
         <GoogleLogin />
       </div>
     </div>

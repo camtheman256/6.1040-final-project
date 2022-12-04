@@ -5,6 +5,7 @@ import { RouterLink, RouterView } from "vue-router";
 import Navbar from "./layout/NavbarComponent.vue";
 import { useUserStore } from "./stores/user";
 import { get } from "./utils";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const userStore = useUserStore();
 

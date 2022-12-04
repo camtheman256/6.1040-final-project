@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
-const router = useRouter();
-
-const onCardClick = () => router.push(`/space/${props.request?.space}`);
+const onCardClick = () =>
+  // TODO(porderiq): redirect to correct view.
+  console.log("Go to page for this card:", props.request);
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
@@ -23,7 +22,7 @@ const statusStyle = {
 </script>
 
 <template>
-  <div class="requestCard card text-white bg-dark" @click="onCardClick">
+  <div class="card text-white bg-dark" @click="onCardClick">
     <div class="card-body">
       <h5 class="card-title spanned">
         {{ props.request.title }}
@@ -45,13 +44,6 @@ const statusStyle = {
 </template>
 
 <style scoped>
-.requestCard {
-  box-shadow: -7px -7px rgb(188, 188, 188);
-}
-.requestCard:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-}
 .spanned {
   display: flex;
   justify-content: space-between;
