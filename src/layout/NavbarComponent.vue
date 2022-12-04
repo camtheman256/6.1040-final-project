@@ -5,16 +5,8 @@ import { Collapse } from "bootstrap";
 
 const navLinks = [
   {
-    route: "/about",
-    label: "About",
-  },
-  {
     route: "/spaces",
     label: "Spaces",
-  },
-  {
-    route: "/place-search",
-    label: "Place Search",
   },
 ];
 
