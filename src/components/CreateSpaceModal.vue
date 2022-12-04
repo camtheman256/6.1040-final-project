@@ -1,12 +1,18 @@
 <script lang="ts" setup>
+import { post } from "@/utils";
 import type {} from "google.maps";
+import type {} from "bootstrap";
 import { ref } from "vue";
 import PlaceSearch from "./PlaceSearch.vue";
+import { Modal } from "bootstrap";
 
 /* global google */
 const locationDetails = ref<google.maps.places.PlaceResult>();
 
 const onSubmit = () => {
+  // const result = await post("/api/spaces", locationDetails);
+  const modal = Modal.getOrCreateInstance("#createSpaceModal");
+  modal.toggle();
   console.log("form submitted!");
 };
 </script>
@@ -21,18 +27,8 @@ const onSubmit = () => {
           </button>
         </div>
         <div class="modal-body">
+          <p>Use the Google Maps lookup below to find a space to create.</p>
           <form class="mb-3 smallWidth" @submit.prevent="onSubmit">
-            <div class="input-group mb-3">
-              <div class="btn static btn-outline-secondary" type="button">
-                Name
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                ref="searchbox"
-                placeholder="Space Name"
-              />
-            </div>
             <PlaceSearch @selected="(value) => (locationDetails = value)" />
             <div v-if="locationDetails">
               <p><b>Name:</b> {{ locationDetails.name }}</p>
@@ -46,11 +42,8 @@ const onSubmit = () => {
               </p>
               <p><b>Address:</b> {{ locationDetails.formatted_address }}</p>
             </div>
-            <button
-              class="btn btn-outline-success"
-              type="submit"
-              @click="onSubmit"
-            >
+            <div v-else class="alert alert-danger">A location is required.</div>
+            <button class="btn btn-outline-success" type="submit">
               Create ➕
             </button>
           </form>

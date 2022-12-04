@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from "vue-router";
 import GoogleLogin from "../components/GoogleLogin.vue";
+import { Collapse } from "bootstrap";
 
 const navLinks = [
   {
