@@ -3,6 +3,8 @@ import SpaceInfo from "../components/SpaceInfo.vue";
 import RequestsRow from "../components/RequestsRow.vue";
 import CreateRequestForm from "../components/CreateRequestForm.vue";
 import { useRoute } from "vue-router";
+import type { PlaceRequestResponse } from "../../backend/request/util";
+import type { SpaceResponse } from "../../backend/space/util";
 
 const route = useRoute();
 console.log(route.params);
@@ -20,7 +22,7 @@ const space = {
   ],
   url: "to google maps?",
   website: "https://studentlife.mit.edu/cac/stratton-student-center",
-};
+} as SpaceResponse;
 
 // TODO: GET requests for this space :id
 const spaceRequests = [
@@ -68,7 +70,7 @@ const spaceRequests = [
     resolved: true,
     inProcess: false,
   },
-];
+] as PlaceRequestResponse[];
 </script>
 
 <template>
