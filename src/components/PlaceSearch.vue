@@ -15,7 +15,16 @@ loadScript(
 ).then(() => {
   const autocomplete = new google.maps.places.Autocomplete(searchbox.value, {
     componentRestrictions: { country: "us" },
-    fields: ["name", "place_id", "url", "geometry", "formatted_address"],
+    fields: [
+      "name",
+      "place_id",
+      "url",
+      "geometry",
+      "formatted_address",
+      "formatted_phone_number",
+      "website",
+      "photos",
+    ],
   });
   autocomplete.addListener("place_changed", () => {
     emit("selected", autocomplete.getPlace());

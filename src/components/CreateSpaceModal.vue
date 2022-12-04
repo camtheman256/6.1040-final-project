@@ -6,14 +6,20 @@ import { ref } from "vue";
 import PlaceSearch from "./PlaceSearch.vue";
 import { Modal } from "bootstrap";
 
+const emit = defineEmits<{ (event: "created"): void }>();
+
 /* global google */
 const locationDetails = ref<google.maps.places.PlaceResult>();
 
-const onSubmit = () => {
-  // const result = await post("/api/spaces", locationDetails);
+const onSubmit = async () => {
+  if (locationDetails.value === undefined) return;
+  await post("/api/spaces", locationDetails.value).catch(() =>
+    console.log("found an error!")
+  );
+
   const modal = Modal.getOrCreateInstance("#createSpaceModal");
   modal.toggle();
-  console.log("form submitted!");
+  emit("created");
 };
 </script>
 <template>
