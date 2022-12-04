@@ -74,7 +74,7 @@ const updateFilter = (event: string) => {
       <h5>My Requests</h5>
       <FilterInput @filter="updateFilter($event)" />
     </section>
-    <div class="row row-cols-3">
+    <div class="row row-cols-lg-3">
       <div
         v-for="request in filteredRequests"
         :key="request.dateCreated"
