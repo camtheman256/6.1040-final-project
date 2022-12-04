@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
-const onCardClick = () =>
-  // TODO(porderiq): redirect to correct view.
-  console.log("Go to page for this card:", props.request);
+const router = useRouter();
+
+const onCardClick = () => router.push(`/space/${props.request?.space}`);
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
