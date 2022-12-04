@@ -2,6 +2,7 @@ import PlaceSearchVue from "@/components/PlaceSearch.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import MapView from "../views/MapView.vue";
+import SingleSpaceView from "../views/SingleSpaceView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,11 @@ const router = createRouter({
       path: "/spaces",
       name: "spaces",
       component: MapView,
+    },
+    {
+      path: "/space/:id",
+      name: "space",
+      component: SingleSpaceView,
     },
     {
       path: "/about",

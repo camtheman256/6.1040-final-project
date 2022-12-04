@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-const props = defineProps(["space"]);
+import { useRouter } from "vue-router";
 
-const onCardClick = () =>
-  // TODO(porderiq): redirect to correct view.
-  console.log("Go to Space page for this card:", props.space);
+const props = defineProps(["space"]);
+const router = useRouter();
+
+const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
 
 const hasWebsite = () => Boolean(props.space.website);
 </script>

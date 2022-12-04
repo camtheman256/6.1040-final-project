@@ -1,29 +1,25 @@
 <script lang="ts" setup>
-import { computed } from "vue";
-import { useRouter } from "vue-router";
-import type { PlaceRequestResponse } from "../../backend/request/util";
-
 // TODO(porderiq): Add type of request.
-const props = defineProps<{ request: PlaceRequestResponse }>();
-const router = useRouter();
+const props = defineProps(["request"]);
+const onCardClick = () =>
+  // TODO(porderiq): redirect to correct view.
+  console.log("Go to page for this card:", props.request);
 
-const onCardClick = () => router.push(`/space/${props.request?.space}`);
-
-const requestStatus = computed<string>(() => {
+const requestStatus = (): string => {
   if (props.request?.resolved) return "Resolved";
   if (props.request?.inProcess) return "In Progress";
   return "Not Addressed";
-});
+};
 
 const statusStyle = {
-  "bg-secondary": requestStatus.value === "Not Addressed",
-  "bg-warning": requestStatus.value === "In Progress",
-  "bg-success": requestStatus.value === "Resolved",
+  "bg-secondary": requestStatus() === "Not Addressed",
+  "bg-warning": requestStatus() === "In Progress",
+  "bg-success": requestStatus() === "Resolved",
 };
 </script>
 
 <template>
-  <div class="requestCard card text-white bg-dark" @click="onCardClick">
+  <div class="card text-white bg-dark" @click="onCardClick">
     <div class="card-body">
       <h5 class="card-title spanned">
         {{ props.request.title }}
@@ -38,20 +34,13 @@ const statusStyle = {
       </p>
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
-        Status: {{ requestStatus }}
+        Status: {{ requestStatus() }}
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.requestCard {
-  box-shadow: -7px -7px rgb(188, 188, 188);
-}
-.requestCard:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-}
 .spanned {
   display: flex;
   justify-content: space-between;
