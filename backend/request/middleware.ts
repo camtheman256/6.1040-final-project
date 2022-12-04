@@ -48,7 +48,6 @@ const isValidCreateRequestPayload = async (
   next: NextFunction
 ) => {
   const createRequestPayload = req.body;
-  console.log(createRequestPayload);
   if (
     !createRequestPayload.author ||
     !createRequestPayload.space ||
