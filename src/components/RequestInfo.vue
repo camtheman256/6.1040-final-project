@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
@@ -19,6 +21,12 @@ const statusStyle = {
   "bg-warning": requestStatus.value === "In Progress",
   "bg-success": requestStatus.value === "Resolved",
 };
+
+const purify = DOMPurify(window);
+
+const responseHtml = computed(() =>
+  purify.sanitize(marked.parse(props.request.textContent))
+);
 </script>
 
 <template>
@@ -32,9 +40,7 @@ const statusStyle = {
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
-      <p class="card-text">
-        {{ props.request.textContent }}
-      </p>
+      <p class="card-text" v-html="responseHtml"></p>
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
