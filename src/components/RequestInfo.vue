@@ -1,20 +1,22 @@
 <script lang="ts" setup>
+import { computed } from "vue";
+
 // TODO(porderiq): Add type of request.
 const props = defineProps(["request"]);
 const onCardClick = () =>
   // TODO(porderiq): redirect to correct view.
   console.log("Go to page for this card:", props.request);
 
-const requestStatus = (): string => {
+const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
   if (props.request?.inProcess) return "In Progress";
   return "Not Addressed";
-};
+});
 
 const statusStyle = {
-  "bg-secondary": requestStatus() === "Not Addressed",
-  "bg-warning": requestStatus() === "In Progress",
-  "bg-success": requestStatus() === "Resolved",
+  "bg-secondary": requestStatus.value === "Not Addressed",
+  "bg-warning": requestStatus.value === "In Progress",
+  "bg-success": requestStatus.value === "Resolved",
 };
 </script>
 
@@ -34,7 +36,7 @@ const statusStyle = {
       </p>
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
-        Status: {{ requestStatus() }}
+        Status: {{ requestStatus }}
       </div>
     </div>
   </div>
