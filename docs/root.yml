@@ -27,7 +27,7 @@ paths:
     $ref: "./paths/users.yml#/PATH_users-session"
   /api/users:
     $ref: "./paths/users.yml#/PATH_users"
-  /api/spaces:
+  /api/spaces/{place_id}:
     $ref: "./paths/spaces.yml#/PATH_spaces"
   /api/requests/{place_id}:
     $ref: "./paths/requests.yml#/PATH_requests_post"
