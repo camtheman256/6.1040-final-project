@@ -28,7 +28,7 @@ class SpaceCollection {
 
     static async findOne(place_id: string): Promise<HydratedDocument<Space> | null>{
         return SpaceModel.findOne({
-            place_id: place_id as string
+            place_id: place_id
         });
     }
 

@@ -35,10 +35,10 @@ router.post(
  * @name DELETE /api/spaces/{place_id}
  */
 router.delete(
-    "/{place_id}",
+    "/",
     [
         userMiddleware.isUserLoggedIn,
-        spaceMiddleware.isPlaceExists
+        spaceMiddleware.isPlaceExistsDelete
     ],
     async (req: Request, res: Response) => {
         const place_id: string = req.params.place_id;
@@ -50,12 +50,12 @@ router.delete(
 )
 
 /**
- * @name GET /api/spaces/{place_id}
+ * @name GET /api/spaces?place_id=place_id
  */
 router.get(
-    "/:place_id?",
+    "/",
     async (req: Request, res: Response, next: NextFunction) => {
-        if (req.params.place_id !== undefined){
+        if (req.query.place_id !== undefined){
             next();
             return;
         }
@@ -69,7 +69,8 @@ router.get(
         spaceMiddleware.isPlaceExists
     ],
     async (req: Request, res: Response) => {
-        const place_id: string = req.params.place_id;
+        console.log(req.query.place_id)
+        const place_id = req.query.place_id as string;
         const space = await SpaceCollection.findOne(place_id);
         if (!space) {
             res.status(404).json({
