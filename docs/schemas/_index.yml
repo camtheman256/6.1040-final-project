@@ -4,6 +4,9 @@ User:
 Space:
   $ref: "./Space.yml"
 
+Reply:
+  $ref: "./Reply.yml"
+
 Place:
   $ref: "https://raw.githubusercontent.com/googlemaps/openapi-specification/main/dist/google-maps-platform-openapi3.yml#/components/schemas/Place"
 
@@ -46,6 +49,23 @@ requestCreatePayload:
     anonymous:
       type: boolean
 
+replyCreatePayload:
+  type: object
+  required:
+    - author
+    - request
+    - textContent
+    - anonymous
+  properties:
+    author:
+      type: string
+    request:
+      type: string
+    textContent:
+      type: string
+    anonymous:
+      type: boolean
+
 checkInUserCountsResponse:
   type: array
   properties:
@@ -56,3 +76,4 @@ checkInUserCountsResponse:
           type: string
         count:
           type: integer
+

@@ -8,12 +8,17 @@ export type SpaceResponse = {
   formatted_address: string,
   formatted_phone_number: string,
   name: string,
+
   /** see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto */
-  photos: Array<string>
+  photos?: any
+
   /** ref to google's official place embed */
   url: string,
+
   /** place's external website */
   website: string
+
+  latlng?: any
 };
 
 /**
@@ -26,6 +31,7 @@ const constructSpaceResponse = (space: HydratedDocument<Space>): SpaceResponse =
       versionKey: false, // Cosmetics; prevents returning of __v property
     }),
   };
+
   return {
     ...spaceCopy,
     _id: spaceCopy._id.toString()

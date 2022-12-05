@@ -27,7 +27,7 @@ paths:
     $ref: "./paths/users.yml#/PATH_users-session"
   /api/users:
     $ref: "./paths/users.yml#/PATH_users"
-  /api/spaces:
+  /api/spaces/{place_id}:
     $ref: "./paths/spaces.yml#/PATH_spaces"
   /api/requests/{place_id}:
     $ref: "./paths/requests.yml#/PATH_requests_post"
@@ -41,6 +41,10 @@ paths:
     $ref: "./paths/checkins.yml#/PATH_checkin"
   /api/checkins/count/{place_id}:
     $ref: "./paths/checkins.yml#/PATH_checkin_counts"
+  /api/replies/{request_id}:
+    $ref: "./paths/replies.yml#/PATH_replies_post"
+  /api/replies:
+    $ref: "./paths/replies.yml#/PATH_replies"
 components:
   schemas:
     $ref: "./schemas/_index.yml"
