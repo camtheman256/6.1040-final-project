@@ -5,87 +5,51 @@ import CreateRequestForm from "../components/CreateRequestForm.vue";
 import { useRoute } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import type { SpaceResponse } from "../../backend/space/util";
+import { onMounted, ref } from "vue";
+import { get } from "../utils";
+import { useUserStore } from "@/stores/user";
 
 const route = useRoute();
-console.log(route.params);
+const userStore = useUserStore();
 
-// TODO: GET request space by route params :id
-const space = {
-  _id: "123abc",
-  place_id: route.params.id,
-  formatted_address: "77 Massachusetts Avenue",
-  formatted_phone_number: "617-123-4567",
-  name: "MIT Student Center",
-  photos: [
-    "https://lh3.googleusercontent.com/p/AF1QipMXp5sa1H3ieYFaNYzb45wAIJ2hrpMxmuLRTNv-=s680-w680-h510",
-    "https://lh3.googleusercontent.com/p/AF1QipOe4eNhGyqGAbhz9RHejRxygWfXVSjhmAgLIutx=s680-w680-h510",
-  ],
-  url: "to google maps?",
-  website: "https://studentlife.mit.edu/cac/stratton-student-center",
-} as SpaceResponse;
+const placeId = route.params.id.toString();
 
-// TODO: GET requests for this space :id
-const spaceRequests = [
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "space_id",
-    title: "More Bananas",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "November 25th 2022, 11:04pm",
-    upvotingUsers: ["u1", "u2", "u3"],
-    resolved: false,
-    inProcess: false,
-  },
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "space_id",
-    title: "More Whiteboards in Stud5",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "November 27th 2022, 1:56pm",
-    upvotingUsers: ["u1", "u2", "u3", "u4", "u5"],
-    resolved: false,
-    inProcess: true,
-  },
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "space_id",
-    title: "No coffee in course 6 lounge",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "November 30th 2022, 9:06am",
-    upvotingUsers: [],
-    resolved: true,
-    inProcess: false,
-  },
-  {
-    author: "signed-in-user's-googleAuth-userId-token",
-    space: "space_id",
-    title: "Add Christmas tree to LCC lounge",
-    textContent:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, mollit anim id est laborum.",
-    dateCreated: "December 1st 2022, 9:00pm",
-    upvotingUsers: ["fabrizzio"],
-    resolved: true,
-    inProcess: false,
-  },
-] as PlaceRequestResponse[];
+const space = ref<SpaceResponse>();
+const spaceRequests = ref<PlaceRequestResponse[]>([]);
+
+const loadSpace = async () => {
+  const response = await get(`/api/spaces/${placeId}`);
+  space.value = response.space;
+  if (space.value !== undefined) {
+    loadRequests();
+  }
+};
+
+const loadRequests = async () => {
+  const requestsResponse = await get(`/api/requests?space=${placeId}`);
+  spaceRequests.value = requestsResponse.requests;
+};
+
+onMounted(loadSpace);
 </script>
 
 <template>
   <main>
     <section v-if="space">
       <div class="row">
-        <div class="col-4">
+        <div class="col-lg-4">
           <div class="row bottom-buffer">
             <SpaceInfo :space="space" />
           </div>
           <div class="row">
-            <CreateRequestForm />
+            <CreateRequestForm
+              v-if="userStore.user"
+              @created="loadRequests"
+              :place_id="placeId"
+            />
           </div>
         </div>
-        <div class="col-8">
+        <div class="col-lg-8">
           <RequestsRow :space-requests="spaceRequests" />
         </div>
       </div>
