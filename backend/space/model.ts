@@ -1,9 +1,6 @@
 import type { Types } from "mongoose";
 import { Schema, model } from "mongoose";
 
-
-
-
 export type Space = {
   _id: Types.ObjectId; //mongoDB
   place_id: string;
@@ -20,7 +17,6 @@ export type Space = {
 
   /** LatLong object of space defined by google maps api */
   latlng?: google.maps.LatLngLiteral;
-  
 };
 
 const SpaceSchema = new Schema({
@@ -51,10 +47,10 @@ const SpaceSchema = new Schema({
     type: String,
     required: false,
   },
-  
-  
+
   latlng: {
-    required: false
+    lat: Number,
+    lng: Number,
   },
 });
 
