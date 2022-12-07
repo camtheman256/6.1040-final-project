@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { SpaceResponse } from "../../backend/space/util";
-import L, { FeatureGroup, LayerGroup, Map } from "leaflet";
+import L, { FeatureGroup, Icon, LayerGroup, Map } from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerIconRetina from "leaflet/dist/images/marker-icon-2x.png";
 import "leaflet/dist/leaflet.css";
 import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
@@ -28,9 +30,15 @@ watch(
     markerLayer.value.clearLayers();
     for (const space of newSpaces) {
       if (space.latlng) {
-        const marker = L.marker(space.latlng).bindPopup(() =>
-          createSpacePopup(space)
-        );
+        const marker = L.marker(space.latlng, {
+          icon: new Icon({
+            iconUrl: markerIcon,
+            iconRetinaUrl: markerIconRetina,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [0, -30],
+          }),
+        }).bindPopup(() => createSpacePopup(space));
         markerLayer.value.addLayer(marker);
       }
     }
