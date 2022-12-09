@@ -34,13 +34,6 @@ PATH_checkin_today_session:
   get:
     summary: Get checkin for space for this current day
     description: Can be used to validate if session user has already checked in to a space today
-    parameters:
-      - in: path
-        name: place_id
-        required: true
-        schema:
-          type: string
-        description: place_id of the Space of desired checkin
     responses:
       '200':
         description: 'OK'

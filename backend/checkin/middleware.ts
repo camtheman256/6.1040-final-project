@@ -14,10 +14,10 @@ import type { CheckIn } from "./model";
  */
 const isSessionUserNotCheckInToday = async(req: Request, res: Response, next: NextFunction) => {
 
-    const todayCheckIn = await CheckInCollection.findOneToday(req.session.userId as string, req.params.place_id as string);
+    const todayCheckIn = await CheckInCollection.findOneToday(req.session.userId as string/*, req.params.place_id as string*/);
     if (todayCheckIn){
         res.status(403).json({
-            message: `User with userId: ${req.session.userId} already checked into ${req.params.place_id} today. Today's date: ${todayCheckIn.date}`
+            message: `User with userId: ${req.session.userId} already checked into ${todayCheckIn.space} today. Check in time: ${todayCheckIn.date}`
         });
         return;
     }
