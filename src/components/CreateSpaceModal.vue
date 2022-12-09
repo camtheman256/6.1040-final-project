@@ -12,7 +12,10 @@ const locationDetails = ref<google.maps.places.PlaceResult>();
 
 const onSubmit = async () => {
   if (locationDetails.value === undefined) return;
-  await post("/api/spaces", locationDetails.value);
+  await post("/api/spaces", {
+    ...locationDetails.value,
+    photos: [locationDetails.value.photos?.at(0)?.getUrl()],
+  });
 
   const modal = Modal.getOrCreateInstance("#createSpaceModal");
   modal.toggle();

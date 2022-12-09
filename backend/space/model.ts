@@ -9,7 +9,7 @@ export type Space = {
   name: string;
 
   /** see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto */
-  photos?: google.maps.places.PlacePhoto[];
+  photos?: string[];
   /** ref to google's official place embed */
   url: string;
   /** place's external website */
@@ -37,6 +37,7 @@ const SpaceSchema = new Schema({
     required: true,
   },
   photos: {
+    type: Array,
     required: false,
   },
   url: {
