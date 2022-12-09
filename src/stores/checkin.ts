@@ -1,11 +1,18 @@
+import { get } from "@/utils";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { CheckInResponse } from "../../backend/checkin/util";
 
-export const checkInStore = defineStore("checkIn", () => {
+export const useCheckInStore = defineStore("checkIn", () => {
   const today = ref<CheckInResponse>();
-  function checkIn(checkIn: CheckInResponse) {
-    today.value = checkIn;
+  /**
+   * Call the API to find Today's check-in, if available.
+   */
+  async function updateCheckIn() {
+    const response = await get("/api/checkins/today/session");
+    if (response.checkin) {
+      today.value = response.checkin;
+    }
   }
-  return { today, checkIn };
+  return { today, updateCheckIn };
 });
