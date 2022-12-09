@@ -34,11 +34,17 @@ const formatDate = (dateString: string): string =>
       <hr />
       <RequestsGrid />
     </section>
-    <div v-else>
+    <div v-else-if="userStore.initialized">
       <h1>Welcome to OurSpace!</h1>
       <h3 class="emphasized">Sign in to see your profile.</h3>
       <hr />
       <TheWelcome />
+    </div>
+    <div v-else>
+      <h2>
+        <div class="spinner-border"></div>
+        Loading
+      </h2>
     </div>
   </main>
 </template>
