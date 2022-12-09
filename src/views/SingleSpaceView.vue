@@ -18,7 +18,7 @@ const space = ref<SpaceResponse>();
 const spaceRequests = ref<PlaceRequestResponse[]>([]);
 
 const loadSpace = async () => {
-  const response = await get(`/api/spaces/${placeId}`);
+  const response = await get(`/api/spaces?place_id=${placeId}`);
   space.value = response.space;
   if (space.value !== undefined) {
     loadRequests();
