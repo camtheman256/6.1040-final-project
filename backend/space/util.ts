@@ -4,28 +4,30 @@ import type { Space } from "./model";
 
 export type SpaceResponse = {
   _id: string;
-  place_id: string,
-  formatted_address: string,
-  formatted_phone_number: string,
-  name: string,
+  place_id: string;
+  formatted_address: string;
+  formatted_phone_number: string;
+  name: string;
 
   /** see https://developers.google.com/maps/documentation/places/web-service/details#PlacePhoto */
-  photos?: any
+  photos?: string[];
 
   /** ref to google's official place embed */
-  url: string,
+  url: string;
 
   /** place's external website */
-  website: string
+  website: string;
 
-  latlng?: any
+  latlng?: any;
 };
 
 /**
- * @param {HydratedDocument<Space>} 
- * @returns {SpaceResponse} 
+ * @param {HydratedDocument<Space>}
+ * @returns {SpaceResponse}
  */
-const constructSpaceResponse = (space: HydratedDocument<Space>): SpaceResponse => {
+const constructSpaceResponse = (
+  space: HydratedDocument<Space>
+): SpaceResponse => {
   const spaceCopy: Space = {
     ...space.toObject({
       versionKey: false, // Cosmetics; prevents returning of __v property
@@ -34,7 +36,7 @@ const constructSpaceResponse = (space: HydratedDocument<Space>): SpaceResponse =
 
   return {
     ...spaceCopy,
-    _id: spaceCopy._id.toString()
+    _id: spaceCopy._id.toString(),
   };
 };
 
