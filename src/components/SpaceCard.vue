@@ -1,20 +1,35 @@
 <script lang="ts" setup>
+import { useCheckInStore } from "@/stores/checkin";
 import { useRouter } from "vue-router";
 
 const props = defineProps(["space"]);
 const router = useRouter();
+const checkInStore = useCheckInStore();
 
 const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
 
 const hasWebsite = () => Boolean(props.space.website);
+function checkInClick() {
+  // call check in here
+}
 </script>
 
 <template>
   <div class="requestCard card text-dark bg-light" @click="onCardClick">
     <div class="card-body">
-      <h5 class="card-title">
-        {{ props.space.name }}
-      </h5>
+      <div class="card-title d-flex justify-content-between">
+        <h5>{{ props.space.name }}</h5>
+        <div>
+          <button
+            class="btn btn-sm btn-outline-success"
+            title="Check In"
+            @click.stop="checkInClick"
+            v-if="!checkInStore.today"
+          >
+            ✅
+          </button>
+        </div>
+      </div>
       <h6 class="card-subtitle mb-2 text-muted">
         {{ props.space.formatted_address }}
       </h6>
