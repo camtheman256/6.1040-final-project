@@ -20,3 +20,10 @@ properties:
     type: string
   website:
     type: string
+  latlng:
+    type: object
+    properties:
+      lat:
+        type: number
+      lng:
+        type: number

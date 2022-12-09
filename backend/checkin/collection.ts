@@ -25,11 +25,11 @@ class CheckInCollection {
     }
 
 
-    static async findOneToday(userId: string, spaceId: string): Promise<HydratedDocument<CheckIn> | null>{
+    static async findOneToday(userId: string, /*spaceId: string*/): Promise<HydratedDocument<CheckIn> | null>{
         const rightNow = new Date();
         return CheckInModel.findOne({
             user: userId,
-            space: spaceId,
+            //space: spaceId,
             date: {$gte: rightNow.toDateString()} //query: {date in store is >= today's Date at 00:00}
         });
     }

@@ -35,12 +35,14 @@ paths:
     $ref: "./paths/requests.yml#/PATH_requests"
   /api/checkins/session/{place_id}:
     $ref: "./paths/checkins.yml#/PATH_checkin_session"
-  /api/checkins/today/session/{place_id}:
+  /api/checkins/today/session:
     $ref: "./paths/checkins.yml#/PATH_checkin_today_session"
   /api/checkins:
     $ref: "./paths/checkins.yml#/PATH_checkin"
   /api/checkins/count/{place_id}:
     $ref: "./paths/checkins.yml#/PATH_checkin_counts"
+  /api/requests/checkin_ranked/{place_id}:
+    $ref: "./paths/requests.yml#/PATH_requests_checkinranked"
   /api/replies/{request_id}:
     $ref: "./paths/replies.yml#/PATH_replies_post"
   /api/replies:

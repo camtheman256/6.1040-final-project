@@ -46,12 +46,12 @@ router.delete(
 );
 
 /**
- * @name GET /api/spaces/{place_id}
+ * @name GET /api/spaces
  */
 router.get(
-  "/:place_id?",
+  "/",
   async (req: Request, res: Response, next: NextFunction) => {
-    if (req.params.place_id !== undefined) {
+    if (req.query.place_id !== undefined) {
       next();
       return;
     }
@@ -61,10 +61,10 @@ router.get(
       spaces: allSpacesResponse, //[TODO] think about spaces vs. space... do we want to split this path into two?
     });
   },
-  [spaceMiddleware.isPlaceExists],
+  [spaceMiddleware.isPlaceQueryExists],
   async (req: Request, res: Response) => {
-    const place_id: string = req.params.place_id;
-    const space = await SpaceCollection.findOne(place_id);
+    const place_id = req.query.place_id;
+    const space = await SpaceCollection.findOne(place_id as string);
     if (!space) {
       res.status(404).json({
         message: `Space with place_id: ${place_id} does not exist.`,

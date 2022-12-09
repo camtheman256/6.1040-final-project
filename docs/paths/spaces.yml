@@ -10,7 +10,7 @@ PATH_spaces:
             $ref: "../schemas/_index.yml#/Place"
     responses:
       '201':
-        description: 'Created'
+        description: 'Created new space with google.maps.LatLngLiteral object and google.maps.places.PlacePhoto[] object as attributes.'
         content:
           application/json:
             schema:
@@ -46,16 +46,16 @@ PATH_spaces:
               message: "Provided place details do not have one of [place_id, formatted_address, name]"
   get:
     summary: Find a space
-    description: Used to get the space in collection based on spaceId. Returns all spaces if no spaceId parameter was given.
+    description: Used to get the space in collection based on place_id. Returns all spaces if no spaceId parameter was given.
     parameters:
-      - in: path
+      - in: query
         name: place_id
         required: false
         schema:
           type: string
     responses:
       '200':
-        description: 'OK'
+        description: 'OK. Found space with google.maps.LatLngLiteral object and google.maps.places.PlacePhoto[] object as attributes.'
         content:
           application/json:
             schema:
