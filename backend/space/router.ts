@@ -46,10 +46,10 @@ router.delete(
 );
 
 /**
- * @name GET /api/spaces/{place_id}
+ * @name GET /api/spaces
  */
 router.get(
-  "/:place_id?",
+  "/",
   async (req: Request, res: Response, next: NextFunction) => {
     if (req.query.place_id !== undefined) {
       next();
