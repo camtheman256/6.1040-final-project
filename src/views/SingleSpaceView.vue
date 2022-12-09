@@ -14,11 +14,13 @@ const userStore = useUserStore();
 
 const placeId = route.params.id.toString();
 
+const initialized = ref(false);
 const space = ref<SpaceResponse>();
 const spaceRequests = ref<PlaceRequestResponse[]>([]);
 
 const loadSpace = async () => {
   const response = await get(`/api/spaces?place_id=${placeId}`);
+  initialized.value = true;
   space.value = response.space;
   if (space.value !== undefined) {
     loadRequests();
@@ -54,9 +56,14 @@ onMounted(loadSpace);
         </div>
       </div>
     </section>
-
-    <section v-else>
+    <section v-else-if="initialized">
       <h2>No space with id {{ $route.params.id }}</h2>
+    </section>
+    <section v-else>
+      <div class="d-flex gap-3">
+        <div class="spinner-border"></div>
+        <h2>Loading space {{ $route.params.id }}</h2>
+      </div>
     </section>
   </main>
 </template>
