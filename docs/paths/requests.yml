@@ -1,7 +1,7 @@
 PATH_requests:
   get:
     summary: Find a PlaceRequest
-    description: Used to get the request in collection based on placeId and/or userId. Returns all requests if no queries are given.
+    description: Used to get the request in collection based on placeId and/or userId. Returns all requests if no queries are given. Ordered by most recent to oldest.
     parameters:
       - in: query
         name: space
@@ -67,6 +67,47 @@ PATH_requests:
                   type: string
             example:
               message: "Request has successfully been deleted."
+  
+PATH_requests_checkinranked:
+  get:
+    summary: Get ranked requests by check_in user score.
+    description: Returns all the requests for a space, denoted by place_id param, ranked by requests with highest user-check_in score, then by request dateCreated recency.
+    parameters: 
+      - in: path
+        name: place_id
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: array
+              properties:
+                request: 
+                  $ref: "../schemas/_index.yml#/PlaceRequest"
+            example:
+              {
+                requests: [
+                  {
+                    "_id": "638a77f66e0efba60f844cad",
+                    "author": "105454022127406520411",
+                    "space": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                    "title": "my title",
+                    "textContent": "content",
+                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
+                    "tags": [
+                      "hi"
+                    ],
+                    "anonymous": true,
+                    "upvotingUsers": [],
+                    "resolved": false,
+                    "inProcess": false
+                  }
+                ]
+              }
 PATH_requests_post:
   post:
     summary: Create a request
