@@ -46,6 +46,12 @@ onMounted(loadMyRequests);
       >
         <RequestCard :request="request" />
       </div>
+      <div v-if="!ownRequests.length">
+        <h4>🫥 You don't have any requests.</h4>
+        <RouterLink to="/spaces"
+          >&rarr; Visit the Spaces page to contribute.</RouterLink
+        >
+      </div>
     </div>
   </div>
 </template>
