@@ -1,4 +1,4 @@
-import { get } from "@/utils";
+import { get, post } from "@/utils";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { CheckInResponse } from "../../backend/checkin/util";
@@ -14,5 +14,14 @@ export const useCheckInStore = defineStore("checkIn", () => {
       today.value = response.checkin;
     }
   }
-  return { today, updateCheckIn };
+  /**
+   * Check-in user to the desired space
+   */
+  async function checkIn(placeId: string) {
+    const response = await post(`/api/checkins/session/${placeId}`, {});
+    if (response.checkin) {
+      today.value = response.checkin;
+    }
+  }
+  return { today, updateCheckIn, checkIn };
 });

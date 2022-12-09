@@ -1,17 +1,15 @@
 <script lang="ts" setup>
 import { useCheckInStore } from "@/stores/checkin";
 import { useRouter } from "vue-router";
+import type { SpaceResponse } from "../../backend/space/util";
 
-const props = defineProps(["space"]);
+const props = defineProps<{ space: SpaceResponse }>();
 const router = useRouter();
 const checkInStore = useCheckInStore();
 
 const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
 
 const hasWebsite = () => Boolean(props.space.website);
-function checkInClick() {
-  // call check in here
-}
 </script>
 
 <template>
@@ -23,11 +21,17 @@ function checkInClick() {
           <button
             class="btn btn-sm btn-outline-success"
             title="Check In"
-            @click.stop="checkInClick"
+            @click.stop="checkInStore.checkIn(space.place_id)"
             v-if="!checkInStore.today"
           >
             ✅
           </button>
+          <div
+            v-else-if="checkInStore.today.space === space.place_id"
+            class="badge bg-success"
+          >
+            Checked in here
+          </div>
         </div>
       </div>
       <h6 class="card-subtitle mb-2 text-muted">
