@@ -29,11 +29,9 @@ const formatDate = (dateString: string): string =>
       <hr />
       <TheWelcome />
     </div>
-    <div v-else>
-      <h2>
-        <div class="spinner-border"></div>
-        Loading
-      </h2>
+    <div class="d-flex gap-3" v-else>
+      <div class="spinner-border"></div>
+      <h2>Loading</h2>
     </div>
   </main>
 </template>
