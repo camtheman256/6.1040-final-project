@@ -26,7 +26,7 @@ class PlaceRequestCollection {
             //inProcess: false
         });
         await request.save();
-        return request;
+        return (await request.populate("author")).populate("space");
     }
 
     static async findByAuthorSpace(place_id: string | undefined, userId: string | undefined): Promise<Array<HydratedDocument<PlaceRequest>>>{
