@@ -3,12 +3,15 @@ import { computed } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
+import { useUserStore } from "@/stores/user";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
 const onCardClick = () =>
   // TODO(porderiq): redirect to correct view.
   console.log("Go to page for this card:", props.request);
+
+const userStore = useUserStore();
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
@@ -36,7 +39,13 @@ const responseHtml = computed(() =>
         {{ props.request.title }}
         <span class="text-muted">
           {{ props.request.upvotingUsers.length }}
-          <a href="#" class="btn btn-sm btn-primary">👍</a>
+          <button
+            href="#"
+            class="btn btn-sm btn-primary"
+            :disabled="!userStore.user"
+          >
+            👍
+          </button>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
