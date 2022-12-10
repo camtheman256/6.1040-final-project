@@ -40,4 +40,16 @@ const constructUserResponse = (user: HydratedDocument<User>): UserResponse => {
   };
 };
 
-export { constructUserResponse };
+const constructUserResponseFromObject = (user: User): UserResponse => {
+  return {
+    _id: user._id.toString(),
+    dateJoined: formatDate(user.dateJoined),
+    gapiUserId: user.gapiUserId as string,
+    name: user.name as string,
+    imageUrl: user.imageUrl as string,
+    email: user.email as string
+  }
+}
+
+export { constructUserResponse,
+  constructUserResponseFromObject };

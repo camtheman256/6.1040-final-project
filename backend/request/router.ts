@@ -79,12 +79,12 @@ router.post(
         const requestPayload = req.body;
         
         const newRequest = await PlaceRequestCollection.addOne(
-            req.body.author,
-            req.body.space,
+            await userMiddleware.gapiIdTo_id(req.body.author) as string,
+            await spaceMiddleware.place_idTo_id(req.body.space) as string,
             req.body.title,
             req.body.textContent,
             //req.body.dateCreated,
-            req.body.tags,
+            //req.body.tags,
             req.body.anonymous,
             //req.body.upvotingUsers,
             //req.body.resolved,

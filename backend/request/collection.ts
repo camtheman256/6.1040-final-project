@@ -7,7 +7,7 @@ import CheckInCollection from "../checkin/collection";
 
 class PlaceRequestCollection {
     static async addOne(author: string, space: string, title: string, textContent: string,
-                        /*dateCreated: Date,*/ tags: Array<string>, anonymous: boolean, /*upvotingUsers: Array<string>,*/
+                        /*dateCreated: Date, tags: Array<string>, */ anonymous: boolean, /*upvotingUsers: Array<string>,*/
                         /*resolved: boolean,*/ /*inProcess: boolean*/): Promise<HydratedDocument<PlaceRequest>> {
         const date = new Date();
         const userArray: Array<string> = []
@@ -17,11 +17,11 @@ class PlaceRequestCollection {
             title,
             textContent, 
             dateCreated: date,
-            tags, 
+            //tags, 
             anonymous,
             upvotingUsers: userArray,
             resolved: false,
-            inProcess: false
+            //inProcess: false
         });
         await request.save();
         return request;
@@ -32,22 +32,24 @@ class PlaceRequestCollection {
             return PlaceRequestModel.find({
                 space: place_id,
                 author: userId
-            });
+            }).populate("author").populate("space");
         }
         else if (place_id !== undefined){
-            return PlaceRequestModel.find({space: place_id}).sort({dateCreated: -1});
+            return PlaceRequestModel.find({space: place_id}).sort({dateCreated: -1})
+            .populate("author").populate("space");
         }
         else{
-            return PlaceRequestModel.find({author: userId}).sort({dateCreated: -1});
+            return PlaceRequestModel.find({author: userId}).sort({dateCreated: -1})
+            .populate("author").populate("space");
         }
     }
 
     static async findAll(): Promise<Array<HydratedDocument<PlaceRequest>>>{
-        return PlaceRequestModel.find({});
+        return PlaceRequestModel.find({}).populate("author").populate("space");;
     }
 
     static async findOneById(requestId: string): Promise<HydratedDocument<PlaceRequest> | null>{
-        return PlaceRequestModel.findOne({_id: requestId as string});
+        return PlaceRequestModel.findOne({_id: requestId as string}).populate("author").populate("space");;
     }
 
     static async deleteOne(requestId: string): Promise<void>{

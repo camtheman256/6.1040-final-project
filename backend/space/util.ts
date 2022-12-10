@@ -38,4 +38,15 @@ const constructSpaceResponse = (space: HydratedDocument<Space>): SpaceResponse =
   };
 };
 
+const constructSpaceResponseFromObject = (space: Space): SpaceResponse => {
+  return {
+    _id: space._id.toString(),
+    place_id: space.place_id as string,
+    formatted_address: space.formatted_address as string,
+    formatted_phone_number: space.formatted_phone_number as string,
+    name: space.name as string,
+    photos: 
+  }
+}
+
 export { constructSpaceResponse };

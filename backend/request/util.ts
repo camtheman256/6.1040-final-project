@@ -1,13 +1,17 @@
 import type { HydratedDocument } from "mongoose";
 import moment from "moment";
-import type { PlaceRequest } from "./model";
+import type { PlaceRequest, PopulatedPlaceRequest } from "./model";
+
+import { type UserResponse, constructUserResponse, constructUserResponseFromObject } from "../user/util";
+import { type SpaceResponse, constructSpaceResponse } from "../space/util";
 
 export type PlaceRequestResponse = {
   _id: string; //mongoDB
-  author: string;
+
+  author: UserResponse;
   /** corresponds to google Auth's userId token */
 
-  space: string;
+  space: SpaceResponse;
   /** corresponds to placeId of space */
 
   title: string;
@@ -15,17 +19,17 @@ export type PlaceRequestResponse = {
 
   dateCreated: string;
 
-  tags: Array<string>;
+  //tags: Array<string>;
   /** [TENATIVE] tagIds associated with request */
 
   anonymous: boolean;
 
-  upvotingUsers: Array<string>;
+  upvotingUsers: Array<UserResponse>;
   /** gapi userIds of upvoting users */
 
   resolved: boolean;
 
-  inProcess: boolean;
+  //inProcess: boolean;
 };
 
 /**
@@ -44,15 +48,22 @@ const formatDate = (date: Date): string =>
 const constructPlaceRequestResponse = (
   placeRequest: HydratedDocument<PlaceRequest>
 ): PlaceRequestResponse => {
-  const placeRequestCopy: PlaceRequest = {
+  const placeRequestCopy: PopulatedPlaceRequest = {
     ...placeRequest.toObject({
       versionKey: false, // Cosmetics; prevents returning of __v property
     }),
   };
+
   return {
-    ...placeRequestCopy,
+    author: constructUserResponseFromObject(placeRequestCopy.author),
+    space: constructSpaceResponse(placeRequestCopy.space),
     _id: placeRequestCopy._id.toString(),
     dateCreated: formatDate(placeRequest.dateCreated),
+    textContent: placeRequestCopy.textContent,
+    anonymous: placeRequestCopy.anonymous,
+    resolved: placeRequestCopy.resolved,
+    title: placeRequestCopy.title,
+    upvotingUsers: placeRequestCopy.upvotingUsers.map(constructUserResponseFromObject)
   };
 };
 

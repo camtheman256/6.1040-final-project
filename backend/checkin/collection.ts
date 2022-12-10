@@ -10,7 +10,7 @@ class CheckInCollection {
      */
     static async addOne(userId: string, spaceId: string): Promise<HydratedDocument<CheckIn>> {
         //find yesterday's check in, if such exists; sorting by count and limit 1 is efficient because spark magic i guess?
-        const yesterdayCheckIn = await CheckInModel.find({}).sort({count:-1}).limit(1)
+        const yesterdayCheckIn = await CheckInModel.find({user: userId, space: spaceId}).sort({count:-1}).limit(1)
         const yestCount: number = yesterdayCheckIn.pop()?.count?? 0;
 
         const rightNow = new Date();
@@ -25,11 +25,10 @@ class CheckInCollection {
     }
 
 
-    static async findOneToday(userId: string, /*spaceId: string*/): Promise<HydratedDocument<CheckIn> | null>{
+    static async findOneToday(userId: string): Promise<HydratedDocument<CheckIn> | null>{
         const rightNow = new Date();
         return CheckInModel.findOne({
             user: userId,
-            //space: spaceId,
             date: {$gte: rightNow.toDateString()} //query: {date in store is >= today's Date at 00:00}
         });
     }
