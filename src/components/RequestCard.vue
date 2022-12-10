@@ -9,11 +9,11 @@ import type { PlaceRequestResponse } from "../../backend/request/util";
 const props = defineProps<{ request: PlaceRequestResponse }>();
 const router = useRouter();
 
-const onCardClick = () => router.push(`/space/${props.request?.space}`);
+const onCardClick = () =>
+  router.push(`/space/${props.request?.space.place_id}`);
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
-  if (props.request?.inProcess) return "In Progress";
   return "Not Addressed";
 });
 
@@ -41,7 +41,9 @@ const requestTagline = computed(() =>
           <a href="#" class="btn btn-sm btn-primary">👍</a>
         </span>
       </h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{ props.request.space.name }}
+      </h6>
       <p class="card-text" v-html="requestTagline"></p>
     </div>
     <div class="card-footer">

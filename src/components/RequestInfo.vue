@@ -12,7 +12,6 @@ const onCardClick = () =>
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
-  if (props.request?.inProcess) return "In Progress";
   return "Not Addressed";
 });
 
@@ -39,7 +38,9 @@ const responseHtml = computed(() =>
           <a href="#" class="btn btn-sm btn-primary">👍</a>
         </span>
       </h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{ props.request.space.name }}
+      </h6>
       <p class="card-text" v-html="responseHtml"></p>
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
