@@ -1,5 +1,4 @@
 import type { Request, Response, NextFunction } from "express";
-import { Types } from "mongoose";
 import express from "express";
 
 import CheckInCollection from "./collection";
@@ -11,6 +10,9 @@ import { constructCheckInResponse } from "./util";
 import * as userMiddleware from "../user/middleware"
 import * as spaceMiddleware from "../space/middleware"
 import * as checkInMiddleware from "./middleware"
+import type { User } from "../user/model";
+
+import { type UserResponse, constructUserResponse, constructUserResponseFromObject } from "../user/util";
 
 const router = express.Router();
 
@@ -41,9 +43,7 @@ const router = express.Router();
 router.get(
     "/today/session",
     [
-        userMiddleware.isUserLoggedIn,
-        //spaceMiddleware.isPlaceExists,
-        //checkInMiddleware.isSessionUserNotCheckInToday,
+        userMiddleware.isUserLoggedIn
     ],
     async (req: Request, res: Response, next: NextFunction) => {
         const todayCheckIn = await CheckInCollection.findOneToday(req.session.userId as string /*req.params.place_id*/);
@@ -99,8 +99,20 @@ router.get(
     async (req: Request, res: Response, next: NextFunction) => {
         const checkIns = await CheckInCollection.findAllBySpace(req.params.place_id);
         const finalCheckInCounts: Map<string, number> = checkInMiddleware.countCheckInsByUser(checkIns);
+        const finalCountArray: Array<{user: UserResponse, count: number}> = new Array();
+
+        finalCheckInCounts.forEach(async (value: number, key: string) => {
+            const user = await UserCollection.findOneFrom_id(key);
+            const checkInCount: number = value;
+            if (user){
+                finalCountArray.push(
+                    {user: constructUserResponse(user),
+                    count: checkInCount}
+                );
+            }
+        });
         res.status(200).json({
-            checkInCounts: Array.from( finalCheckInCounts ).map(([key, value]) => ({ userId: key, count: value }))
+            checkInCounts: finalCountArray
         });
     }
 )
