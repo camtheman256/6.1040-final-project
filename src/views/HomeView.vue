@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import RequestsGrid from "../components/RequestsGrid.vue";
 import { useUserStore } from "@/stores/user";
+import { useCheckInStore } from "@/stores/checkin";
+import { RouterLink } from "vue-router";
 
 const userStore = useUserStore();
+const checkInStore = useCheckInStore();
 const getFirstName = (fullname: string): string =>
   fullname.substring(0, fullname.indexOf(" "));
 const formatDate = (dateString: string): string =>
@@ -18,6 +21,14 @@ const formatDate = (dateString: string): string =>
       </h2>
       <p class="emphasized">
         Contributor since {{ formatDate(userStore.user.dateJoined) }}
+      </p>
+      <p v-if="checkInStore.today">
+        You checked in to a space today at {{ checkInStore.today.date }} for the
+        {{ checkInStore.today.count }} time. Thanks!
+      </p>
+      <p v-else>
+        <b>You haven't checked in today!</b>&nbsp;
+        <RouterLink to="/spaces">Visit the Spaces page to check in.</RouterLink>
       </p>
       <hr />
       <RequestsGrid />
