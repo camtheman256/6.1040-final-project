@@ -23,5 +23,11 @@ export const useCheckInStore = defineStore("checkIn", () => {
       today.value = response.checkin;
     }
   }
-  return { today, updateCheckIn, checkIn };
+  /**
+   * Clear check-in store, such as when a user logs out
+   */
+  function clear() {
+    today.value = undefined;
+  }
+  return { today, updateCheckIn, checkIn, clear };
 });
