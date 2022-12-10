@@ -15,32 +15,38 @@ const formatDate = (dateString: string): string =>
 <template>
   <main>
     <section v-if="userStore.user">
-      <h2>
-        Welcome,
-        {{ getFirstName(userStore.user.name) }}
-      </h2>
-      <p class="emphasized">
-        Contributor since {{ formatDate(userStore.user.dateJoined) }}
-      </p>
-      <p v-if="checkInStore.today">
-        You checked in to a space today at {{ checkInStore.today.date }} for the
-        {{ checkInStore.today.count }} time. Thanks!
-      </p>
-      <p v-else>
-        <b>You haven't checked in today!</b>&nbsp;
-        <RouterLink to="/spaces">Visit the Spaces page to check in.</RouterLink>
-      </p>
+      <section class="welcome">
+        <h1>
+          Welcome,
+          {{ getFirstName(userStore.user.name) }}
+        </h1>
+        <h5 class="emphasized">
+          Contributor since {{ formatDate(userStore.user.dateJoined) }}
+        </h5>
+        <p v-if="checkInStore.today">
+          You checked in to a space today at {{ checkInStore.today.date }} for
+          the {{ checkInStore.today.count }} time. Thanks!
+        </p>
+        <p v-else>
+          <b>You haven't checked in today!</b>&nbsp;
+          <RouterLink to="/spaces"
+            >Visit the Spaces page to check in.</RouterLink
+          >
+        </p>
+      </section>
       <hr />
       <RequestsGrid />
     </section>
 
     <div v-else-if="userStore.initialized">
-      <h1>Welcome to OurSpace!</h1>
-      <h4>
-        Create, discover, and contribute to crowdsourcing efforts for a better
-        community, today.
-      </h4>
-      <h5 class="emphasized">Sign in to see your profile.</h5>
+      <section class="welcome">
+        <h1>Welcome to 🎯OurSpace</h1>
+        <h4>
+          Create, discover, and contribute to crowdsourcing efforts for a better
+          community, today.
+        </h4>
+        <h5 class="emphasized">Sign in to see your profile.</h5>
+      </section>
       <hr />
       <RequestsGrid />
     </div>
@@ -55,5 +61,21 @@ const formatDate = (dateString: string): string =>
 .emphasized {
   font-style: italic;
   color: rgb(142, 142, 142);
+}
+
+.welcome {
+  padding: 2rem 0;
+  animation: fadeIn 1s ease-in both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 </style>

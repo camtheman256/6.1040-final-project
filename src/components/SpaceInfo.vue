@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { useCheckInStore } from "@/stores/checkin";
+import { useUserStore } from "@/stores/user";
 import type { SpaceResponse } from "../../backend/space/util";
 
 const props = defineProps<{ space: SpaceResponse }>();
 const checkInStore = useCheckInStore();
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -18,7 +20,7 @@ const checkInStore = useCheckInStore();
       <p>{{ props.space.formatted_address }}</p>
       <p>{{ props.space.formatted_phone_number }}</p>
     </div>
-    <div>
+    <div v-if="userStore.user">
       <button
         v-if="!checkInStore.today"
         class="btn btn-success mb-3"

@@ -43,6 +43,8 @@ const requestTagline = computed(() =>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
       <p class="card-text" v-html="requestTagline"></p>
+    </div>
+    <div class="card-footer">
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
@@ -55,6 +57,7 @@ const requestTagline = computed(() =>
 .requestCard {
   box-shadow: -7px -7px rgb(188, 188, 188);
   height: 100%;
+  padding-bottom: 8px;
 }
 .requestCard:hover {
   cursor: pointer;
