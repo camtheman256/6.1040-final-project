@@ -3,7 +3,7 @@ import moment from "moment";
 import type { PlaceRequest, PopulatedPlaceRequest } from "./model";
 
 import { type UserResponse, constructUserResponse, constructUserResponseFromObject } from "../user/util";
-import { type SpaceResponse, constructSpaceResponse } from "../space/util";
+import { type SpaceResponse, constructSpaceResponse, constructSpaceResponseFromObject } from "../space/util";
 
 export type PlaceRequestResponse = {
   _id: string; //mongoDB
@@ -25,7 +25,6 @@ export type PlaceRequestResponse = {
   anonymous: boolean;
 
   upvotingUsers: Array<UserResponse>;
-  /** gapi userIds of upvoting users */
 
   resolved: boolean;
 
@@ -56,7 +55,7 @@ const constructPlaceRequestResponse = (
 
   return {
     author: constructUserResponseFromObject(placeRequestCopy.author),
-    space: constructSpaceResponse(placeRequestCopy.space),
+    space: constructSpaceResponseFromObject(placeRequestCopy.space),
     _id: placeRequestCopy._id.toString(),
     dateCreated: formatDate(placeRequest.dateCreated),
     textContent: placeRequestCopy.textContent,

@@ -47,8 +47,12 @@ const constructSpaceResponseFromObject = (space: Space): SpaceResponse => {
     formatted_address: space.formatted_address as string,
     formatted_phone_number: space.formatted_phone_number as string,
     name: space.name as string,
-    photos: 
+    photos: space.photos,
+    url: space.url,
+    website: space.website,
+    latlng: space.latlng
   }
 }
 
-export { constructSpaceResponse };
+export { constructSpaceResponse,
+  constructSpaceResponseFromObject };
