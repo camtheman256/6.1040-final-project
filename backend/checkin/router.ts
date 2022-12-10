@@ -75,7 +75,7 @@ router.get(
         }
         const allCheckIns = await CheckInCollection.findAll();
         res.status(200).json({
-            requests: allCheckIns.map(constructCheckInResponse)
+            checkins: allCheckIns.map(constructCheckInResponse)
         });
     },
     async (req: Request, res: Response) => {

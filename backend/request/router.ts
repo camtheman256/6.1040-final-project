@@ -31,6 +31,7 @@ router.get(
             return;
         }
         const allRequests = await PlaceRequestCollection.findAll();
+        console.log(allRequests)
         res.status(200).json({
             requests: allRequests.map(constructPlaceRequestResponse)
         });
@@ -60,7 +61,7 @@ router.get(
     async (req: Request, res: Response, next: NextFunction) => {
         const requestsRanked = await PlaceRequestCollection.findRankedBySpace(req.params.place_id as string);
         res.status(200).json({
-            requests: requestsRanked.map(constructPlaceRequestResponse)
+            checkins: requestsRanked.map(constructPlaceRequestResponse)
         })
     }
 )

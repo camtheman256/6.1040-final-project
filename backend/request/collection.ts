@@ -4,6 +4,8 @@ import PlaceRequestModel from "./model";
 import * as checkInMiddleware from "../checkin/middleware"
 
 import CheckInCollection from "../checkin/collection";
+import { place_idTo_id } from "../space/middleware";
+import { gapiIdTo_id } from "../user/middleware";
 
 class PlaceRequestCollection {
     static async addOne(author: string, space: string, title: string, textContent: string,
@@ -30,22 +32,22 @@ class PlaceRequestCollection {
     static async findByAuthorSpace(place_id: string | undefined, userId: string | undefined): Promise<Array<HydratedDocument<PlaceRequest>>>{
         if (place_id !== undefined && userId !== undefined){
             return PlaceRequestModel.find({
-                space: place_id,
-                author: userId
+                space: await place_idTo_id(place_id),
+                author: await gapiIdTo_id(userId)
             }).populate("author").populate("space");
         }
         else if (place_id !== undefined){
-            return PlaceRequestModel.find({space: place_id}).sort({dateCreated: -1})
+            return PlaceRequestModel.find({space: await place_idTo_id(place_id)}).sort({dateCreated: -1})
             .populate("author").populate("space");
         }
         else{
-            return PlaceRequestModel.find({author: userId}).sort({dateCreated: -1})
+            return PlaceRequestModel.find({author: await gapiIdTo_id(userId as string)}).sort({dateCreated: -1})
             .populate("author").populate("space");
         }
     }
 
     static async findAll(): Promise<Array<HydratedDocument<PlaceRequest>>>{
-        return PlaceRequestModel.find({}).populate("author").populate("space");;
+        return PlaceRequestModel.find({}).populate("author").populate("space");
     }
 
     static async findOneById(requestId: string): Promise<HydratedDocument<PlaceRequest> | null>{

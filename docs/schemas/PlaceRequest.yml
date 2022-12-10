@@ -5,12 +5,15 @@ required:
   - title
   - textContent
   - anonymous
-  - tags
 properties:
   author:
-    type: string
+    schema:
+      type: object
+      $ref: "../schemas/_index.yml#User"
   space:
-    type: string
+    schema:
+      type: object
+      $ref: "../schemas/_index.yml#Space"
   title:
     type: string
   textContent:
@@ -26,8 +29,8 @@ properties:
   upvotingUsers:
     type: array
     items: 
-      type: string
+      schema:
+        type: object
+        $ref: "./_index.yml#User"
   resolved:
-    type: boolean
-  inProcess:
     type: boolean
