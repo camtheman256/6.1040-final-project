@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import TheWelcome from "../components/TheWelcome.vue";
 import RequestsGrid from "../components/RequestsGrid.vue";
 import { useUserStore } from "@/stores/user";
 
@@ -23,11 +22,16 @@ const formatDate = (dateString: string): string =>
       <hr />
       <RequestsGrid />
     </section>
+
     <div v-else-if="userStore.initialized">
       <h1>Welcome to OurSpace!</h1>
-      <h3 class="emphasized">Sign in to see your profile.</h3>
+      <h4>
+        Create, discover, and contribute to crowdsourcing efforts for a better
+        community, today.
+      </h4>
+      <h5 class="emphasized">Sign in to see your profile.</h5>
       <hr />
-      <TheWelcome />
+      <RequestsGrid />
     </div>
     <div class="d-flex gap-3" v-else>
       <div class="spinner-border"></div>

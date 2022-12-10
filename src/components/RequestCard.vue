@@ -54,6 +54,7 @@ const requestTagline = computed(() =>
 <style scoped>
 .requestCard {
   box-shadow: -7px -7px rgb(188, 188, 188);
+  height: 100%;
 }
 .requestCard:hover {
   cursor: pointer;
