@@ -17,7 +17,7 @@ const isSessionUserNotCheckInToday = async(req: Request, res: Response, next: Ne
     const todayCheckIn = await CheckInCollection.findOneToday(req.session.userId as string/*, req.params.place_id as string*/);
     if (todayCheckIn){
         res.status(403).json({
-            message: `User with userId: ${req.session.userId} already checked into ${todayCheckIn.space} today. Check in time: ${todayCheckIn.date}`
+            message: `User with userId: ${req.session.userId} already checked in today. Check in time: ${todayCheckIn.date}`
         });
         return;
     }
@@ -26,10 +26,11 @@ const isSessionUserNotCheckInToday = async(req: Request, res: Response, next: Ne
 
 
 /**
- * Group by userId and count number of check ins
+ * Group by userId and count number of check ins,
+ * @returns Map< user._id => count>
  */
 function countCheckInsByUser(checkIns: Array<HydratedDocument<CheckIn>>): Map<string, number>{
-    const allUserIds: Array<string> = checkIns.map( i => i.user)
+    const allUserIds: Array<string> = checkIns.map( i => i.user._id.toString())
     const initialSums: Map<string, number> = new Map();
     const finalSums = allUserIds.reduce(function(sums,entry){
         sums.set(entry, (sums.get(entry) || 0) + 1);
