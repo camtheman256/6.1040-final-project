@@ -4,6 +4,7 @@ import { marked } from "marked";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
+import UserProfile from "./UserProfile.vue";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
@@ -47,7 +48,14 @@ const requestTagline = computed(() =>
       <p class="card-text" v-html="requestTagline"></p>
     </div>
     <div class="card-footer">
-      <p class="emphasized">Created {{ props.request.dateCreated }}</p>
+      <p class="emphasized">
+        <UserProfile
+          :user="props.request.author"
+          class="d-inline-flex"
+          :suffix="` at ${props.request.dateCreated}`"
+          height="30"
+        />
+      </p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
       </div>

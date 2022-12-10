@@ -3,7 +3,7 @@ import type { UserResponse } from "../../backend/user/util";
 withDefaults(
   defineProps<{ user: UserResponse; height: string; suffix?: string }>(),
   {
-    height: "40px",
+    height: "40",
   }
 );
 </script>
