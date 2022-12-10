@@ -1,7 +1,7 @@
 import PlaceSearchVue from "@/components/PlaceSearch.vue";
+import SpacesGridVue from "@/views/SpacesGrid.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import MapView from "../views/MapView.vue";
 import SingleSpaceView from "../views/SingleSpaceView.vue";
 
 const router = createRouter({
@@ -15,7 +15,7 @@ const router = createRouter({
     {
       path: "/spaces",
       name: "spaces",
-      component: MapView,
+      component: SpacesGridVue,
     },
     {
       path: "/space/:id",

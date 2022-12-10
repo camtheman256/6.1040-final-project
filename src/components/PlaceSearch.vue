@@ -3,7 +3,7 @@ import { loadScript } from "vue-plugin-load-script";
 import type {} from "google.maps";
 import { ref } from "vue";
 
-const searchbox = ref();
+const searchbox = ref<HTMLInputElement>();
 
 const emit = defineEmits<{
   (e: "selected", value: google.maps.places.PlaceResult): void;
@@ -13,7 +13,7 @@ const emit = defineEmits<{
 loadScript(
   "https://maps.googleapis.com/maps/api/js?key=AIzaSyDhCO6sNefSGvLNNXx6i_IB6KsUmks1uWo&libraries=places"
 ).then(() => {
-  const autocomplete = new google.maps.places.Autocomplete(searchbox.value, {
+  const autocomplete = new google.maps.places.Autocomplete(searchbox.value!!, {
     componentRestrictions: { country: "us" },
     fields: [
       "name",
@@ -29,6 +29,10 @@ loadScript(
   autocomplete.addListener("place_changed", () => {
     emit("selected", autocomplete.getPlace());
   });
+});
+
+defineExpose({
+  clear: () => (searchbox.value!!.value = ""),
 });
 </script>
 
