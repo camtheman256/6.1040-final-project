@@ -3,6 +3,7 @@ import { computed } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
+import UserProfile from "./UserProfile.vue";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
@@ -42,7 +43,14 @@ const responseHtml = computed(() =>
         {{ props.request.space.name }}
       </h6>
       <p class="card-text" v-html="responseHtml"></p>
-      <p class="emphasized">Created {{ props.request.dateCreated }}</p>
+      <p class="emphasized">
+        <UserProfile
+          :user="props.request.author"
+          height="30"
+          class="d-inline-flex align-middle"
+          :suffix="` at ${props.request.dateCreated}`"
+        />
+      </p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
       </div>
