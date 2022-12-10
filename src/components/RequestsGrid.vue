@@ -8,35 +8,41 @@ import { useUserStore } from "@/stores/user";
 
 const userStore = useUserStore();
 
-const ownRequests = ref<PlaceRequestResponse[]>([]);
+const requests = ref<PlaceRequestResponse[]>([]);
 const filter = ref("");
-const filteredRequests = ref<PlaceRequestResponse[]>(ownRequests.value);
+const filteredRequests = ref<PlaceRequestResponse[]>(requests.value);
 const updateFilter = (event: string) => {
   filter.value = event;
-  filteredRequests.value = ownRequests.value.filter(
+  filteredRequests.value = requests.value.filter(
     (req) =>
       req.title.toLowerCase().includes(filter.value.toLowerCase()) ||
       req.textContent.toLowerCase().includes(filter.value.toLowerCase())
   );
 };
 
-async function loadMyRequests() {
-  const response = await get(
-    `/api/requests?user=${userStore.user?.gapiUserId}`
-  );
-  ownRequests.value = response.requests;
-  filteredRequests.value = ownRequests.value;
+async function loadRequests() {
+  const route = userStore.user
+    ? `/api/requests?user=${userStore.user?.gapiUserId}`
+    : "/api/requests";
+  const response = await get(route);
+  requests.value = response.requests;
+  filteredRequests.value = requests.value;
   filter.value = "";
 }
 
-onMounted(loadMyRequests);
+onMounted(loadRequests);
 </script>
 
 <template>
   <div>
     <section class="spanned">
-      <h5>My Requests</h5>
-      <FilterInput @filter="updateFilter($event)" />
+      <h4>
+        {{ userStore.user ? "My Requests" : "Discover All Requests" }}
+      </h4>
+      <FilterInput
+        @filter="updateFilter($event)"
+        placeholder="Request or Space Name"
+      />
     </section>
     <div class="row row-cols-lg-3">
       <div
@@ -46,8 +52,14 @@ onMounted(loadMyRequests);
       >
         <RequestCard :request="request" />
       </div>
-      <div v-if="!ownRequests.length">
-        <h4>🫥 You don't have any requests.</h4>
+      <div v-if="!requests.length">
+        <h4>
+          {{
+            userStore.user
+              ? "You don't have any requests yet"
+              : "No requests made yet."
+          }}
+        </h4>
         <RouterLink to="/spaces"
           >&rarr; Visit the Spaces page to contribute.</RouterLink
         >
