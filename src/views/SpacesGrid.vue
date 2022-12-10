@@ -70,3 +70,9 @@ const updateFilter = (event: string) => {
     <CreateSpaceModal @created="loadSpaces()" />
   </section>
 </template>
+
+<style scoped>
+.bottom-buffer {
+  margin-bottom: 1rem;
+}
+</style>

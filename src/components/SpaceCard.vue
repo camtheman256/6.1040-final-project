@@ -15,7 +15,7 @@ const hasWebsite = () => Boolean(props.space.website);
 </script>
 
 <template>
-  <div class="requestCard card text-dark bg-light" @click="onCardClick">
+  <div class="spaceCard card text-dark bg-light" @click="onCardClick">
     <div class="card-body">
       <div class="card-title d-flex justify-content-between">
         <h5>{{ props.space.name }}</h5>
@@ -48,10 +48,11 @@ const hasWebsite = () => Boolean(props.space.website);
 </template>
 
 <style scoped>
-.requestCard {
+.spaceCard {
   box-shadow: -7px -7px rgb(188, 188, 188);
+  height: 100%;
 }
-.requestCard:hover {
+.spaceCard:hover {
   cursor: pointer;
   transform: scale(1.03);
 }
