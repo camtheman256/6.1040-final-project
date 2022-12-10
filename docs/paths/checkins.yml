@@ -24,7 +24,13 @@ PATH_checkin_session:
             example:
               message: "Successfully checked in user."
               checkin: {
-                  userId: "105454022127406520411",
+                  user: {
+                      "dateJoined": "November 23rd 2022, 5:31:29 pm",
+                      "gapiUserId": "105454022127406520411",
+                      "name": "Jason Yang",
+                      "imageUrl": "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      "email": "jas.yang71@gmail.com"
+                    },
                   spaceId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
                   date: "2022-11-23T22:31:29.847+00:00",
                   count: 100
