@@ -56,7 +56,7 @@ onMounted(loadRequests);
         <h4>
           {{
             userStore.user
-              ? "You don't have any requests yet"
+              ? "👻 You don't have any requests yet"
               : "No requests made yet."
           }}
         </h4>
