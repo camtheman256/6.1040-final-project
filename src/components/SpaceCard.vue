@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { useCheckInStore } from "@/stores/checkin";
+import { useUserStore } from "@/stores/user";
 import { useRouter } from "vue-router";
 import type { SpaceResponse } from "../../backend/space/util";
 
 const props = defineProps<{ space: SpaceResponse }>();
 const router = useRouter();
 const checkInStore = useCheckInStore();
+const userStore = useUserStore();
 
 const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
 
@@ -17,7 +19,7 @@ const hasWebsite = () => Boolean(props.space.website);
     <div class="card-body">
       <div class="card-title d-flex justify-content-between">
         <h5>{{ props.space.name }}</h5>
-        <div>
+        <div v-if="userStore.user">
           <button
             class="btn btn-sm btn-outline-success"
             title="Check In"
