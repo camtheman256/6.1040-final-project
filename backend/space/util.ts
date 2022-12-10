@@ -3,7 +3,7 @@ import moment from "moment";
 import type { Space } from "./model";
 
 export type SpaceResponse = {
-  //_id: string;
+  _id: string;
   place_id: string;
   formatted_address: string;
   formatted_phone_number: string;
@@ -36,13 +36,13 @@ const constructSpaceResponse = (
 
   return {
     ...spaceCopy,
-    //_id: spaceCopy._id.toString(),
+    _id: spaceCopy._id.toString(),
   };
 };
 
 const constructSpaceResponseFromObject = (space: Space): SpaceResponse => {
   return {
-    //_id: space._id.toString(),
+    _id: space._id.toString(),
     place_id: space.place_id as string,
     formatted_address: space.formatted_address as string,
     formatted_phone_number: space.formatted_phone_number as string,
