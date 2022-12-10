@@ -52,18 +52,18 @@ onMounted(loadRequests);
       >
         <RequestCard :request="request" />
       </div>
-      <div v-if="!requests.length">
-        <h4>
-          {{
-            userStore.user
-              ? "👻 You don't have any requests yet"
-              : "No requests made yet."
-          }}
-        </h4>
-        <RouterLink to="/spaces"
-          >&rarr; Visit the Spaces page to contribute.</RouterLink
-        >
-      </div>
+    </div>
+    <div v-if="!requests.length">
+      <h4>
+        {{
+          userStore.user
+            ? "👻 You don't have any requests yet"
+            : "No requests made yet."
+        }}
+      </h4>
+      <RouterLink to="/spaces"
+        >&rarr; Visit the Spaces page to contribute.</RouterLink
+      >
     </div>
   </div>
 </template>
