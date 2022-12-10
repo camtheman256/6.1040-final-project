@@ -37,7 +37,7 @@ router.get(
         });
     },
     [
-        userMiddleware.isUserLoggedIn,
+        //userMiddleware.isUserLoggedIn,
         //placeRequestMiddleware.isValidGetPlaceRequestQuery
     ],
     async (req: Request, res: Response) => {
