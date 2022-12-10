@@ -29,7 +29,7 @@ async function handleSignOut() {
   <div v-if="userStore.user">
     <img
       class="rounded-circle me-2"
-      height="40px"
+      height="40"
       :src="userStore.user.imageUrl"
     />
     <span class="navbar-text me-3" :title="userStore.user.email">{{
