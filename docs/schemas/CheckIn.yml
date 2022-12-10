@@ -1,14 +1,18 @@
 type: object
 required:
-  - userId
-  - spaceId
+  - user
+  - space
   - date
   - count
 properties:
   userId:
-    type: string
-  spaceId:
-    type: string
+    schema:
+      type: object
+      $ref: "../schemas/_index.yml#User"
+  space:
+    schema:
+      type: object
+      $ref: "../schemas/_index.yml#Space"
   date:
     type: string
   count:

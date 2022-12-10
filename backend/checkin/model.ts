@@ -18,6 +18,8 @@ export type CheckIn = {
     count: number;
 }
 
+
+
 const CheckInSchema = new Schema({
     user: {
         type: String,
