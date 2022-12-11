@@ -10,15 +10,18 @@ const checkInStore = useCheckInStore();
 const userStore = useUserStore();
 
 const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
-
-const hasWebsite = () => Boolean(props.space.website);
 </script>
 
 <template>
   <div class="spaceCard card text-dark bg-light" @click="onCardClick">
     <div class="card-body">
       <div class="card-title d-flex justify-content-between">
-        <h5>{{ props.space.name }}</h5>
+        <h5>
+          {{ props.space.name }}
+          <span class="badge text-bg-danger">{{
+            props.space.totalCheckInCount
+          }}</span>
+        </h5>
         <div v-if="userStore.user">
           <button
             class="btn btn-sm btn-outline-success"
@@ -29,7 +32,7 @@ const hasWebsite = () => Boolean(props.space.website);
             ✅
           </button>
           <div
-            v-else-if="checkInStore.today.space === space.place_id"
+            v-else-if="checkInStore.today.space.place_id === space.place_id"
             class="badge bg-success"
           >
             Checked in here
@@ -39,7 +42,7 @@ const hasWebsite = () => Boolean(props.space.website);
       <h6 class="card-subtitle mb-2 text-muted">
         {{ props.space.formatted_address }}
       </h6>
-      <p v-if="hasWebsite()" class="card-text emphasized">
+      <p v-if="props.space.website" class="card-text emphasized">
         External information
         <a :href="props.space.website" target="_blank">here</a>
       </p>

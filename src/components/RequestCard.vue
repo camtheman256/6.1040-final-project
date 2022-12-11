@@ -4,16 +4,17 @@ import { marked } from "marked";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
+import UserProfile from "./UserProfile.vue";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
 const router = useRouter();
 
-const onCardClick = () => router.push(`/space/${props.request?.space}`);
+const onCardClick = () =>
+  router.push(`/space/${props.request?.space.place_id}`);
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
-  if (props.request?.inProcess) return "In Progress";
   return "Not Addressed";
 });
 
@@ -29,6 +30,8 @@ const requestTagline = computed(() =>
     FORBID_TAGS: ["img"],
   })
 );
+
+const getDate = (isoString: string): Date => new Date(isoString);
 </script>
 
 <template>
@@ -41,11 +44,20 @@ const requestTagline = computed(() =>
           <a href="#" class="btn btn-sm btn-primary">👍</a>
         </span>
       </h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{ props.request.space.name }}
+      </h6>
       <p class="card-text" v-html="requestTagline"></p>
     </div>
     <div class="card-footer">
-      <p class="emphasized">Created {{ props.request.dateCreated }}</p>
+      <p class="emphasized">
+        <UserProfile
+          :user="props.request.author"
+          class="d-inline-flex"
+          :suffix="` at ${getDate(props.request.dateCreated).toLocaleString()}`"
+          height="30"
+        />
+      </p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
       </div>
