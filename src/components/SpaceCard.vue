@@ -16,7 +16,12 @@ const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
   <div class="spaceCard card text-dark bg-light" @click="onCardClick">
     <div class="card-body">
       <div class="card-title d-flex justify-content-between">
-        <h5>{{ props.space.name }}</h5>
+        <h5>
+          {{ props.space.name }}
+          <span class="badge text-bg-danger">{{
+            props.space.totalCheckInCount
+          }}</span>
+        </h5>
         <div v-if="userStore.user">
           <button
             class="btn btn-sm btn-outline-success"
