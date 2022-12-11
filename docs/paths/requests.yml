@@ -1,50 +1,4 @@
 PATH_requests:
-  get:
-    summary: Find a PlaceRequest
-    description: Used to get the request in collection based on placeId and/or userId. Returns all requests if no queries are given.
-    parameters:
-      - in: query
-        name: space
-        required: false
-        schema:
-          type: string
-        description: corresponding placeId of space
-      - in: query
-        name: user
-        required: false
-        schema:
-          type: string
-        description: gapi userId
-    responses:
-      '200':
-        description: 'OK'
-        content:
-          application/json:
-            schema:
-              type: array
-              properties:
-                request: 
-                  $ref: "../schemas/_index.yml#/PlaceRequest"
-            example:
-              {
-                requests: [
-                  {
-                    "_id": "638a77f66e0efba60f844cad",
-                    "author": "105454022127406520411",
-                    "space": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                    "title": "my title",
-                    "textContent": "content",
-                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
-                    "tags": [
-                      "hi"
-                    ],
-                    "anonymous": true,
-                    "upvotingUsers": [],
-                    "resolved": false,
-                    "inProcess": false
-                  }
-                ]
-              }
 
   delete:
     summary: Delete a request
@@ -103,4 +57,50 @@ PATH_requests_post:
                   space: "ChIJN1t_tDeuEmsRUsoyG83frY4",
                   title: "big problem in 3rd floor bathroom",
               }
-      
+  get:
+    summary: Find a PlaceRequest
+    description: Used to get the request in collection based on placeId and/or userId. Returns all requests if no queries are given.
+    parameters:
+      - in: query
+        name: space
+        required: false
+        schema:
+          type: string
+        description: corresponding placeId of space
+      - in: query
+        name: user
+        required: false
+        schema:
+          type: string
+        description: gapi userId
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: array
+              properties:
+                request: 
+                  $ref: "../schemas/_index.yml#/PlaceRequest"
+            example:
+              {
+                requests: [
+                  {
+                    "_id": "638a77f66e0efba60f844cad",
+                    "author": "105454022127406520411",
+                    "space": "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                    "title": "my title",
+                    "textContent": "content",
+                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
+                    "tags": [
+                      "hi"
+                    ],
+                    "anonymous": true,
+                    "upvotingUsers": [],
+                    "resolved": false,
+                    "inProcess": false
+                  }
+                ]
+              }
+
