@@ -24,8 +24,9 @@ const formatDate = (dateString: string): string =>
           Contributor since {{ formatDate(userStore.user.dateJoined) }}
         </h5>
         <p v-if="checkInStore.today">
-          You checked in to a space today at {{ checkInStore.today.date }} for
-          the {{ checkInStore.today.count }} time. Thanks!
+          You checked in to {{ checkInStore.today.space.name }} today at
+          {{ checkInStore.today.date }} for the
+          {{ checkInStore.today.count }} time. Thanks!
         </p>
         <p v-else>
           <b>You haven't checked in today!</b>&nbsp;

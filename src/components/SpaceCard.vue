@@ -29,7 +29,7 @@ const hasWebsite = () => Boolean(props.space.website);
             ✅
           </button>
           <div
-            v-else-if="checkInStore.today.space === space.place_id"
+            v-else-if="checkInStore.today.space.place_id === space.place_id"
             class="badge bg-success"
           >
             Checked in here

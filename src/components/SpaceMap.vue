@@ -76,7 +76,10 @@ function createSpacePopup(space: SpaceResponse): HTMLElement {
 
   const container = L.DomUtil.create("div");
   container.append(title);
-  if (checkInStore.today && checkInStore.today.space == space.place_id) {
+  if (
+    checkInStore.today &&
+    checkInStore.today.space.place_id == space.place_id
+  ) {
     const checkedInBadge = L.DomUtil.create("div", "badge bg-success me-3");
     checkedInBadge.innerText = "Checked in here";
     container.append(checkedInBadge);
