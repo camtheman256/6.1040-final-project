@@ -2,6 +2,7 @@
 import { useCheckInStore } from "@/stores/checkin";
 import { useUserStore } from "@/stores/user";
 import type { SpaceResponse } from "../../backend/space/util";
+import TopContributors from "./TopContributors.vue";
 
 const props = defineProps<{ space: SpaceResponse }>();
 const checkInStore = useCheckInStore();
@@ -23,7 +24,7 @@ const userStore = useUserStore();
     <div v-if="userStore.user">
       <button
         v-if="!checkInStore.today"
-        class="btn btn-success mb-3"
+        class="btn btn-success"
         @click="checkInStore.checkIn(space.place_id)"
       >
         ✅ Check In Here
@@ -35,6 +36,7 @@ const userStore = useUserStore();
         Checked in here today!
       </p>
     </div>
+    <TopContributors class="mb-3" :space="space" />
   </section>
 </template>
 

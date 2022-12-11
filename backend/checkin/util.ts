@@ -26,7 +26,7 @@ export type CheckInResponse = {
   count: number;
 };
 
-type CheckInCountsResponse = {
+export type CheckInCountsResponse = {
   user: UserResponse;
   count: number;
 };

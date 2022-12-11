@@ -10,8 +10,6 @@ const checkInStore = useCheckInStore();
 const userStore = useUserStore();
 
 const onCardClick = () => router.push(`/space/${props.space?.place_id}`);
-
-const hasWebsite = () => Boolean(props.space.website);
 </script>
 
 <template>
@@ -39,7 +37,7 @@ const hasWebsite = () => Boolean(props.space.website);
       <h6 class="card-subtitle mb-2 text-muted">
         {{ props.space.formatted_address }}
       </h6>
-      <p v-if="hasWebsite()" class="card-text emphasized">
+      <p v-if="props.space.website" class="card-text emphasized">
         External information
         <a :href="props.space.website" target="_blank">here</a>
       </p>
