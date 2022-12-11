@@ -1,31 +1,35 @@
+import type { User } from "../user/model";
 import type { Types } from "mongoose";
 import { Schema, model } from "mongoose";
+import type { Space, PopulatedSpace } from "../space/model";
 
 export type CheckIn = {
     _id: Types.ObjectId; //mongoDB
-
-    /** corresponds to google Auth's userId token */
-    user: string;
-
-    /** corresponds to placeId of space */
-    space: string;
-
+    user: Types.ObjectId;
+    space: Types.ObjectId;
     date: Date;
+    /** this CheckIn is the count^th check-in for this user, at this space. */
+    count: number;
+}
 
-    
-
-    /** Count of all checkins by this user at this space, including this one. */
+export type PopulatedCheckIn = {
+    _id: Types.ObjectId;
+    user: User;
+    space: PopulatedSpace;
+    date: Date;
     count: number;
 }
 
 const CheckInSchema = new Schema({
     user: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
     },
     space: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Space"
     },
     date: {
         type: Date,

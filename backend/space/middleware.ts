@@ -87,6 +87,10 @@ const isPlaceQueryExists = async (req: Request, res: Response, next: NextFunctio
   next();
 };
 
+async function place_idTo_id(place_id: string): Promise<string | undefined>{
+  const space = await SpaceCollection.findOne(place_id as string);
+  return space?._id.toString()?? undefined;
+}
 
 
 
@@ -95,5 +99,6 @@ export {
     isPlaceExistsDelete,
     isPlaceAlreadyExists,
     isPlaceExists,
-    isPlaceQueryExists
+    isPlaceQueryExists,
+    place_idTo_id
 }

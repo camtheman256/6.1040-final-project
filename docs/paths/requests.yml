@@ -29,23 +29,103 @@ PATH_requests:
               {
                 requests: [
                   {
-                    "_id": "638a77f66e0efba60f844cad",
-                    "author": "105454022127406520411",
-                    "space": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                    "title": "my title",
-                    "textContent": "content",
-                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
-                    "tags": [
-                      "hi"
-                    ],
-                    "anonymous": true,
-                    "upvotingUsers": [],
-                    "resolved": false,
-                    "inProcess": false
+                    _id: "638a77f66e0efba60f844cad",
+                    author: {
+                      dateJoined: "November 23rd 2022, 5:31:29 pm",
+                      gapiUserId: "105454022127406520411",
+                      name: "Jason Yang",
+                      imageUrl: "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      email: "jas.yang71@gmail.com"
+                    },
+                    space: {
+                      _id: "6394fef615757c754f136ba9",
+                      place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                      formatted_address: "48 Pirrama Rd, Pyrmont NSW 2009, Australia",
+                      formatted_phone_number: "(02) 9374 4000",
+                      name: "Google Workplace 6",
+                      url: "https://maps.google.com/?cid=10281119596374313554",
+                      website: "http://google.com",
+                      latlng: {
+                        lat: 0,
+                        lng: 0
+                      },
+                      photos: [
+                        "url1", "url2"
+                        ]
+                    },
+                    title: "my title",
+                    textContent: "content",
+                    dateCreated: "December 2nd 2022, 5:11:02 pm",
+                    anonymous: true,
+                    upvotingUsers: [UserObject, UserObject],
+                    resolved: false,
                   }
                 ]
               }
-
+PATH_requests_update:
+  put:
+    summary: Update a PlaceRequest status
+    description: Used to update the PlaceRequest resolved? boolean status
+    parameters:
+      - in: path
+        name: requestId
+        required: false
+        schema:
+          type: string
+        description: corresponding requestId of request to update
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              resolved:
+                type: boolean      
+    responses:
+      '200':
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: array
+              properties:
+                request: 
+                  $ref: "../schemas/_index.yml#/PlaceRequest"
+            example:
+              request: 
+                  {
+                    _id: "638a77f66e0efba60f844cad",
+                    author: {
+                      dateJoined: "November 23rd 2022, 5:31:29 pm",
+                      gapiUserId: "105454022127406520411",
+                      name: "Jason Yang",
+                      imageUrl: "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      email: "jas.yang71@gmail.com"
+                    },
+                    space: {
+                      _id: "6394fef615757c754f136ba9",
+                      place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                      formatted_address: "48 Pirrama Rd, Pyrmont NSW 2009, Australia",
+                      formatted_phone_number: "(02) 9374 4000",
+                      name: "Google Workplace 6",
+                      url: "https://maps.google.com/?cid=10281119596374313554",
+                      website: "http://google.com",
+                      latlng: {
+                        lat: 0,
+                        lng: 0
+                      },
+                      photos: [
+                        "url1", "url2"
+                        ]
+                    },
+                    title: "my title",
+                    textContent: "content",
+                    dateCreated: "December 2nd 2022, 5:11:02 pm",
+                    anonymous: true,
+                    upvotingUsers: [UserObject, UserObject],
+                    resolved: false,
+                  }
   delete:
     summary: Delete a request
     description: Used to delete a request from collection.
@@ -92,19 +172,36 @@ PATH_requests_checkinranked:
               {
                 requests: [
                   {
-                    "_id": "638a77f66e0efba60f844cad",
-                    "author": "105454022127406520411",
-                    "space": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                    "title": "my title",
-                    "textContent": "content",
-                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
-                    "tags": [
-                      "hi"
-                    ],
-                    "anonymous": true,
-                    "upvotingUsers": [],
-                    "resolved": false,
-                    "inProcess": false
+                    _id: "638a77f66e0efba60f844cad",
+                    author: {
+                      dateJoined: "November 23rd 2022, 5:31:29 pm",
+                      gapiUserId: "105454022127406520411",
+                      name: "Jason Yang",
+                      imageUrl: "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      email: "jas.yang71@gmail.com"
+                    },
+                    space: {
+                      _id: "6394fef615757c754f136ba9",
+                      place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                      formatted_address: "48 Pirrama Rd, Pyrmont NSW 2009, Australia",
+                      formatted_phone_number: "(02) 9374 4000",
+                      name: "Google Workplace 6",
+                      url: "https://maps.google.com/?cid=10281119596374313554",
+                      website: "http://google.com",
+                      latlng: {
+                        lat: 0,
+                        lng: 0
+                      },
+                      photos: [
+                        "url1", "url2"
+                        ]
+                    },
+                    title: "my title",
+                    textContent: "content",
+                    dateCreated: "December 2nd 2022, 5:11:02 pm",
+                    anonymous: true,
+                    upvotingUsers: [UserObject, UserObject],
+                    resolved: false,
                   }
                 ]
               }
@@ -140,54 +237,35 @@ PATH_requests_post:
             example:
               message: "Successfully created request"
               request: {
-                  author: "105454022127406520411",
-                  space: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                  title: "big problem in 3rd floor bathroom",
-              }
-  get:
-    summary: Find a PlaceRequest
-    description: Used to get the request in collection based on placeId and/or userId. Returns all requests if no queries are given.
-    parameters:
-      - in: query
-        name: space
-        required: false
-        schema:
-          type: string
-        description: corresponding placeId of space
-      - in: query
-        name: user
-        required: false
-        schema:
-          type: string
-        description: gapi userId
-    responses:
-      '200':
-        description: 'OK'
-        content:
-          application/json:
-            schema:
-              type: array
-              properties:
-                request: 
-                  $ref: "../schemas/_index.yml#/PlaceRequest"
-            example:
-              {
-                requests: [
-                  {
-                    "_id": "638a77f66e0efba60f844cad",
-                    "author": "105454022127406520411",
-                    "space": "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                    "title": "my title",
-                    "textContent": "content",
-                    "dateCreated": "December 2nd 2022, 5:11:02 pm",
-                    "tags": [
-                      "hi"
-                    ],
-                    "anonymous": true,
-                    "upvotingUsers": [],
-                    "resolved": false,
-                    "inProcess": false
+                    _id: "638a77f66e0efba60f844cad",
+                    author: {
+                      dateJoined: "November 23rd 2022, 5:31:29 pm",
+                      gapiUserId: "105454022127406520411",
+                      name: "Jason Yang",
+                      imageUrl: "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      email: "jas.yang71@gmail.com"
+                    },
+                    space: {
+                      _id: "6394fef615757c754f136ba9",
+                      place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                      formatted_address: "48 Pirrama Rd, Pyrmont NSW 2009, Australia",
+                      formatted_phone_number: "(02) 9374 4000",
+                      name: "Google Workplace 6",
+                      url: "https://maps.google.com/?cid=10281119596374313554",
+                      website: "http://google.com",
+                      latlng: {
+                        lat: 0,
+                        lng: 0
+                      },
+                      photos: [
+                        "url1", "url2"
+                        ]
+                    },
+                    title: "my title",
+                    textContent: "content",
+                    dateCreated: "December 2nd 2022, 5:11:02 pm",
+                    anonymous: true,
+                    upvotingUsers: [UserObject, UserObject],
+                    resolved: false,
                   }
-                ]
-              }
-
+      

@@ -1,3 +1,4 @@
+import UserCollection from "../user/collection";
 import type { HydratedDocument, Types } from "mongoose";
 import type { Space } from "./model";
 import SpaceModel from "./model";
@@ -21,23 +22,39 @@ class SpaceCollection {
             url,
             website,
             latlng,
+            localLegend: undefined,
+            localLegendCount: undefined,
+            totalCheckInCount: 0
         });
         await space.save();
-        return space;
+        return space.populate("localLegend");
     }
 
     static async findOne(place_id: string): Promise<HydratedDocument<Space> | null>{
         return SpaceModel.findOne({
-            place_id: place_id
-        });
+            place_id: place_id as string
+        }).populate("localLegend");
     }
 
     static async findAll(): Promise<Array<HydratedDocument<Space>>>{
-        return SpaceModel.find({});
+        return SpaceModel.find({}).populate("localLegend");
     }
 
     static async deleteOne(place_id: string): Promise<void>{
         SpaceModel.deleteOne({place_id: place_id});
+    }
+
+    static async updateOne(place_id: string, totalCheckInCount: number, newLegend: string, newLegendCount: number): Promise<HydratedDocument<Space> | null>{
+        const space = await SpaceModel.findOne({place_id: place_id});
+        const legend = await UserCollection.findOneFrom_id(newLegend);
+        if (space && legend){
+            space.localLegend = legend._id;
+            space.totalCheckInCount = totalCheckInCount;
+            space.localLegendCount = newLegendCount;
+            await space.save();
+            return space.populate("localLegend");
+        }
+        return null; //I know im sorry pls forgive me
     }
 }
 

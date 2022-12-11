@@ -14,7 +14,7 @@ const router = express.Router();
  * @name POST /api/spaces
  */
 router.post(
-  "/",
+  "/:place_id?",
   [
     userMiddleware.isUserLoggedIn,
     spaceMiddleware.isValidPlaceResponse,
@@ -49,7 +49,7 @@ router.delete(
  * @name GET /api/spaces
  */
 router.get(
-  "/",
+  "/:place_id?",
   async (req: Request, res: Response, next: NextFunction) => {
     if (req.query.place_id !== undefined) {
       next();

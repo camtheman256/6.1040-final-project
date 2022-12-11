@@ -16,7 +16,8 @@ const updateFilter = (event: string) => {
   filteredRequests.value = requests.value.filter(
     (req) =>
       req.title.toLowerCase().includes(filter.value.toLowerCase()) ||
-      req.textContent.toLowerCase().includes(filter.value.toLowerCase())
+      req.textContent.toLowerCase().includes(filter.value.toLowerCase()) ||
+      req.space.name.toLowerCase().includes(filter.value.toLowerCase())
   );
 };
 

@@ -28,5 +28,11 @@ class UserCollection {
       gapiUserId: gapiUserId as string,
     });
   }
+
+  static async findOneFrom_id(mongo_id: string): Promise<HydratedDocument<User> |null> {
+    return UserModel.findOne({
+      _id: mongo_id as string
+    });
+  }
 }
 export default UserCollection;

@@ -4,6 +4,7 @@ import type { PlaceRequestResponse } from "../../backend/request/util";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { useUserStore } from "@/stores/user";
+import UserProfile from "./UserProfile.vue";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
@@ -15,7 +16,6 @@ const userStore = useUserStore();
 
 const requestStatus = computed<string>(() => {
   if (props.request?.resolved) return "Resolved";
-  if (props.request?.inProcess) return "In Progress";
   return "Not Addressed";
 });
 
@@ -30,6 +30,8 @@ const purify = DOMPurify(window);
 const responseHtml = computed(() =>
   purify.sanitize(marked.parse(props.request.textContent))
 );
+
+const getDate = (isoString: string): Date => new Date(isoString);
 </script>
 
 <template>
@@ -48,9 +50,18 @@ const responseHtml = computed(() =>
           </button>
         </span>
       </h5>
-      <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{ props.request.space.name }}
+      </h6>
       <p class="card-text" v-html="responseHtml"></p>
-      <p class="emphasized">Created {{ props.request.dateCreated }}</p>
+      <p class="emphasized">
+        <UserProfile
+          :user="props.request.author"
+          height="30"
+          class="d-inline-flex align-middle"
+          :suffix="` at ${getDate(props.request.dateCreated).toLocaleString()}`"
+        />
+      </p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
       </div>

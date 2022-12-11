@@ -53,8 +53,7 @@ const isValidCreateRequestPayload = async (
     !createRequestPayload.space ||
     !createRequestPayload.title ||
     !createRequestPayload.textContent ||
-    createRequestPayload.anonymous === undefined ||
-    createRequestPayload.tags === undefined
+    createRequestPayload.anonymous === undefined
   ) {
     res.status(400).json({
       message: `Missing at least one of the following values: [author, space, title, textContent, anonymous]`,

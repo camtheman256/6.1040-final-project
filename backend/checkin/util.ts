@@ -1,27 +1,33 @@
 import type { HydratedDocument } from "mongoose";
 import moment from "moment";
-import type { CheckIn } from "./model";
+import type { CheckIn, PopulatedCheckIn } from "./model";
+import type { User } from "../user/model";
+import {
+  type UserResponse,
+  constructUserResponse,
+  constructUserResponseFromObject,
+} from "../user/util";
+import {
+  type SpaceResponse,
+  constructSpaceResponse,
+  constructSpaceResponseFromObject,
+} from "../space/util";
 
 export type CheckInResponse = {
   _id: string; //mongoDB
 
-  /** corresponds to google Auth's userId token */
-  user: string;
+  user: UserResponse;
 
-  /** corresponds to placeId of space */
-  space: string;
+  space: SpaceResponse;
 
   date: string;
 
-  /** Count of all checkins by this user at this space, including this one. */
+  /** this CheckIn is the count^th check-in for this user, at this space. */
   count: number;
 };
 
-type CheckInCountsResponse = {
-  /** corresponds to google Auth's userId token */
-  user: string;
-
-  /** Count of all checkins by this user at this space. */
+export type CheckInCountsResponse = {
+  user: UserResponse;
   count: number;
 };
 
@@ -31,8 +37,7 @@ type CheckInCountsResponse = {
  * @param {Date} date - A date object
  * @returns {string} - formatted date as string
  */
-const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+const formatDate = (date: Date): string => date.toISOString();
 
 /**
  * @param {HydratedDocument<CheckIn>}
@@ -41,16 +46,29 @@ const formatDate = (date: Date): string =>
 const constructCheckInResponse = (
   checkin: HydratedDocument<CheckIn>
 ): CheckInResponse => {
-  const checkinCopy: CheckIn = {
+  const checkinCopy: PopulatedCheckIn = {
     ...checkin.toObject({
       versionKey: false, // Cosmetics; prevents returning of __v property
     }),
   };
   return {
-    ...checkinCopy,
     _id: checkinCopy._id.toString(),
     date: formatDate(checkinCopy.date),
+    user: constructUserResponseFromObject(checkinCopy.user),
+    space: constructSpaceResponseFromObject(checkinCopy.space),
+    count: checkinCopy.count,
   };
 };
 
-export { constructCheckInResponse };
+const constructCountsResponse = (countObject: {
+  user: HydratedDocument<User>;
+  count: number;
+}): CheckInCountsResponse => {
+  const user: User = countObject.user;
+  return {
+    user: constructUserResponseFromObject(user),
+    count: countObject.count,
+  };
+};
+
+export { constructCheckInResponse, constructCountsResponse };
