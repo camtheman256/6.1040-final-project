@@ -27,3 +27,11 @@ properties:
         type: number
       lng:
         type: number
+  localLegend:
+    schema:
+      type: object
+      $ref: "../schemas/_index.yml#User"
+  localLegendCount:
+    type: number
+  totalCheckInCount:
+    type: number

@@ -70,9 +70,36 @@ PATH_spaces:
               {
                 spaces: [
                   {
+                    _id: "63955094305424c1a4bbb7ce",
                     place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
                     formatted_address: "123 Apple St. Anchorage, AL 12345",
-                    name: "aPlaceInAlaska"
+                    formatted_phone_number: "(02) 9374 4000",
+                    name: "Google Workplace 6",
+                    photos: [
+                      {
+                        height: 0,
+                        width: 0,
+                        html_attributions: [
+                          "string"
+                        ],
+                        photo_reference: "Aap_uEDY1GahdnFHaMArH3g6W4bELCIn9yaZ0XGqh1-G2lX3OwzTExM6g-_0U8qedk5o3R1SmtMK-NMt34dDMcCNnc4DWREX0vQEH9DjvfF70ZPHo3IFbT-TU_oCNCCB3kxe36EsdXeoKEtRH74NueUIeslebZuVeteDpKvpwVqxRpZFVSjS"
+                      }
+                    ],
+                    url: "https://maps.google.com/?cid=10281119596374313554",
+                    website: "http://google.com",
+                    latlng: {
+                      lat: 0,
+                      lng: 0
+                    },
+                    localLegend: {
+                      dateJoined: "2022-11-23T22:31:29.847Z",
+                      gapiUserId: "105454022127406520411",
+                      name: "Jason Yang",
+                      imageUrl: "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      email: "jas.yang71@gmail.com"
+                    },
+                    localLegendCount: 1,
+                    totalCheckInCount: 1
                   }
                 ]
               }
@@ -122,8 +149,8 @@ PATH_spaces:
               message: "Space with place_id: ChIJN1t_tDeuEmsRUsoyG83frY4 does not exist."
 
   put:
-    summary: Update a space
-    description: Used to update a space in collection.
+    summary: Update a space [TODO]
+    description: Used to update a space in collection. [NOT IMPLEMENTED YET]
     requestBody:
       required: true
       content:
@@ -152,9 +179,36 @@ PATH_spaces:
               {
                 message: "Space has successfully been updated.",
                 space: {
-                  place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-                  formatted_address: "123 Apple St. Anchorage, AL 12345",
-                  name: "aPlaceInAlaska"
-                }
+                    _id: "63955094305424c1a4bbb7ce",
+                    place_id: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                    formatted_address: "123 Apple St. Anchorage, AL 12345",
+                    formatted_phone_number: "(02) 9374 4000",
+                    name: "Google Workplace 6",
+                    photos: [
+                      {
+                        height: 0,
+                        width: 0,
+                        html_attributions: [
+                          "string"
+                        ],
+                        photo_reference: "Aap_uEDY1GahdnFHaMArH3g6W4bELCIn9yaZ0XGqh1-G2lX3OwzTExM6g-_0U8qedk5o3R1SmtMK-NMt34dDMcCNnc4DWREX0vQEH9DjvfF70ZPHo3IFbT-TU_oCNCCB3kxe36EsdXeoKEtRH74NueUIeslebZuVeteDpKvpwVqxRpZFVSjS"
+                      }
+                    ],
+                    url: "https://maps.google.com/?cid=10281119596374313554",
+                    website: "http://google.com",
+                    latlng: {
+                      lat: 0,
+                      lng: 0
+                    },
+                    localLegend: {
+                      dateJoined: "2022-11-23T22:31:29.847Z",
+                      gapiUserId: "105454022127406520411",
+                      name: "Jason Yang",
+                      imageUrl: "https://lh3.googleusercontent.com/a/ALm5wu3edgh0ha4sa2QnxQmcIpwZO4wF5_mUDRrF1XaS=s96-c",
+                      email: "jas.yang71@gmail.com"
+                    },
+                    localLegendCount: 1,
+                    totalCheckInCount: 1
+                  }
               }
       
