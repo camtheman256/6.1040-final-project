@@ -1,9 +1,17 @@
 import type { HydratedDocument } from "mongoose";
 import moment from "moment";
 import type { CheckIn, PopulatedCheckIn } from "./model";
-
-import { type UserResponse, constructUserResponse, constructUserResponseFromObject } from "../user/util";
-import { type SpaceResponse, constructSpaceResponse, constructSpaceResponseFromObject } from "../space/util";
+import type { User } from "../user/model";
+import {
+  type UserResponse,
+  constructUserResponse,
+  constructUserResponseFromObject,
+} from "../user/util";
+import {
+  type SpaceResponse,
+  constructSpaceResponse,
+  constructSpaceResponseFromObject,
+} from "../space/util";
 
 export type CheckInResponse = {
   _id: string; //mongoDB
@@ -29,8 +37,7 @@ type CheckInCountsResponse = {
  * @param {Date} date - A date object
  * @returns {string} - formatted date as string
  */
-const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+const formatDate = (date: Date): string => date.toISOString();
 
 /**
  * @param {HydratedDocument<CheckIn>}
@@ -49,8 +56,19 @@ const constructCheckInResponse = (
     date: formatDate(checkinCopy.date),
     user: constructUserResponseFromObject(checkinCopy.user),
     space: constructSpaceResponseFromObject(checkinCopy.space),
-    count: checkinCopy.count
+    count: checkinCopy.count,
   };
 };
 
-export { constructCheckInResponse };
+const constructCountsResponse = (countObject: {
+  user: HydratedDocument<User>;
+  count: number;
+}): CheckInCountsResponse => {
+  const user: User = countObject.user;
+  return {
+    user: constructUserResponseFromObject(user),
+    count: countObject.count,
+  };
+};
+
+export { constructCheckInResponse, constructCountsResponse };

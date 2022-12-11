@@ -38,7 +38,7 @@ export type PlaceRequestResponse = {
  * @returns {string} - formatted date as string
  */
 const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  date.toISOString();
 
 /**
  * @param {HydratedDocument<PlaceRequest>}
@@ -57,7 +57,7 @@ const constructPlaceRequestResponse = (
     author: constructUserResponseFromObject(placeRequestCopy.author),
     space: constructSpaceResponseFromObject(placeRequestCopy.space),
     _id: placeRequestCopy._id.toString(),
-    dateCreated: formatDate(placeRequest.dateCreated),
+    dateCreated: formatDate(placeRequestCopy.dateCreated),
     textContent: placeRequestCopy.textContent,
     anonymous: placeRequestCopy.anonymous,
     resolved: placeRequestCopy.resolved,

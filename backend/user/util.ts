@@ -17,7 +17,7 @@ export type UserResponse = {
  * @returns {string} - formatted date as string
  */
 const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  date.toISOString();
 
 /**
  * Transform a raw User object from the database into an object
