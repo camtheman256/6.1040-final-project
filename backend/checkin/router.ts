@@ -5,7 +5,7 @@ import CheckInCollection from "./collection";
 import SpaceCollection from "../space/collection";
 import UserCollection from "../user/collection";
 
-import { constructCheckInResponse } from "./util";
+import { constructCheckInResponse, constructCountsResponse } from "./util";
 
 import * as userMiddleware from "../user/middleware"
 import * as spaceMiddleware from "../space/middleware"
@@ -13,6 +13,7 @@ import * as checkInMiddleware from "./middleware"
 import type { User } from "../user/model";
 
 import { type UserResponse, constructUserResponse, constructUserResponseFromObject } from "../user/util";
+import type { HydratedDocument } from "mongoose";
 
 const router = express.Router();
 
@@ -99,21 +100,16 @@ router.get(
     async (req: Request, res: Response, next: NextFunction) => {
         const checkIns = await CheckInCollection.findAllBySpace(req.params.place_id);
         const finalCheckInCounts: Map<string, number> = checkInMiddleware.countCheckInsByUser(checkIns);
-        const finalCountArray: Array<{user: UserResponse, count: number}> = new Array();
-
-        finalCheckInCounts.forEach(async (value: number, key: string) => {
-            const user = await UserCollection.findOneFrom_id(key);
-            const checkInCount: number = value;
+        const finalCountsArray: Array<{user: HydratedDocument<User>, count: number}> = [];
+        for (const [key, val] of finalCheckInCounts){
+            const user = await UserCollection.findOneFrom_id(key as string);
             if (user){
-                finalCountArray.push(
-                    {user: constructUserResponse(user),
-                    count: checkInCount}
-                );
+                finalCountsArray.push({user: user, count: val});
             }
-        });
+        };
         res.status(200).json({
-            checkInCounts: finalCountArray
-        });
+            checkInCounts: finalCountsArray.map(constructCountsResponse)
+        })
     }
 )
 
