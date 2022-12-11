@@ -123,7 +123,7 @@ router.get(
     res.status(200).json({
       checkInCounts: finalCountsArray
         .map(constructCountsResponse)
-        .sort((a, b) => a.count - b.count),
+        .sort((a, b) => b.count - a.count),
     });
   }
 );
