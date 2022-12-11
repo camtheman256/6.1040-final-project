@@ -30,7 +30,7 @@ type CheckInCountsResponse = {
  * @returns {string} - formatted date as string
  */
 const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  date.toISOString();
 
 /**
  * @param {HydratedDocument<CheckIn>}

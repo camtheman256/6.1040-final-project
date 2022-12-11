@@ -27,7 +27,7 @@ type ReplyResponse = {
  * @returns {string} - formatted date as string
  */
 const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  date.toISOString();
 
 /**
  * @param {HydratedDocument<Reply>}
@@ -44,7 +44,7 @@ const constructReplyResponse = (
   return {
     ...replyCopy,
     _id: replyCopy._id.toString(),
-    dateCreated: formatDate(reply.dateCreated),
+    dateCreated: formatDate(replyCopy.dateCreated),
   };
 };
 
