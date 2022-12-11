@@ -3,7 +3,7 @@ import moment from "moment";
 import type { User } from "./model";
 
 export type UserResponse = {
-  _id: string;
+  //_id: string;
   gapiUserId: string;
   name: string;
   imageUrl: string;
@@ -17,7 +17,7 @@ export type UserResponse = {
  * @returns {string} - formatted date as string
  */
 const formatDate = (date: Date): string =>
-  moment(date).format("MMMM Do YYYY, h:mm:ss a");
+  date.toISOString();
 
 /**
  * Transform a raw User object from the database into an object
@@ -35,9 +35,20 @@ const constructUserResponse = (user: HydratedDocument<User>): UserResponse => {
   };
   return {
     ...userCopy,
-    _id: userCopy._id.toString(),
+    //_id: userCopy._id.toString(),
     dateJoined: formatDate(user.dateJoined),
   };
 };
 
-export { constructUserResponse };
+const constructUserResponseFromObject = (user: User): UserResponse => {
+  return {
+    dateJoined: formatDate(user.dateJoined),
+    gapiUserId: user.gapiUserId as string,
+    name: user.name as string,
+    imageUrl: user.imageUrl as string,
+    email: user.email as string
+  }
+}
+
+export { constructUserResponse,
+  constructUserResponseFromObject };

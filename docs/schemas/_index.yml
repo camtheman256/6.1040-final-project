@@ -31,7 +31,6 @@ requestCreatePayload:
     - space
     - title
     - textContent
-    - tags
     - anonymous
   properties:
     author:
@@ -42,10 +41,6 @@ requestCreatePayload:
       type: string
     textContent:
       type: string
-    tags:
-      type: array
-      items: 
-        type: string
     anonymous:
       type: boolean
 

@@ -33,6 +33,8 @@ paths:
     $ref: "./paths/requests.yml#/PATH_requests_post"
   /api/requests:
     $ref: "./paths/requests.yml#/PATH_requests"
+  /api/requests/{requestId}:
+    $ref: "./paths/requests.yml#/PATH_requests_update"
   /api/checkins/session/{place_id}:
     $ref: "./paths/checkins.yml#/PATH_checkin_session"
   /api/checkins/today/session:

@@ -57,7 +57,9 @@ const updateFilter = (event: string) => {
         />
       </div>
     </section>
-    <h5 class="bottom-buffer">All Spaces</h5>
+    <h5 class="bottom-buffer">
+      All Spaces <span class="badge text-bg-danger"># of check-ins</span>
+    </h5>
     <div class="row row-cols-md-3">
       <div
         v-for="space in filteredSpaces"

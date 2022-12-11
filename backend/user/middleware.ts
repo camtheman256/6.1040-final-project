@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 
-import type { HydratedDocument } from "mongoose";
+import type { HydratedDocument, Types } from "mongoose";
 import { OAuth2Client, type TokenPayload } from "google-auth-library";
 
 import UserCollection from "./collection";
@@ -42,6 +42,15 @@ async function createUserFromGapiAuth(
 	return newUser;
   }
   return user;
+}
+
+/**
+ * Takes in gapiUserId and returns mongo _id reference to document, if one exists
+ * @param gapiUserId 
+ */
+async function gapiIdTo_id(gapiUserId: string): Promise<string | undefined>{
+  const user = await UserCollection.findOneFromGapiUserId(gapiUserId);
+  return user?._id.toString()?? undefined;
 }
 
 /**
@@ -115,5 +124,6 @@ export {
   isUserLoggedIn,
   isUserLoggedOut,
   isCurrentSessionUserExists,
-  isUserQueryExists
+  isUserQueryExists,
+  gapiIdTo_id
 };
