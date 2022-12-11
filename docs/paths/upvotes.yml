@@ -1,0 +1,63 @@
+PATH_upvotes_post:
+  post:
+    summary: Create an upvote
+    description: Create a upvote as a user for a request
+    parameters:
+      - in: path
+        name: requestId
+        required: true
+        schema:
+          type: string
+        description: corresponding requestId of request to add upvote to
+
+    responses:
+      '201':
+        description: 'Created'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message: 
+                  type: string
+                request:
+                  $ref: '../schemas/_index.yml#/PlaceRequest'
+            example:
+              message: "Successfully added Upvote"
+              request: {
+                  author: "105454022127406520411",
+                  space: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                  title: "big problem in 3rd floor bathroom",
+                  upvotingUsers: ['userIdexample']
+              }
+
+PATH_upvotes:
+  delete:
+    summary: Delete an upvote
+    description: Used to delete an upvote from a request.
+    parameters:
+      - in: query
+        name: requestId
+        required: true
+        schema:
+          type: string
+    responses:
+      '201':
+        description: 'Deleted'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                request:
+                  $ref: '../schemas/_index.yml#/PlaceRequest'
+            example:
+              message: "Successfully deleted Upvote"
+              request: {
+                  author: "105454022127406520411",
+                  space: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+                  title: "big problem in 3rd floor bathroom",
+                  upvotingUsers: []
+              }
