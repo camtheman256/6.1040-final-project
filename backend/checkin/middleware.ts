@@ -8,6 +8,8 @@ import type { HydratedDocument } from "mongoose";
 import CheckInCollection from "./collection";
 import type { CheckIn } from "./model";
 
+import type { Space } from "../space/model";
+
 /**
  * Checks if current session user is allowed to check into space with req.params.place_id,
  * in other words, has session user checked in space already today?
@@ -39,7 +41,18 @@ function countCheckInsByUser(checkIns: Array<HydratedDocument<CheckIn>>): Map<st
     return finalSums;
 }
 
+async function refreshSpaceLocalLegend(place_id: string): Promise<HydratedDocument<Space> | null>{
+    const space = await SpaceCollection.findOne(place_id as string);
+    const spaceCheckIns = await CheckInCollection.findAllBySpace(place_id as string);
+    const totalCount = spaceCheckIns.length;
+    const countedCheckIns = countCheckInsByUser(spaceCheckIns);
+    const legendCount = [...countedCheckIns.entries()].reduce((a, e ) => e[1] > a[1] ? e : a)
+    const newSpace = await SpaceCollection.updateOne(place_id, totalCount, legendCount[0], legendCount[1]);
+    return newSpace;
+}   
+
 export {
     isSessionUserNotCheckInToday,
-    countCheckInsByUser
+    countCheckInsByUser,
+    refreshSpaceLocalLegend
 }

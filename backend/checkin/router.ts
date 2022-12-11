@@ -30,7 +30,7 @@ const router = express.Router();
     ],
     async (req: Request, res: Response, next: NextFunction) => {
         const newCheckIn = await CheckInCollection.addOne(req.session.userId as string, req.params.place_id);
-
+        console.log(newCheckIn)
         res.status(201).json({
             message: "Successfully checked in!",
             checkin: constructCheckInResponse(newCheckIn)
