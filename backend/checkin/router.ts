@@ -36,17 +36,17 @@ const router = express.Router();
 )
 
 /**
- * @name GET /api/checkin/today/session/{place_id}
+ * @name GET /api/checkin/today/session
  */
 router.get(
-    "/today/session/:place_id",
+    "/today/session",
     [
         userMiddleware.isUserLoggedIn,
-        spaceMiddleware.isPlaceExists,
+        //spaceMiddleware.isPlaceExists,
         //checkInMiddleware.isSessionUserNotCheckInToday,
     ],
     async (req: Request, res: Response, next: NextFunction) => {
-        const todayCheckIn = await CheckInCollection.findOneToday(req.session.userId as string, req.params.place_id);
+        const todayCheckIn = await CheckInCollection.findOneToday(req.session.userId as string /*req.params.place_id*/);
         if (!todayCheckIn){
             res.status(404).json({
                 message: "You have not checked in yet today."
@@ -54,7 +54,7 @@ router.get(
             return;
         }
         res.status(200).json({
-            checkin: todayCheckIn
+            checkin: constructCheckInResponse(todayCheckIn)
         });
     }
 )

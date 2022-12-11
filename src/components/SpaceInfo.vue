@@ -1,7 +1,11 @@
 <script lang="ts" setup>
+import { useCheckInStore } from "@/stores/checkin";
+import { useUserStore } from "@/stores/user";
 import type { SpaceResponse } from "../../backend/space/util";
 
 const props = defineProps<{ space: SpaceResponse }>();
+const checkInStore = useCheckInStore();
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -15,6 +19,21 @@ const props = defineProps<{ space: SpaceResponse }>();
     <div class="emphasized spanned">
       <p>{{ props.space.formatted_address }}</p>
       <p>{{ props.space.formatted_phone_number }}</p>
+    </div>
+    <div v-if="userStore.user">
+      <button
+        v-if="!checkInStore.today"
+        class="btn btn-success mb-3"
+        @click="checkInStore.checkIn(space.place_id)"
+      >
+        ✅ Check In Here
+      </button>
+      <p
+        v-else-if="checkInStore.today.space === space.place_id"
+        class="badge bg-success"
+      >
+        Checked in here today!
+      </p>
     </div>
   </section>
 </template>

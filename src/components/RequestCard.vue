@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { useUserStore } from "@/stores/user";
+import DOMPurify from "dompurify";
+import { marked } from "marked";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
@@ -6,6 +9,7 @@ import type { PlaceRequestResponse } from "../../backend/request/util";
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
 const router = useRouter();
+const userStore = useUserStore();
 
 const onCardClick = () => router.push(`/space/${props.request?.space}`);
 
@@ -20,6 +24,13 @@ const statusStyle = {
   "bg-warning": requestStatus.value === "In Progress",
   "bg-success": requestStatus.value === "Resolved",
 };
+
+const purify = DOMPurify(window);
+const requestTagline = computed(() =>
+  purify.sanitize(marked.parseInline(props.request.textContent, {}), {
+    FORBID_TAGS: ["img"],
+  })
+);
 </script>
 
 <template>
@@ -29,13 +40,19 @@ const statusStyle = {
         {{ props.request.title }}
         <span class="text-muted">
           {{ props.request.upvotingUsers.length }}
-          <a href="#" class="btn btn-sm btn-primary">👍</a>
+          <button
+            href="#"
+            class="btn btn-sm btn-primary"
+            :disabled="!userStore.user"
+          >
+            👍
+          </button>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ props.request.space }}</h6>
-      <p class="card-text">
-        {{ props.request.textContent }}
-      </p>
+      <p class="card-text" v-html="requestTagline"></p>
+    </div>
+    <div class="card-footer">
       <p class="emphasized">Created {{ props.request.dateCreated }}</p>
       <div class="btn status text-white" :class="statusStyle">
         Status: {{ requestStatus }}
@@ -47,6 +64,8 @@ const statusStyle = {
 <style scoped>
 .requestCard {
   box-shadow: -7px -7px rgb(188, 188, 188);
+  height: 100%;
+  padding-bottom: 8px;
 }
 .requestCard:hover {
   cursor: pointer;

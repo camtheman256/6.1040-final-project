@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import type { SpaceResponse } from "../../backend/space/util";
-import FilterInput from "./FilterInput.vue";
-import SpaceCard from "./SpaceCard.vue";
-import { onMounted, reactive, ref } from "vue";
-import CreateSpaceModal from "./CreateSpaceModal.vue";
+import FilterInput from "../components/FilterInput.vue";
+import SpaceCard from "../components/SpaceCard.vue";
+import { onMounted, ref } from "vue";
+import CreateSpaceModal from "../components/CreateSpaceModal.vue";
 import { useUserStore } from "@/stores/user";
 import { get } from "@/utils";
+import SpaceMap from "@/components/SpaceMap.vue";
 
 const userStore = useUserStore();
 const allSpaces = ref<SpaceResponse[]>([]);
@@ -31,6 +32,11 @@ const updateFilter = (event: string) => {
 </script>
 
 <template>
+  <section>
+    <h1>All Spaces</h1>
+    <SpaceMap :spaces="allSpaces" />
+    <hr />
+  </section>
   <section>
     <section class="d-flex flex-wrap mb-3 justify-content-between">
       <div>
@@ -64,3 +70,9 @@ const updateFilter = (event: string) => {
     <CreateSpaceModal @created="loadSpaces()" />
   </section>
 </template>
+
+<style scoped>
+.bottom-buffer {
+  margin-bottom: 1rem;
+}
+</style>

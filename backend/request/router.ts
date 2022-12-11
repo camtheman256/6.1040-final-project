@@ -10,7 +10,9 @@ import { constructPlaceRequestResponse } from "./util";
 
 import * as userMiddleware from "../user/middleware"
 import * as spaceMiddleware from "../space/middleware"
+import * as checkInMiddleware from "../checkin/middleware"
 import * as placeRequestMiddleware from "./middleware"
+import CheckInCollection from "../checkin/collection";
 
 const router = express.Router();
 
@@ -44,6 +46,22 @@ router.get(
         res.status(200).json({
             requests: allRequests.map(constructPlaceRequestResponse)
         });
+    }
+)
+
+/**
+ * @name GET /api/requests/checkin_ranked/{place_id}
+ */
+router.get(
+    "/checkin_ranked/:place_id",
+    [
+        spaceMiddleware.isPlaceExists
+    ],
+    async (req: Request, res: Response, next: NextFunction) => {
+        const requestsRanked = await PlaceRequestCollection.findRankedBySpace(req.params.place_id as string);
+        res.status(200).json({
+            requests: requestsRanked.map(constructPlaceRequestResponse)
+        })
     }
 )
 

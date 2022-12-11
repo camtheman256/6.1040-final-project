@@ -72,12 +72,12 @@ const isPlaceExists = async (req: Request, res: Response, next: NextFunction) =>
  * Checks if place_id in req.query exists; move on if req.query not provided
  */
 const isPlaceQueryExists = async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.query.space) {
+  if (!req.query.space && !req.query.place_id){
     next();
     return;
   }
-  const place_id: string = req.query.space as string;
-  const space = await SpaceCollection.findOne(place_id);
+  const place_id = req.query.space?? req.query.place_id;
+  const space = await SpaceCollection.findOne(place_id as string);
   if (!space) {
     res.status(404).json({
       message: `Space with place_id: ${place_id} does not exist.`
