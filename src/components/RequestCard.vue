@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useUserStore } from "@/stores/user";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
 import { computed } from "vue";
@@ -9,6 +10,7 @@ import UserProfile from "./UserProfile.vue";
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
 const router = useRouter();
+const userStore = useUserStore();
 
 const onCardClick = () =>
   router.push(`/space/${props.request?.space.place_id}`);
@@ -41,7 +43,13 @@ const getDate = (isoString: string): Date => new Date(isoString);
         {{ props.request.title }}
         <span class="text-muted">
           {{ props.request.upvotingUsers.length }}
-          <a href="#" class="btn btn-sm btn-primary">👍</a>
+          <button
+            href="#"
+            class="btn btn-sm btn-primary"
+            :disabled="!userStore.user"
+          >
+            👍
+          </button>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">
@@ -49,6 +57,7 @@ const getDate = (isoString: string): Date => new Date(isoString);
       </h6>
       <p class="card-text" v-html="requestTagline"></p>
     </div>
+    <div class="card-footer"></div>
     <div class="card-footer">
       <p class="emphasized">
         <UserProfile
