@@ -2,7 +2,7 @@ import type { Types } from "mongoose";
 import { Schema, model } from "mongoose";
 
 import type { User } from "../user/model"
-import type { Space } from "../space/model"
+import type { Space, PopulatedSpace } from "../space/model"
 
 export type PlaceRequest = {
     _id: Types.ObjectId; //mongoDB
@@ -37,7 +37,7 @@ export type PopulatedPlaceRequest = {
 
     author: User;
 
-    space: Space;
+    space: PopulatedSpace;
 
     title: string;
     textContent: string; //markdown?

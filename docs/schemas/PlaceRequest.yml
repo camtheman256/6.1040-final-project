@@ -9,11 +9,11 @@ properties:
   author:
     schema:
       type: object
-      $ref: "../schemas/_index.yml#User"
+      $ref: "./User.yml"
   space:
     schema:
       type: object
-      $ref: "../schemas/_index.yml#Space"
+      $ref: "./Space.yml"
   title:
     type: string
   textContent:
@@ -31,6 +31,6 @@ properties:
     items: 
       schema:
         type: object
-        $ref: "./_index.yml#User"
+        $ref: "./User.yml"
   resolved:
     type: boolean

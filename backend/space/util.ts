@@ -1,6 +1,7 @@
 import type { HydratedDocument } from "mongoose";
 import moment from "moment";
-import type { Space } from "./model";
+import type { Space, PopulatedSpace } from "./model";
+import { type UserResponse, constructUserResponse, constructUserResponseFromObject } from "../user/util";
 
 export type SpaceResponse = {
   _id: string;
@@ -19,6 +20,12 @@ export type SpaceResponse = {
   website: string;
 
   latlng?: any;
+
+  localLegend?: UserResponse;
+
+  localLegendCount?: number;
+
+  totalCheckInCount: number;
 };
 
 /**
@@ -28,19 +35,29 @@ export type SpaceResponse = {
 const constructSpaceResponse = (
   space: HydratedDocument<Space>
 ): SpaceResponse => {
-  const spaceCopy: Space = {
+  const spaceCopy: PopulatedSpace = {
     ...space.toObject({
       versionKey: false, // Cosmetics; prevents returning of __v property
     }),
   };
 
   return {
-    ...spaceCopy,
     _id: spaceCopy._id.toString(),
+    place_id: spaceCopy.place_id as string,
+    formatted_address: spaceCopy.formatted_address as string,
+    formatted_phone_number: spaceCopy.formatted_phone_number as string,
+    name: spaceCopy.name as string,
+    photos: spaceCopy.photos,
+    url: spaceCopy.url,
+    website: spaceCopy.website,
+    latlng: spaceCopy.latlng,
+    localLegend: spaceCopy.localLegend? constructUserResponseFromObject(spaceCopy.localLegend) : undefined,
+    localLegendCount: spaceCopy.localLegendCount,
+    totalCheckInCount: spaceCopy.totalCheckInCount
   };
 };
 
-const constructSpaceResponseFromObject = (space: Space): SpaceResponse => {
+const constructSpaceResponseFromObject = (space: PopulatedSpace): SpaceResponse => {
   return {
     _id: space._id.toString(),
     place_id: space.place_id as string,
@@ -50,7 +67,10 @@ const constructSpaceResponseFromObject = (space: Space): SpaceResponse => {
     photos: space.photos,
     url: space.url,
     website: space.website,
-    latlng: space.latlng
+    latlng: space.latlng,
+    localLegend: space.localLegend? constructUserResponseFromObject(space.localLegend) : undefined,
+    localLegendCount: space.localLegendCount,
+    totalCheckInCount: space.totalCheckInCount
   }
 }
 

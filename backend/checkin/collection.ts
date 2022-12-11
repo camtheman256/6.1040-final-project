@@ -2,6 +2,8 @@ import type { HydratedDocument, Types } from "mongoose";
 import type { CheckIn } from "./model";
 import CheckInModel from "./model";
 
+import {refreshSpaceLocalLegend} from "./middleware";
+
 import { place_idTo_id } from "../space/middleware";
 import { gapiIdTo_id } from "../user/middleware";
 
@@ -25,8 +27,9 @@ class CheckInCollection {
             date: rightNow,
             count: yestCount + 1
         });
-        await checkin.save()
-        return (await checkin.populate("user")).populate("space");
+        await checkin.save();
+        await refreshSpaceLocalLegend(place_id);
+        return (await checkin.populate("user")).populate({path: "space", populate: {path: "localLegend"}});
     }
 
 
@@ -35,11 +38,11 @@ class CheckInCollection {
         return CheckInModel.findOne({
             user: await gapiIdTo_id(userId),
             date: {$gte: rightNow.toDateString()} //query: {date in store is >= today's Date at 00:00}
-        }).populate("user").populate("space");
+        }).populate("user").populate({path: "space", populate: {path: "localLegend"}});
     }
 
     static async findAll(): Promise<Array<HydratedDocument<CheckIn>>>{
-        return CheckInModel.find({}).populate("user").populate("space");
+        return CheckInModel.find({}).populate("user").populate({path: "space", populate: {path: "localLegend"}});
     }
 
     static async findAllByUserSpace(userId: string | undefined, place_id: string | undefined): Promise<Array<HydratedDocument<CheckIn>>>{
@@ -50,19 +53,19 @@ class CheckInCollection {
             return CheckInModel.find({
                 space: mg_spaceId,
                 user: mg_userId
-            }).populate("user").populate("space");
+            }).populate("user").populate({path: "space", populate: {path: "localLegend"}});
         }
         else if (place_id !== undefined){
-            return CheckInModel.find({space: mg_spaceId}).populate("user").populate("space");
+            return CheckInModel.find({space: mg_spaceId}).populate("user").populate({path: "space", populate: {path: "localLegend"}});
         }
         else{
-            return CheckInModel.find({user: mg_userId});
+            return CheckInModel.find({user: mg_userId}).populate("user").populate({path: "space", populate: {path: "localLegend"}});
         }
     }
 
     static async findAllBySpace(place_id: string): Promise<Array<HydratedDocument<CheckIn>>>{
         const mg_spaceId = await place_idTo_id(place_id as string) //mongo space._id
-        return CheckInModel.find({space: mg_spaceId}).populate("user").populate("space");
+        return CheckInModel.find({space: mg_spaceId}).populate("user").populate({path: "space", populate: {path: "localLegend"}});
     }
 
 

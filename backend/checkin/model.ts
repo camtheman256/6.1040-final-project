@@ -1,7 +1,7 @@
 import type { User } from "../user/model";
 import type { Types } from "mongoose";
 import { Schema, model } from "mongoose";
-import type { Space } from "../space/model";
+import type { Space, PopulatedSpace } from "../space/model";
 
 export type CheckIn = {
     _id: Types.ObjectId; //mongoDB
@@ -15,7 +15,7 @@ export type CheckIn = {
 export type PopulatedCheckIn = {
     _id: Types.ObjectId;
     user: User;
-    space: Space;
+    space: PopulatedSpace;
     date: Date;
     count: number;
 }
