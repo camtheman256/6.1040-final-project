@@ -8,8 +8,7 @@ const userStore = useUserStore();
 const checkInStore = useCheckInStore();
 const getFirstName = (fullname: string): string =>
   fullname.substring(0, fullname.indexOf(" "));
-const formatDate = (dateString: string): string =>
-  dateString.substring(0, dateString.indexOf(","));
+const formatDate = (dateString: string): Date => new Date(dateString);
 </script>
 
 <template>
@@ -21,11 +20,12 @@ const formatDate = (dateString: string): string =>
           {{ getFirstName(userStore.user.name) }}
         </h1>
         <h5 class="emphasized">
-          Contributor since {{ formatDate(userStore.user.dateJoined) }}
+          Contributor since
+          {{ formatDate(userStore.user.dateJoined).toLocaleDateString() }}
         </h5>
         <p v-if="checkInStore.today">
-          You checked in to {{ checkInStore.today.space.name }} today at
-          {{ checkInStore.today.date }} for the
+          You checked in to <b>{{ checkInStore.today.space.name }}</b> today at
+          {{ formatDate(checkInStore.today.date).toLocaleString() }} for the
           {{ checkInStore.today.count }} time. Thanks!
         </p>
         <p v-else>

@@ -27,6 +27,8 @@ const purify = DOMPurify(window);
 const responseHtml = computed(() =>
   purify.sanitize(marked.parse(props.request.textContent))
 );
+
+const getDate = (isoString: string): Date => new Date(isoString);
 </script>
 
 <template>
@@ -48,7 +50,7 @@ const responseHtml = computed(() =>
           :user="props.request.author"
           height="30"
           class="d-inline-flex align-middle"
-          :suffix="` at ${props.request.dateCreated}`"
+          :suffix="` at ${getDate(props.request.dateCreated).toLocaleString()}`"
         />
       </p>
       <div class="btn status text-white" :class="statusStyle">

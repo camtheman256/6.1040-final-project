@@ -30,6 +30,8 @@ const requestTagline = computed(() =>
     FORBID_TAGS: ["img"],
   })
 );
+
+const getDate = (isoString: string): Date => new Date(isoString);
 </script>
 
 <template>
@@ -52,7 +54,7 @@ const requestTagline = computed(() =>
         <UserProfile
           :user="props.request.author"
           class="d-inline-flex"
-          :suffix="` at ${props.request.dateCreated}`"
+          :suffix="` at ${getDate(props.request.dateCreated).toLocaleString()}`"
           height="30"
         />
       </p>
