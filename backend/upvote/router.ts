@@ -1,0 +1,93 @@
+import type { Request, Response, NextFunction } from "express";
+import { Types } from "mongoose";
+import express from "express";
+
+import PlaceRequestCollection from "../request/collection";
+import { constructPlaceRequestResponse } from "../request/util";
+const router = express.Router();
+
+/**
+ * @name POST /api/upvotes/{requestId}
+ */
+router.post(
+  "/:requestId",
+
+  async (req: Request, res: Response) => {
+    const request = await PlaceRequestCollection.findOneById(
+      req.params["requestId"] as string
+    );
+    if (!request) {
+      res.status(403).json({
+        message: `Request with id ${req.params["requestId"]} does not exist`,
+      });
+      return;
+    }
+    if (!req.session.userId) {
+      res.status(403).json({
+        message: "User is not logged in.",
+      });
+      return;
+    }
+
+    if (request.upvotingUsers.includes(req.session.userId)) {
+      // this should not happen
+      res.status(201).json({
+        message: "User has already upvoted this response",
+        request: request,
+      });
+    } else {
+      request.upvotingUsers.push(req.session.userId);
+      request.save();
+      res.status(201).json({
+        message: "Upvote was successfully created.",
+        request: constructPlaceRequestResponse(request),
+      });
+    }
+  }
+);
+
+/**
+ * @name DELETE /api/upvotes/upvotes?requestId=requestId
+ */
+router.delete(
+  "/",
+
+  async (req: Request, res: Response) => {
+    const request = await PlaceRequestCollection.findOneById(
+      req.query.requestId as string
+    );
+    if (!request) {
+      res.status(403).json({
+        message: `Request with id ${req.query.requestId} does not exist`,
+      });
+      return;
+    }
+    if (!req.session.userId) {
+      res.status(403).json({
+        message: "User is not logged in.",
+      });
+      return;
+    }
+    if (!request.upvotingUsers.includes(req.session.userId)) {
+      // this should not happen
+      res.status(201).json({
+        message: "User did not upvote this response",
+        request: request,
+      });
+    } else {
+      const index = request.upvotingUsers.indexOf(req.session.userId);
+
+      if (index !== -1) {
+        request.upvotingUsers.splice(index, 1);
+      }
+      //   request.upvotingUsers.push(req.session.userId);
+      request.save();
+      res.status(201).json({
+        message: "Upvote was successfully deleted.",
+        request: constructPlaceRequestResponse(request),
+      });
+    }
+  }
+);
+
+export { router as upvoteRouter };
