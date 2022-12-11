@@ -149,8 +149,8 @@ PATH_spaces:
               message: "Space with place_id: ChIJN1t_tDeuEmsRUsoyG83frY4 does not exist."
 
   put:
-    summary: Update a space [TODO]
-    description: Used to update a space in collection. [NOT IMPLEMENTED YET]
+    summary: Update a space [NOT IMPLEMENTED]
+    description: Used to update a space in collection. [NOT IMPLEMENTED]
     requestBody:
       required: true
       content:

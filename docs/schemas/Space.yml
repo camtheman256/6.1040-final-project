@@ -30,7 +30,7 @@ properties:
   localLegend:
     schema:
       type: object
-      $ref: "../schemas/_index.yml#User"
+      $ref: "./User.yml"
   localLegendCount:
     type: number
   totalCheckInCount:

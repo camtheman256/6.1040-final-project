@@ -103,7 +103,7 @@ router.post(
  * @name DELETE /api/request/{requestId}
  */
 router.delete(
-    "/",
+    "/:requestId",
     [
         userMiddleware.isUserLoggedIn,
         placeRequestMiddleware.isRequestExists,
@@ -111,7 +111,7 @@ router.delete(
 
     ],
     async (req: Request, res: Response, next: NextFunction) => {
-        const requestId = req.params.requestId
+        const requestId = req.params.requestId;
         await PlaceRequestCollection.deleteOne(requestId);
         res.status(200).json({
             message: "Request was successfully deleted."
@@ -120,7 +120,33 @@ router.delete(
 )
 
 /**
- * @name PUT /api/request
+ * @name PUT /api/request/{requestId}
  */
+router.put(
+    "/:requestId",
+    [
+        placeRequestMiddleware.isRequestExists,
+        placeRequestMiddleware.isRequestAuthor
+    ],
+    async (req: Request, res: Response, next: NextFunction) => {
+        if (!req.body.resolved){
+            res.status(400).json({
+                message: "Resolved boolean not provided."
+            });
+            return;
+        }
+        const requestId = req.params.requestId;
+        const newRequest = await PlaceRequestCollection.updateOne(requestId, req.body.resolved);
+        if (!newRequest){
+            res.status(500).json({
+                message: "Unable to update request status."
+            }) //should never get here
+            return;
+        }
+        res.status(200).json({
+            request: constructPlaceRequestResponse(newRequest)
+        })
+    }
+)
 
  export { router as requestRouter };

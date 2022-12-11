@@ -8,11 +8,11 @@ properties:
   userId:
     schema:
       type: object
-      $ref: "../schemas/_index.yml#User"
+      $ref: "./User.yml"
   space:
     schema:
       type: object
-      $ref: "../schemas/_index.yml#Space"
+      $ref: "./Space.yml"
   date:
     type: string
   count:
