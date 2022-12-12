@@ -42,12 +42,12 @@ const onStatusChange = (event: boolean) => {
     </button>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <a @click="onStatusChange(false)" class="dropdown-item" href="#"
-        >Not Addressed</a
-      >
-      <a @click="onStatusChange(true)" class="dropdown-item" href="#"
-        >Resolved</a
-      >
+      <button @click="onStatusChange(false)" class="dropdown-item">
+        Not Addressed
+      </button>
+      <button @click="onStatusChange(true)" class="dropdown-item">
+        Resolved
+      </button>
     </div>
   </div>
   <div v-else class="btn nopointer text-white" :class="styleStatus">
