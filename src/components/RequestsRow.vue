@@ -1,19 +1,17 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { ref } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import RequestInfo from "./RequestInfo.vue";
 
 const props = defineProps<{ spaceRequests: PlaceRequestResponse[] }>();
 
-const numPending = computed(
-  () => props.spaceRequests?.filter((req: any) => req.inProcess).length
+const numResolved = ref(
+  props.spaceRequests?.filter((req: any) => req.resolved).length
 );
 
-const numUnresolved = computed(
-  () =>
-    props.spaceRequests?.filter((req: any) => !req.isPending && !req.resolved)
-      .length
-);
+const updateNumResolved = (incr: number) => {
+  numResolved.value += incr;
+};
 </script>
 
 <template>
@@ -22,14 +20,14 @@ const numUnresolved = computed(
       <h3>Requests</h3>
       <div>
         <p class="status">
-          🟡
-          <span class="emphasized">{{ numPending }} pending requests</span>
+          🟢
+          <span class="emphasized">{{ numResolved }} pending requests</span>
         </p>
         <p class="status">
-          🔴
+          ⚪
           <span class="emphasized"
-            >{{ numUnresolved }} unresolved requests</span
-          >
+            >{{ props.spaceRequests.length - numResolved }} unresolved requests
+          </span>
         </p>
       </div>
     </section>
@@ -40,8 +38,10 @@ const numUnresolved = computed(
         :key="request.dateCreated"
         class="bottom-buffer"
       >
-        <!-- {{ request.title }} -->
-        <RequestInfo :request="request" />
+        <RequestInfo
+          :request="request"
+          @resolvedCount="updateNumResolved($event)"
+        />
       </div>
     </div>
   </div>
