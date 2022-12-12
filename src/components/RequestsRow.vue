@@ -31,7 +31,7 @@ onMounted(loadRequests);
       <div>
         <p class="status">
           🟢
-          <span class="emphasized">{{ numResolved }} pending requests</span>
+          <span class="emphasized">{{ numResolved }} resolved requests</span>
         </p>
         <p class="status">
           ⚪
