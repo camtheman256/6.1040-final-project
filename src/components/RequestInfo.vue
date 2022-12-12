@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
@@ -9,16 +9,13 @@ import UserProfile from "./UserProfile.vue";
 import StatusTag from "../components/StatusTag.vue";
 
 const props = defineProps<{ request: PlaceRequestResponse }>();
-const resolvedStatus = ref<boolean>(props.request.resolved);
 const emit = defineEmits<{
-  (event: "resolvedCount", incr: number): void;
+  (event: "statusUpdate"): void;
 }>();
 
 const onDropdownChange = async (resolved: boolean) => {
-  if (resolvedStatus.value === resolved) return;
-  resolvedStatus.value = resolved;
   await put(`/api/requests/${props.request._id}`, { resolved });
-  emit("resolvedCount", resolved ? 1 : -1);
+  emit("statusUpdate");
 };
 
 const userStore = useUserStore();
@@ -62,7 +59,7 @@ const getDate = (isoString: string): Date => new Date(isoString);
       </p>
       <StatusTag
         :can-dropdown="userStore.user?.name === props.request.author.name"
-        :resolved="resolvedStatus.valueOf()"
+        :resolved="props.request.resolved"
         @resolved="onDropdownChange($event)"
       />
     </div>

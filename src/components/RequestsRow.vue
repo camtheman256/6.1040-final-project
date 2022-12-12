@@ -1,18 +1,27 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import type { SpaceResponse } from "../../backend/space/util";
+import { ref, computed, onMounted } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import RequestInfo from "./RequestInfo.vue";
+import { get } from "@/utils";
 
-const props = defineProps<{ spaceRequests: PlaceRequestResponse[] }>();
+const props = defineProps<{ space: SpaceResponse }>();
 
-const numResolved = ref(
-  props.spaceRequests?.filter((req: any) => req.resolved).length
+const spaceRequests = ref<PlaceRequestResponse[]>([]);
+
+const numResolved = computed(
+  () => spaceRequests.value.filter((req: any) => req.resolved).length
 );
 
-const updateNumResolved = (incr: number) => {
-  // TODO: properly update count here
-  // numResolved.value += incr;
+const loadRequests = async () => {
+  const requestsResponse = await get(
+    `/api/requests?space=${props.space.place_id}`
+  );
+  spaceRequests.value = requestsResponse.requests;
 };
+
+defineExpose({ loadRequests });
+onMounted(loadRequests);
 </script>
 
 <template>
@@ -27,7 +36,7 @@ const updateNumResolved = (incr: number) => {
         <p class="status">
           ⚪
           <span class="emphasized"
-            >{{ props.spaceRequests.length - numResolved }} unresolved requests
+            >{{ spaceRequests.length - numResolved }} unresolved requests
           </span>
         </p>
       </div>
@@ -35,14 +44,11 @@ const updateNumResolved = (incr: number) => {
     <hr />
     <div>
       <div
-        v-for="request in props.spaceRequests"
+        v-for="request in spaceRequests"
         :key="request.dateCreated"
         class="bottom-buffer"
       >
-        <RequestInfo
-          :request="request"
-          @resolvedCount="updateNumResolved($event)"
-        />
+        <RequestInfo :request="request" @statusUpdate="loadRequests()" />
       </div>
     </div>
   </div>
