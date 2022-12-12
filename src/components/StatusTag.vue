@@ -1,13 +1,11 @@
 <script lang="ts" setup>
+import { booleanLiteral } from "@babel/types";
 import { Dropdown } from "bootstrap";
 import { computed, ref } from "vue";
 
 const dropdownElement = ref<HTMLButtonElement>();
 
-const props = defineProps({
-  canDropdown: { type: Boolean },
-  resolved: { type: Boolean },
-});
+const props = defineProps<{ canDropdown: boolean; resolved: boolean }>();
 
 const styleStatus = computed(() => ({
   "bg-secondary": !props.resolved,
