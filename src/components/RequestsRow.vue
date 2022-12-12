@@ -10,7 +10,8 @@ const numResolved = ref(
 );
 
 const updateNumResolved = (incr: number) => {
-  numResolved.value += incr;
+  // TODO: properly update count here
+  // numResolved.value += incr;
 };
 </script>
 
