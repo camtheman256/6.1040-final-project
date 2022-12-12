@@ -130,7 +130,6 @@ router.put(
     ],
     async (req: Request, res: Response, next: NextFunction) => {
         if (req.body.resolved === undefined){
-            console.log(req.body);
             res.status(400).json({
                 message: "Resolved boolean not provided."
             });
