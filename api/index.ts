@@ -11,6 +11,7 @@ import { spaceRouter } from "../backend/space/router";
 import { requestRouter } from "../backend/request/router";
 import { checkinRouter } from "../backend/checkin/router";
 import { replyRouter } from "../backend/reply/router";
+import { upvoteRouter } from "../backend/upvote/router";
 
 // Configure .env file
 dotenv.config();
@@ -54,6 +55,7 @@ app.use("/api/spaces", spaceRouter);
 app.use("/api/requests", requestRouter);
 app.use("/api/replies", replyRouter);
 app.use("/api/checkins", checkinRouter);
+app.use("/api/upvotes", upvoteRouter);
 
 app.get("/api", (req, res) => {
   res.status(200).json({

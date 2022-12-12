@@ -42,14 +42,14 @@ router.post(
       // this should not happen
       res.status(201).json({
         message: "User has already upvoted this response",
-        request: request,
+        //request: request,
       });
     } else {
       request.upvotingUsers.push(sessionUser?._id);
       request.save();
       res.status(201).json({
         message: "Upvote was successfully created.",
-        request: constructPlaceRequestResponse(request),
+        //request: constructPlaceRequestResponse(request),
       });
     }
   }
@@ -88,7 +88,7 @@ router.delete(
       // this should not happen
       res.status(201).json({
         message: "User did not upvote this response",
-        request: request,
+        //request: request,
       });
     } else {
       const index = request.upvotingUsers.indexOf(sessionUser._id);
@@ -96,11 +96,10 @@ router.delete(
       if (index !== -1) {
         request.upvotingUsers.splice(index, 1);
       }
-      //   request.upvotingUsers.push(req.session.userId);
       request.save();
       res.status(201).json({
         message: "Upvote was successfully deleted.",
-        request: constructPlaceRequestResponse(request),
+        //request: constructPlaceRequestResponse(request),
       });
     }
   }
