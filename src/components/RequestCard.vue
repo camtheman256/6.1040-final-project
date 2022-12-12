@@ -57,7 +57,6 @@ const getDate = (isoString: string): Date => new Date(isoString);
       </h6>
       <p class="card-text" v-html="requestTagline"></p>
     </div>
-    <div class="card-footer"></div>
     <div class="card-footer">
       <p class="emphasized">
         <UserProfile

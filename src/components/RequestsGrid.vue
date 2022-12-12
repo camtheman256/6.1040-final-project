@@ -26,6 +26,15 @@ async function loadRequests() {
     ? `/api/requests?user=${userStore.user?.gapiUserId}`
     : "/api/requests";
   const response = await get(route);
+  response.requests.sort((a: PlaceRequestResponse, b: PlaceRequestResponse) =>
+    Date.parse(a.dateCreated) > Date.parse(b.dateCreated)
+      ? -1
+      : Date.parse(b.dateCreated) > Date.parse(a.dateCreated)
+      ? 1
+      : 0
+  );
+  const date = Date.parse(response.requests[0].dateCreated);
+  console.log(date);
   requests.value = response.requests;
   filteredRequests.value = requests.value;
   filter.value = "";

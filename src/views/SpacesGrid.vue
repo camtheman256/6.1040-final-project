@@ -13,6 +13,10 @@ const allSpaces = ref<SpaceResponse[]>([]);
 
 async function loadSpaces() {
   const response = await get("/api/spaces");
+  // Sort spaces by name.
+  response.spaces.sort((a: SpaceResponse, b: SpaceResponse) =>
+    a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+  );
   allSpaces.value = response.spaces;
   filter.value = "";
   filteredSpaces.value = response.spaces;
