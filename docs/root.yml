@@ -28,9 +28,11 @@ paths:
   /api/users:
     $ref: "./paths/users.yml#/PATH_users"
   /api/spaces/{place_id}:
-    $ref: "./paths/spaces.yml#/PATH_spaces"
+    $ref: "./paths/spaces.yml#/PATH_spaces_post"
   /api/requests/{place_id}:
     $ref: "./paths/requests.yml#/PATH_requests_post"
+  /api/spaces/:
+    $ref: "./paths/spaces.yml#/PATH_spaces"
   /api/requests:
     $ref: "./paths/requests.yml#/PATH_requests"
   /api/requests/{requestId}:
@@ -49,6 +51,10 @@ paths:
     $ref: "./paths/replies.yml#/PATH_replies_post"
   /api/replies:
     $ref: "./paths/replies.yml#/PATH_replies"
+  /api/upvotes/{requestId}:
+    $ref: "./paths/upvotes.yml#/PATH_upvotes_post"
+  /api/upvotes/:
+    $ref: "./paths/upvotes.yml#/PATH_upvotes"
 components:
   schemas:
     $ref: "./schemas/_index.yml"
