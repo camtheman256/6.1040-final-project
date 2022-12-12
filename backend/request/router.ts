@@ -10,9 +10,7 @@ import { constructPlaceRequestResponse } from "./util";
 
 import * as userMiddleware from "../user/middleware"
 import * as spaceMiddleware from "../space/middleware"
-import * as checkInMiddleware from "../checkin/middleware"
 import * as placeRequestMiddleware from "./middleware"
-import CheckInCollection from "../checkin/collection";
 
 const router = express.Router();
 
@@ -31,15 +29,10 @@ router.get(
             return;
         }
         const allRequests = await PlaceRequestCollection.findAll();
-        console.log(allRequests)
         res.status(200).json({
             requests: allRequests.map(constructPlaceRequestResponse)
         });
     },
-    [
-        //userMiddleware.isUserLoggedIn,
-        //placeRequestMiddleware.isValidGetPlaceRequestQuery
-    ],
     async (req: Request, res: Response) => {
         const space = await SpaceCollection.findOne(req.query.space as string);
         const user = await UserCollection.findOneFromGapiUserId(req.query.user as string);
@@ -84,12 +77,7 @@ router.post(
             await spaceMiddleware.place_idTo_id(req.body.space) as string,
             req.body.title,
             req.body.textContent,
-            //req.body.dateCreated,
-            //req.body.tags,
-            req.body.anonymous,
-            //req.body.upvotingUsers,
-            //req.body.resolved,
-            //req.body.inProcess
+            req.body.anonymous
         );
         
         res.status(201).json({

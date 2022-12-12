@@ -8,6 +8,7 @@ export type CheckIn = {
     user: Types.ObjectId;
     space: Types.ObjectId;
     date: Date;
+
     /** this CheckIn is the count^th check-in for this user, at this space. */
     count: number;
 }

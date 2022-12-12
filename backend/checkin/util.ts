@@ -1,15 +1,12 @@
 import type { HydratedDocument } from "mongoose";
-import moment from "moment";
 import type { CheckIn, PopulatedCheckIn } from "./model";
 import type { User } from "../user/model";
 import {
   type UserResponse,
-  constructUserResponse,
   constructUserResponseFromObject,
 } from "../user/util";
 import {
   type SpaceResponse,
-  constructSpaceResponse,
   constructSpaceResponseFromObject,
 } from "../space/util";
 

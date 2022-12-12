@@ -1,7 +1,5 @@
 import SpaceCollection from "../space/collection";
-import UserCollection from "../user/collection";
 import type { Request, Response, NextFunction } from "express";
-import { exists } from "fs";
 
 import type { HydratedDocument } from "mongoose";
 
@@ -41,8 +39,10 @@ function countCheckInsByUser(checkIns: Array<HydratedDocument<CheckIn>>): Map<st
     return finalSums;
 }
 
+/**
+ * Handle refreshing Space details, such as the localLegend and total check-in counts upon new check-in request. 
+ */
 async function refreshSpaceLocalLegend(place_id: string): Promise<HydratedDocument<Space> | null>{
-    const space = await SpaceCollection.findOne(place_id as string);
     const spaceCheckIns = await CheckInCollection.findAllBySpace(place_id as string);
     const totalCount = spaceCheckIns.length;
     const countedCheckIns = countCheckInsByUser(spaceCheckIns);

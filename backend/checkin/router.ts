@@ -12,11 +12,6 @@ import * as spaceMiddleware from "../space/middleware";
 import * as checkInMiddleware from "./middleware";
 import type { User } from "../user/model";
 
-import {
-  type UserResponse,
-  constructUserResponse,
-  constructUserResponseFromObject,
-} from "../user/util";
 import type { HydratedDocument } from "mongoose";
 
 const router = express.Router();
@@ -28,7 +23,7 @@ router.post(
   "/session/:place_id",
   [
     userMiddleware.isUserLoggedIn,
-    //validator for geolocation? [TODO]
+    //validator for geolocation? [TODO/aspirational]
     spaceMiddleware.isPlaceExists,
     checkInMiddleware.isSessionUserNotCheckInToday,
   ],
@@ -53,7 +48,7 @@ router.get(
   [userMiddleware.isUserLoggedIn],
   async (req: Request, res: Response, next: NextFunction) => {
     const todayCheckIn = await CheckInCollection.findOneToday(
-      req.session.userId as string /*req.params.place_id*/
+      req.session.userId as string
     );
     if (!todayCheckIn) {
       res.status(404).json({

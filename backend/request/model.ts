@@ -8,28 +8,23 @@ export type PlaceRequest = {
     _id: Types.ObjectId; //mongoDB
 
     author: Types.ObjectId;
-    //author: string;
-    /** corresponds to google Auth's userId token */
 
     space: Types.ObjectId;
-    //space: string;
-    /** corresponds to placeId of space */
 
     title: string;
-    textContent: string; //markdown?
+
+    /** content for PlaceRequest in markdown text format*/
+    textContent: string;
 
     dateCreated: Date;
 
-    //tags: Array<string>; 
-    /** [TENATIVE] tagIds associated with request */
-
     anonymous: boolean;
 
+    /** All users upvoting this PlaceRequest */
     upvotingUsers: Array<Types.ObjectId>;
 
     resolved: boolean;
 
-    //inProcess: boolean;
 }
 
 export type PopulatedPlaceRequest = {
@@ -52,25 +47,11 @@ export type PopulatedPlaceRequest = {
 }
 
 const PlaceRequestSchema = new Schema({
-    /*
-    author: {
-        type: String,
-        required: true,
-        ref: "User"
-    },
-    */
     author: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "User"
     },
-    /*
-    space: {
-        type: String,
-        required: true,
-        ref: "Space"
-    },
-    */
    space: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -88,12 +69,6 @@ const PlaceRequestSchema = new Schema({
         type: Date,
         required: true
     },
-    /*
-    tags: {
-        type: Array<String>,
-        required: true
-    },
-    */
     anonymous: {
         type: Boolean,
         required: true
@@ -107,12 +82,6 @@ const PlaceRequestSchema = new Schema({
         type: Boolean,
         required: true
     },
-    /*
-    inProcess: {
-        type: Boolean,
-        required: true
-    }
-    */
 });
 
 const PlaceRequestModel = model<PlaceRequest>("PlaceRequest", PlaceRequestSchema);

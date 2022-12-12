@@ -8,9 +8,7 @@ import { place_idTo_id } from "../space/middleware";
 import { gapiIdTo_id } from "../user/middleware";
 
 class PlaceRequestCollection {
-    static async addOne(author: string, space: string, title: string, textContent: string,
-                        /*dateCreated: Date, tags: Array<string>, */ anonymous: boolean, /*upvotingUsers: Array<string>,*/
-                        /*resolved: boolean,*/ /*inProcess: boolean*/): Promise<HydratedDocument<PlaceRequest>> {
+    static async addOne(author: string, space: string, title: string, textContent: string, anonymous: boolean): Promise<HydratedDocument<PlaceRequest>> {
         const date = new Date();
         const userArray: Array<string> = []
         const request = new PlaceRequestModel({
@@ -19,11 +17,9 @@ class PlaceRequestCollection {
             title,
             textContent, 
             dateCreated: date,
-            //tags, 
             anonymous,
             upvotingUsers: userArray,
             resolved: false,
-            //inProcess: false
         });
         await request.save();
         return (await (await request.populate("author")).populate({path: "space", populate: {path: "localLegend"}})).populate("upvotingUsers");

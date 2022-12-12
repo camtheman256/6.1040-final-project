@@ -7,28 +7,14 @@ import { type SpaceResponse, constructSpaceResponse, constructSpaceResponseFromO
 
 export type PlaceRequestResponse = {
   _id: string; //mongoDB
-
   author: UserResponse;
-  /** corresponds to google Auth's userId token */
-
   space: SpaceResponse;
-  /** corresponds to placeId of space */
-
   title: string;
-  textContent: string; //markdown?
-
+  textContent: string;
   dateCreated: string;
-
-  //tags: Array<string>;
-  /** [TENATIVE] tagIds associated with request */
-
   anonymous: boolean;
-
   upvotingUsers: Array<UserResponse>;
-
   resolved: boolean;
-
-  //inProcess: boolean;
 };
 
 /**

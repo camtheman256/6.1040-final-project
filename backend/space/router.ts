@@ -58,7 +58,7 @@ router.get(
     const allSpaces = await SpaceCollection.findAll();
     const allSpacesResponse = allSpaces.map(constructSpaceResponse);
     res.status(200).json({
-      spaces: allSpacesResponse, //[TODO] think about spaces vs. space... do we want to split this path into two?
+      spaces: allSpacesResponse,
     });
   },
   [spaceMiddleware.isPlaceQueryExists],

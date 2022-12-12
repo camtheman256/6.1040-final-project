@@ -16,6 +16,7 @@ class CheckInCollection {
     static async addOne(userId: string, place_id: string): Promise<HydratedDocument<CheckIn>> {
         const mg_userId = await gapiIdTo_id(userId); //mongo user._id
         const mg_spaceId = await place_idTo_id(place_id) //mongo space._id
+        
         //find yesterday's check in, if such exists; sorting by count and limit 1 is efficient because spark magic i guess?
         const yesterdayCheckIn = await CheckInModel.find({user: mg_userId, space: mg_spaceId}).sort({count:-1}).limit(1)
         const yestCount: number = yesterdayCheckIn.pop()?.count?? 0;

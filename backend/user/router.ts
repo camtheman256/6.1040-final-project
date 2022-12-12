@@ -1,12 +1,10 @@
 import type { Request, Response, NextFunction } from "express";
-import { Types } from "mongoose";
 import express from "express";
 
 import * as userMiddleware from "./middleware";
 import UserCollection from "./collection";
 import { constructUserResponse } from "./util";
 
-import { assert } from "console";
 
 const router = express.Router();
 
@@ -24,11 +22,6 @@ router.post(
       });
       return;
     }
-    const gapiUserId: string = payload.sub;
-    const gapiClientId: string | undefined = payload.azp;
-    const name: string | undefined = payload.name;
-    const imageUrl: string | undefined = payload.picture;
-    const email: string | undefined = payload.email;
     const userDoc = await userMiddleware.createUserFromGapiAuth(payload);
     req.session.userId = userDoc.gapiUserId;
     res.status(200).json({

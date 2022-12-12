@@ -2,10 +2,7 @@ import PlaceRequestCollection from "../space/collection";
 import UserCollection from "../user/collection";
 import type { Request, Response, NextFunction } from "express";
 
-import type { HydratedDocument } from "mongoose";
-
 import ReplyCollection from "./collection";
-import type { Reply } from "./model";
 
 /**
  * Checks if query values in GET request for PlaceRequest is valid, namely,
