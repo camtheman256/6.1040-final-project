@@ -26,7 +26,7 @@ class PlaceRequestCollection {
             //inProcess: false
         });
         await request.save();
-        return (await request.populate("author")).populate({path: "space", populate: {path: "localLegend"}});
+        return (await (await request.populate("author")).populate({path: "space", populate: {path: "localLegend"}})).populate("upvotingUsers");
     }
 
     static async findByAuthorSpace(place_id: string | undefined, userId: string | undefined): Promise<Array<HydratedDocument<PlaceRequest>>>{
@@ -34,24 +34,24 @@ class PlaceRequestCollection {
             return PlaceRequestModel.find({
                 space: await place_idTo_id(place_id),
                 author: await gapiIdTo_id(userId)
-            }).populate("author").populate({path: "space", populate: {path: "localLegend"}});
+            }).populate("author").populate({path: "space", populate: {path: "localLegend"}}).populate("upvotingUsers");
         }
         else if (place_id !== undefined){
             return PlaceRequestModel.find({space: await place_idTo_id(place_id)}).sort({dateCreated: -1})
-            .populate("author").populate({path: "space", populate: {path: "localLegend"}});
+            .populate("author").populate({path: "space", populate: {path: "localLegend"}}).populate("upvotingUsers");
         }
         else{
             return PlaceRequestModel.find({author: await gapiIdTo_id(userId as string)}).sort({dateCreated: -1})
-            .populate("author").populate({path: "space", populate: {path: "localLegend"}});
+            .populate("author").populate({path: "space", populate: {path: "localLegend"}}).populate("upvotingUsers");
         }
     }
 
     static async findAll(): Promise<Array<HydratedDocument<PlaceRequest>>>{
-        return PlaceRequestModel.find({}).populate("author").populate({path: "space", populate: {path: "localLegend"}});
+        return PlaceRequestModel.find({}).populate("author").populate({path: "space", populate: {path: "localLegend"}}).populate("upvotingUsers");
     }
 
     static async findOneById(requestId: string): Promise<HydratedDocument<PlaceRequest> | null>{
-        return PlaceRequestModel.findOne({_id: requestId as string}).populate("author").populate({path: "space", populate: {path: "localLegend"}});
+        return PlaceRequestModel.findOne({_id: requestId as string}).populate("author").populate({path: "space", populate: {path: "localLegend"}}).populate("upvotingUsers");
     }
 
     static async deleteOne(requestId: string): Promise<void>{
@@ -83,7 +83,7 @@ class PlaceRequestCollection {
         if (request){
             request.resolved = resolved;
             await request.save();
-            return (await request.populate("author")).populate({path: "space", populate: {path: "localLegend"}})
+            return (await (await request.populate("author")).populate({path: "space", populate: {path: "localLegend"}})).populate("upvotingUsers");
         }
         return null; //I know i'm sorry again
     }
