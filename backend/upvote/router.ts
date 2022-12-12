@@ -4,6 +4,8 @@ import express from "express";
 
 import PlaceRequestCollection from "../request/collection";
 import { constructPlaceRequestResponse } from "../request/util";
+import UserCollection from "../user/collection";
+import * as userMiddleware from "../user/middleware"
 const router = express.Router();
 
 /**
@@ -29,14 +31,21 @@ router.post(
       return;
     }
 
-    if (request.upvotingUsers.includes(req.session.userId)) {
+    const sessionUser = await UserCollection.findOneFromGapiUserId(req.session.userId);
+    if (sessionUser === null){
+      res.status(500).json({ //should never reach here
+        message: "Session user cannot be found"
+      });
+      return;
+    };
+    if (request.upvotingUsers.includes(sessionUser?._id)) {
       // this should not happen
       res.status(201).json({
         message: "User has already upvoted this response",
         request: request,
       });
     } else {
-      request.upvotingUsers.push(req.session.userId);
+      request.upvotingUsers.push(sessionUser?._id);
       request.save();
       res.status(201).json({
         message: "Upvote was successfully created.",
@@ -68,14 +77,21 @@ router.delete(
       });
       return;
     }
-    if (!request.upvotingUsers.includes(req.session.userId)) {
+    const sessionUser = await UserCollection.findOneFromGapiUserId(req.session.userId);
+    if (sessionUser === null){
+      res.status(500).json({ //should never reach here
+        message: "Session user cannot be found"
+      });
+      return;
+    };
+    if (!request.upvotingUsers.includes(sessionUser._id)) {
       // this should not happen
       res.status(201).json({
         message: "User did not upvote this response",
         request: request,
       });
     } else {
-      const index = request.upvotingUsers.indexOf(req.session.userId);
+      const index = request.upvotingUsers.indexOf(sessionUser._id);
 
       if (index !== -1) {
         request.upvotingUsers.splice(index, 1);
