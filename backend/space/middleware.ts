@@ -42,7 +42,7 @@ const isPlaceAlreadyExists = async (req: Request, res: Response, next: NextFunct
  * Checks if place_id in req.params exists
  */
 const isPlaceExists = async (req: Request, res: Response, next: NextFunction) => {
-    const place_id: string = req.query.place_id as string
+    const place_id: string = req.params.place_id
     const space = await SpaceCollection.findOne(place_id);
     if (!space) {
       res.status(404).json({
@@ -51,21 +51,6 @@ const isPlaceExists = async (req: Request, res: Response, next: NextFunction) =>
       return;
     }
     next();
-};
-
-/**
- * Checks if place_id in req.params exists
- */
- const isPlaceExistsDelete = async (req: Request, res: Response, next: NextFunction) => {
-  const place_id: string = req.params.place_id;
-  const space = await SpaceCollection.findOne(place_id);
-  if (!space) {
-    res.status(404).json({
-      message: `Space with place_id: ${place_id} does not exist.`
-    });
-    return;
-  }
-  next();
 };
 
 /**
@@ -96,7 +81,6 @@ async function place_idTo_id(place_id: string): Promise<string | undefined>{
 
 export {
     isValidPlaceResponse,
-    isPlaceExistsDelete,
     isPlaceAlreadyExists,
     isPlaceExists,
     isPlaceQueryExists,
