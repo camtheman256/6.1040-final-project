@@ -4,26 +4,21 @@ import type { PlaceRequestResponse } from "../../backend/request/util";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { useUserStore } from "@/stores/user";
+import { put } from "../utils";
 import UserProfile from "./UserProfile.vue";
+import StatusTag from "../components/StatusTag.vue";
 
-// TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
-const onCardClick = () =>
-  // TODO(porderiq): redirect to correct view.
-  console.log("Go to page for this card:", props.request);
+const emit = defineEmits<{
+  (event: "statusUpdate"): void;
+}>();
+
+const onDropdownChange = async (resolved: boolean) => {
+  await put(`/api/requests/${props.request._id}`, { resolved });
+  emit("statusUpdate");
+};
 
 const userStore = useUserStore();
-
-const requestStatus = computed<string>(() => {
-  if (props.request?.resolved) return "Resolved";
-  return "Not Addressed";
-});
-
-const statusStyle = {
-  "bg-secondary": requestStatus.value === "Not Addressed",
-  "bg-warning": requestStatus.value === "In Progress",
-  "bg-success": requestStatus.value === "Resolved",
-};
 
 const purify = DOMPurify(window);
 
@@ -35,7 +30,7 @@ const getDate = (isoString: string): Date => new Date(isoString);
 </script>
 
 <template>
-  <div class="card text-white bg-dark" @click="onCardClick">
+  <div class="card text-white bg-dark">
     <div class="card-body">
       <h5 class="card-title spanned">
         {{ props.request.title }}
@@ -62,9 +57,11 @@ const getDate = (isoString: string): Date => new Date(isoString);
           :suffix="` at ${getDate(props.request.dateCreated).toLocaleString()}`"
         />
       </p>
-      <div class="btn status text-white" :class="statusStyle">
-        Status: {{ requestStatus }}
-      </div>
+      <StatusTag
+        :can-dropdown="userStore.user?.name === props.request.author.name"
+        :resolved="props.request.resolved"
+        @resolved="onDropdownChange($event)"
+      />
     </div>
   </div>
 </template>
@@ -77,8 +74,5 @@ const getDate = (isoString: string): Date => new Date(isoString);
 .emphasized {
   font-style: italic;
   color: rgb(142, 142, 142);
-}
-.status {
-  pointer-events: none;
 }
 </style>

@@ -129,7 +129,7 @@ router.put(
         placeRequestMiddleware.isRequestAuthor
     ],
     async (req: Request, res: Response, next: NextFunction) => {
-        if (!req.body.resolved){
+        if (req.body.resolved === undefined){
             res.status(400).json({
                 message: "Resolved boolean not provided."
             });

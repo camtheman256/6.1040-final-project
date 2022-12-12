@@ -1,19 +1,27 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import type { SpaceResponse } from "../../backend/space/util";
+import { ref, computed, onMounted } from "vue";
 import type { PlaceRequestResponse } from "../../backend/request/util";
 import RequestInfo from "./RequestInfo.vue";
+import { get } from "@/utils";
 
-const props = defineProps<{ spaceRequests: PlaceRequestResponse[] }>();
+const props = defineProps<{ space: SpaceResponse }>();
 
-const numPending = computed(
-  () => props.spaceRequests?.filter((req: any) => req.inProcess).length
+const spaceRequests = ref<PlaceRequestResponse[]>([]);
+
+const numResolved = computed(
+  () => spaceRequests.value.filter((req: any) => req.resolved).length
 );
 
-const numUnresolved = computed(
-  () =>
-    props.spaceRequests?.filter((req: any) => !req.isPending && !req.resolved)
-      .length
-);
+const loadRequests = async () => {
+  const requestsResponse = await get(
+    `/api/requests?space=${props.space.place_id}`
+  );
+  spaceRequests.value = requestsResponse.requests;
+};
+
+defineExpose({ loadRequests });
+onMounted(loadRequests);
 </script>
 
 <template>
@@ -22,26 +30,25 @@ const numUnresolved = computed(
       <h3>Requests</h3>
       <div>
         <p class="status">
-          🟡
-          <span class="emphasized">{{ numPending }} pending requests</span>
+          🟢
+          <span class="emphasized">{{ numResolved }} pending requests</span>
         </p>
         <p class="status">
-          🔴
+          ⚪
           <span class="emphasized"
-            >{{ numUnresolved }} unresolved requests</span
-          >
+            >{{ spaceRequests.length - numResolved }} unresolved requests
+          </span>
         </p>
       </div>
     </section>
     <hr />
     <div>
       <div
-        v-for="request in props.spaceRequests"
+        v-for="request in spaceRequests"
         :key="request.dateCreated"
         class="bottom-buffer"
       >
-        <!-- {{ request.title }} -->
-        <RequestInfo :request="request" />
+        <RequestInfo :request="request" @statusUpdate="loadRequests()" />
       </div>
     </div>
   </div>

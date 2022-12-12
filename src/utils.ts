@@ -12,6 +12,15 @@ export async function post(url: string, body: object) {
   return fetch(url, options).then((r) => r.json());
 }
 
+export async function put(url: string, body: object) {
+  const options = {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  };
+  return fetch(url, options).then((r) => r.json());
+}
+
 export async function _delete(url: string) {
   const options = {
     method: "DELETE",
