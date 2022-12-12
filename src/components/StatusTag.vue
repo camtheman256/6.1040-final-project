@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { Dropdown } from "bootstrap";
-import { computed } from "vue";
+import { computed, ref } from "vue";
+
+const dropdownElement = ref<HTMLButtonElement>();
 
 const props = defineProps({
   canDropdown: { type: Boolean },
@@ -20,27 +22,24 @@ const requestStatus = computed<string>(() => {
 const emit = defineEmits<{ (event: "resolved", status: boolean): void }>();
 
 const onStatusChange = (event: boolean) => {
-  const dropdownElement = document.getElementById("dropdownMenuLink");
-  Dropdown.getInstance(dropdownElement!)?.hide();
+  Dropdown.getInstance(dropdownElement.value!)?.hide();
   emit("resolved", event);
 };
 </script>
 
 <template>
   <div v-if="props.canDropdown" class="dropdown">
-    <a
+    <button
       :class="styleStatus"
       class="btn btn-secondary dropdown-toggle"
-      href="#"
       role="button"
       data-bs-toggle="dropdown"
       id="dropdownMenuLink"
-      data-toggle="dropdown"
       aria-haspopup="true"
-      aria-expanded="false"
+      ref="dropdownElement"
     >
       Status: {{ requestStatus }}
-    </a>
+    </button>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       <a @click="onStatusChange(false)" class="dropdown-item" href="#"
