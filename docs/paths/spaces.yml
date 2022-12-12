@@ -1,4 +1,4 @@
-PATH_spaces_post:
+PATH_spaces:
   post:
     summary: Create new space
     description: Used to create a new space in collection.
@@ -44,8 +44,6 @@ PATH_spaces_post:
                   type: string
             example:
               message: "Provided place details do not have one of [place_id, formatted_address, name]"
-
-PATH_spaces:
   get:
     summary: Find a space
     description: Used to get the space in collection based on place_id. Returns all spaces if no spaceId parameter was given.
