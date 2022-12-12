@@ -10,12 +10,12 @@ import StatusTag from "../components/StatusTag.vue";
 
 const props = defineProps<{ request: PlaceRequestResponse }>();
 const emit = defineEmits<{
-  (event: "statusUpdate"): void;
+  (event: "refreshRequests"): void;
 }>();
 
 const onDropdownChange = async (resolved: boolean) => {
   await put(`/api/requests/${props.request._id}`, { resolved });
-  emit("statusUpdate");
+  emit("refreshRequests");
 };
 
 const userStore = useUserStore();
@@ -27,6 +27,23 @@ const responseHtml = computed(() =>
 );
 
 const getDate = (isoString: string): Date => new Date(isoString);
+
+const likedByUser = computed(() =>
+  props.request.upvotingUsers
+    .map((user) => user.name)
+    .includes(userStore.user!.name)
+);
+
+const buttonStyle = computed(() => ({
+  "btn-secondary": !likedByUser.value,
+  "btn-primary": likedByUser.value,
+}));
+
+const onLike = () => {
+  // TODO: replace with PUT request.
+  console.log("like PUT request here!");
+  emit("refreshRequests");
+};
 </script>
 
 <template>
@@ -37,12 +54,15 @@ const getDate = (isoString: string): Date => new Date(isoString);
         <span class="text-muted">
           {{ props.request.upvotingUsers.length }}
           <button
+            v-if="userStore.user"
+            :class="buttonStyle"
+            class="btn btn-sm"
             href="#"
-            class="btn btn-sm btn-primary"
-            :disabled="!userStore.user"
+            @click="onLike"
           >
             👍
           </button>
+          <span v-else>👍</span>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">

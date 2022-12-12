@@ -48,7 +48,7 @@ onMounted(loadRequests);
         :key="request.dateCreated"
         class="bottom-buffer"
       >
-        <RequestInfo :request="request" @statusUpdate="loadRequests()" />
+        <RequestInfo :request="request" @refreshRequests="loadRequests()" />
       </div>
     </div>
   </div>
