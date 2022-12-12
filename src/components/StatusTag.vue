@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { booleanLiteral } from "@babel/types";
 import { Dropdown } from "bootstrap";
 import { computed, ref } from "vue";
 
