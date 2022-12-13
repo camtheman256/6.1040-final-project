@@ -30,8 +30,8 @@ const getDate = (isoString: string): Date => new Date(isoString);
 
 const likedByUser = computed(() =>
   props.request.upvotingUsers
-    .map((user) => user.name)
-    .includes(userStore.user!.name)
+    .map((user) => user.gapiUserId)
+    .includes(userStore.user?.gapiUserId ?? "")
 );
 
 const buttonStyle = computed(() => ({
@@ -56,7 +56,7 @@ const onLike = async () => {
         <span class="text-muted">
           {{ props.request.upvotingUsers.length }}
           <button
-            v-if="userStore.user"
+            :disabled="userStore.user === undefined"
             :class="buttonStyle"
             class="btn btn-sm"
             href="#"
@@ -64,7 +64,6 @@ const onLike = async () => {
           >
             👍
           </button>
-          <span v-else>👍</span>
         </span>
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">
