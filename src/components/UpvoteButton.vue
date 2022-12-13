@@ -39,7 +39,7 @@ const onLike = async () => {
       :class="buttonStyle"
       class="btn btn-sm"
       href="#"
-      @click="onLike"
+      @click.stop="onLike"
     >
       👍
     </button>

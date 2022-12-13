@@ -60,7 +60,7 @@ onMounted(loadRequests);
         :key="request.dateCreated"
         class="bottom-buffer"
       >
-        <RequestCard :request="request" />
+        <RequestCard :request="request" @refresh-requests="loadRequests()" />
       </div>
     </div>
     <div v-if="!requests.length">
