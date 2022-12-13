@@ -29,7 +29,10 @@ const onLike = async () => {
 </script>
 
 <template>
-  <span class="text-muted">
+  <span
+    class="text-muted"
+    :title="props.request.upvotingUsers.map((u) => u.name).join(', ')"
+  >
     {{ props.request.upvotingUsers.length }}
     <button
       :disabled="userStore.user === undefined"
