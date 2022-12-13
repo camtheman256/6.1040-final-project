@@ -4,7 +4,7 @@ import type { PlaceRequestResponse } from "../../backend/request/util";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 import { useUserStore } from "@/stores/user";
-import { put } from "../utils";
+import { _delete, post, put } from "../utils";
 import UserProfile from "./UserProfile.vue";
 import StatusTag from "../components/StatusTag.vue";
 
@@ -39,9 +39,11 @@ const buttonStyle = computed(() => ({
   "btn-primary": likedByUser.value,
 }));
 
-const onLike = () => {
+const onLike = async () => {
   // TODO: replace with PUT request.
-  console.log("like PUT request here!");
+  if (likedByUser.value)
+    await _delete(`/api/upvotes?requestId=${props.request._id}`);
+  else await post(`/api/upvotes/${props.request._id}`, {});
   emit("refreshRequests");
 };
 </script>
