@@ -5,7 +5,7 @@ import express from "express";
 import PlaceRequestCollection from "../request/collection";
 import { constructPlaceRequestResponse } from "../request/util";
 import UserCollection from "../user/collection";
-import * as userMiddleware from "../user/middleware"
+import * as userMiddleware from "../user/middleware";
 const router = express.Router();
 
 /**
@@ -31,16 +31,19 @@ router.post(
       return;
     }
 
-    const sessionUser = await UserCollection.findOneFromGapiUserId(req.session.userId);
-    if (sessionUser === null){
-      res.status(500).json({ //should never reach here
-        message: "Session user cannot be found"
+    const sessionUser = await UserCollection.findOneFromGapiUserId(
+      req.session.userId
+    );
+    if (sessionUser === null) {
+      res.status(500).json({
+        //should never reach here
+        message: "Session user cannot be found",
       });
       return;
-    };
+    }
     if (request.upvotingUsers.includes(sessionUser?._id)) {
       // this should not happen
-      res.status(201).json({
+      res.status(200).json({
         message: "User has already upvoted this response",
         //request: request,
       });
@@ -77,25 +80,26 @@ router.delete(
       });
       return;
     }
-    const sessionUser = await UserCollection.findOneFromGapiUserId(req.session.userId);
-    if (sessionUser === null){
-      res.status(500).json({ //should never reach here
-        message: "Session user cannot be found"
+    const sessionUser = await UserCollection.findOneFromGapiUserId(
+      req.session.userId
+    );
+    if (sessionUser === null) {
+      res.status(500).json({
+        //should never reach here
+        message: "Session user cannot be found",
       });
       return;
-    };
-    if (!request.upvotingUsers.includes(sessionUser._id)) {
+    }
+    if (!request.upvotingUsers.some((id) => id.equals(sessionUser._id))) {
       // this should not happen
-      res.status(201).json({
+      res.status(200).json({
         message: "User did not upvote this response",
         //request: request,
       });
     } else {
-      const index = request.upvotingUsers.indexOf(sessionUser._id);
-
-      if (index !== -1) {
-        request.upvotingUsers.splice(index, 1);
-      }
+      request.upvotingUsers = request.upvotingUsers.filter(
+        (id) => !id.equals(sessionUser._id)
+      );
       request.save();
       res.status(201).json({
         message: "Upvote was successfully deleted.",

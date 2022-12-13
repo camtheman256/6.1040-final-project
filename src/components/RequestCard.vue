@@ -2,13 +2,15 @@
 import { useUserStore } from "@/stores/user";
 import DOMPurify from "dompurify";
 import { marked } from "marked";
-import { computed } from "vue";
+import { computed, defineEmits } from "vue";
 import { useRouter } from "vue-router";
 import type { PlaceRequestResponse } from "../../backend/request/util";
+import UpvoteButton from "./UpvoteButton.vue";
 import UserProfile from "./UserProfile.vue";
 
 // TODO(porderiq): Add type of request.
 const props = defineProps<{ request: PlaceRequestResponse }>();
+const emit = defineEmits<{ (event: "refreshRequests"): void }>();
 const router = useRouter();
 const userStore = useUserStore();
 
@@ -41,16 +43,10 @@ const getDate = (isoString: string): Date => new Date(isoString);
     <div class="card-body">
       <h5 class="card-title spanned">
         {{ props.request.title }}
-        <span class="text-muted">
-          {{ props.request.upvotingUsers.length }}
-          <button
-            href="#"
-            class="btn btn-sm btn-primary"
-            :disabled="!userStore.user"
-          >
-            👍
-          </button>
-        </span>
+        <UpvoteButton
+          :request="request"
+          @button-click="emit('refreshRequests')"
+        />
       </h5>
       <h6 class="card-subtitle mb-2 text-muted">
         {{ props.request.space.name }}
