@@ -38,7 +38,7 @@ const filteredSpaces = ref<SpaceResponse[]>(allSpaces.value);
 const updateFilter = (event: string) => {
   filter.value = event;
   filteredSpaces.value = allSpaces.value.filter((space) =>
-    space.name.toLowerCase().includes(filter.value)
+    space.name.toLowerCase().includes(filter.value.toLowerCase())
   );
 };
 </script>
