@@ -8,7 +8,7 @@ discover, request, and contribute to spaces in your community! </h1>
 
 <h2 align="center"> Quick Links </h2>
 <div align = "center">
-<a ref="https://ourspace-project.vercel.app/">
+<a href="https://ourspace.jasyang.com/">
 <img src='https://img.shields.io/badge/HOMEPAGE-gray?style=for-the-badge'></a>
 <a href="https://61040-fa22.github.io/about/">
 <img src='https://img.shields.io/badge/6.1040 Class Website-blue?style=for-the-badge'></a>
